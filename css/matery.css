@@ -280,9 +280,10 @@ nav {
 }
 
 header .nav-transparent {
-    background-color: transparent !important;
-    background-image: none;
-    box-shadow: none;
+    /* 取消透明效果 - 保持导航栏背景 */
+    /* background-color: transparent !important; */
+    /* background-image: none; */
+    /* box-shadow: none; */
 }
 
 header nav .brand-span {
