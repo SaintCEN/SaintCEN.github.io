@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2025/01/09/hello-world/"/>
+      <url>/2025/01/09/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your veryfirst post. Check <a href="https://hexo.io/docs/">documentation</a> formore info. If you get any problems when using Hexo, you can find theanswer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> oryou can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="quick-start">Quick Start</h2><h3 id="create-a-new-post">Create a new post</h3><pre class="language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;using namespace std;#define ll long longint main() &#123;    int n,m;    cin &gt;&gt; n &gt;&gt; m;    vector&lt;ll&gt; sign(n);    for(int i&#x3D;0;i&lt;n;i++)&#123;        cin &gt;&gt; sign[i];    &#125;    unordered_map&lt;ll, int&gt; stu;    for(int i&#x3D;0;i&lt;m;i++)&#123;        ll id;        cin &gt;&gt; id;        stu[id]++;    &#125;    vector&lt;ll&gt; out;    for(auto id : sign)&#123;        if(stu[id]%2&#x3D;&#x3D;0)&#123;            out.push_back(id);        &#125;    &#125;    sort(out.begin(),out.end());    cout &lt;&lt; out.size() &lt;&lt; endl;    for(int i&#x3D;0;i&lt;out.size();i++)&#123;        cout &lt;&lt; out[i] &lt;&lt; &quot; &quot;;    &#125;    return 0;&#125;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="run-server">Run server</h3><pre class="language-bash" data-language="bash"><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="generate-static-files">Generate static files</h3><pre class="language-bash" data-language="bash"><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="deploy-to-remote-sites">Deploy to remote sites</h3><pre class="language-bash" data-language="bash"><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><p><img src="/2025/01/09/hello-world/1.jpg"></p><p><span class="math inline">$\int_{-\infty}^{\infty} e^{-x^2} dx =\sqrt{\pi}$</span></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 教程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 前端开发 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
