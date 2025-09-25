@@ -216,6 +216,17 @@ body.DarkMode .aplayer .aplayer-body {
     filter: invert(.8);
 }
 
+/* 修复音乐列表项文字颜色 */
+body.DarkMode .aplayer .aplayer-list ol li {
+    color: #333 !important;
+}
+body.DarkMode .aplayer .aplayer-list ol li .aplayer-list-index {
+    color: #666 !important;
+}
+body.DarkMode .aplayer .aplayer-list ol li .aplayer-list-author {
+    color: #666 !important;
+}
+
 /*图片滤镜*/
 body.DarkMode img,
 body.DarkMode strong,

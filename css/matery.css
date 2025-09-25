@@ -724,6 +724,17 @@ header .go-back i {
     box-shadow: 0 5px 20px 0 rgba(0, 0, 0, .2), 0 10px 20px -12px rgba(0, 0, 0, .5) !important;
 }
 
+/* 修复音乐播放器列表项文字颜色 */
+.aplayer .aplayer-list ol li {
+    color: #333 !important;
+}
+.aplayer .aplayer-list ol li .aplayer-list-index {
+    color: #666 !important;
+}
+.aplayer .aplayer-list ol li .aplayer-list-author {
+    color: #666 !important;
+}
+
 #recommend-sections {
     margin-top: -30px;
     padding-top: 30px;
