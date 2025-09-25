@@ -2,6 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://saintcen.github.io/categories/index.html</loc>
+    
+    <lastmod>2025-09-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://saintcen.github.io/friends/index.html</loc>
+    
+    <lastmod>2025-09-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://saintcen.github.io/2025/09/25/Hexo-Blog/</loc>
+    
+    <lastmod>2025-09-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://saintcen.github.io/2025/09/26/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88C%E8%AF%AD%E8%A8%80%E7%89%88%EF%BC%89/</loc>
+    
+    <lastmod>2025-09-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://saintcen.github.io/2025/01/09/MoeCTF2025_Misc_wp/</loc>
+    
+    <lastmod>2025-09-25</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://saintcen.github.io/about/index.html</loc>
     
     <lastmod>2025-09-24</lastmod>
@@ -19,24 +64,6 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>https://saintcen.github.io/2025/01/09/hello-world/</loc>
-    
-    <lastmod>2025-09-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://saintcen.github.io/categories/index.html</loc>
-    
-    <lastmod>2025-09-23</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   <url>
     <loc>https://saintcen.github.io/</loc>
@@ -47,7 +74,21 @@
 
   
   <url>
-    <loc>https://saintcen.github.io/tags/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/</loc>
+    <loc>https://saintcen.github.io/tags/%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2025-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://saintcen.github.io/tags/CTF/</loc>
+    <lastmod>2025-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://saintcen.github.io/tags/CS%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2025-09-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -57,6 +98,13 @@
   
   <url>
     <loc>https://saintcen.github.io/categories/%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2025-09-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://saintcen.github.io/categories/%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2025-09-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
