@@ -735,6 +735,11 @@ header .go-back i {
     color: #666 !important;
 }
 
+/* 修复音乐播放器歌名颜色 */
+.aplayer .aplayer-info .aplayer-music .aplayer-title {
+    color: #333 !important;
+}
+
 #recommend-sections {
     margin-top: -30px;
     padding-top: 30px;
