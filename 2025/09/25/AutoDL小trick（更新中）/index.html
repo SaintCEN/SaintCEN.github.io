@@ -4,16 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hexo-Blog搭建教程, Sa1ntCHENの小窝">
-    <meta name="description" content="
-在思考如何搭建个人博客时，我决定采用了Hexo+Github Pages的方案。
-
-纯静态资源网站，只需修改前端代码和资源文件
-Github托管，免费且易于维护
-Hexo提供了优秀的博客模板和便捷的命令行
-
-参考资料
-官方">
+    <meta name="keywords" content="AutoDL小trick（更新中）, Sa1ntCHENの小窝">
+    <meta name="description" content="scp
+手动拉拽不支持文件夹，Linux和Powershell均支持scp命令。
+scp -r -P 21075 /media/dzc/Data/GeoPixel-7B root@connect.westc.gpuhub.com:/ro">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -25,7 +19,7 @@ Hexo提供了优秀的博客模板和便捷的命令行
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hexo-Blog搭建教程 | Sa1ntCHENの小窝</title>
+    <title>AutoDL小trick（更新中） | Sa1ntCHENの小窝</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
     <style>
@@ -358,7 +352,7 @@ Hexo提供了优秀的博客模板和便捷的命令行
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hexo-Blog搭建教程</h1>
+                    <h1 class="description center-align post-title">AutoDL小trick（更新中）</h1>
                 </div>
             </div>
         </div>
@@ -382,8 +376,8 @@ Hexo提供了优秀的博客模板和便捷的命令行
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%BC%80%E5%8F%91/">
-                                <span class="chip bg-color">开发</span>
+                            <a href="/tags/AI/">
+                                <span class="chip bg-color">AI</span>
                             </a>
                         
                     </div>
@@ -394,8 +388,8 @@ Hexo提供了优秀的博客模板和便捷的命令行
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%99%E7%A8%8B/" class="post-category">
-                                教程
+                            <a href="/categories/%E7%A7%91%E7%A0%94/" class="post-category">
+                                科研
                             </a>
                         
                     </div>
@@ -431,95 +425,85 @@ Hexo提供了优秀的博客模板和便捷的命令行
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><img src="/2025/09/25/Hexo-Blog%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/1.png"></p>
-<p>在思考如何搭建个人博客时，我决定采用了<code>Hexo</code>+<code>Github Pages</code>的方案。</p>
-<ul>
-<li>纯静态资源网站，只需修改前端代码和资源文件</li>
-<li><code>Github</code>托管，免费且易于维护</li>
-<li><code>Hexo</code>提供了优秀的博客模板和便捷的命令行</li>
-</ul>
-<h2 id="参考资料">参考资料</h2>
-<p>官方文档：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration">配置 |
-Hexo</a></p>
-<p>大佬的博客1：<a target="_blank" rel="noopener" href="https://bg51717.github.io/13640/">Hexo+Github搭建个人Wiki风格博客
-| Blogs</a></p>
-<p>大佬的博客2：[<a target="_blank" rel="noopener" href="https://aiyoja.github.io/20220704/">三万字教程]基于Hexo的matery主题搭建博客并深度优化一站式完全教程
-- 游颜色</a></p>
-<h2 id="环境搭建">环境搭建</h2>
-<h3 id="基本工具">基本工具</h3>
-<p>搭建过程中，需要利用<code>npm</code>下载相关包，用<code>git</code>上传到指定仓库。</p>
-<ul>
-<li><a href="https://link.zhihu.com/?target=https%3A//nodejs.org/zh-cn">Node.js</a></li>
-<li><a href="https://link.zhihu.com/?target=https%3A//git-scm.com/downloads">git</a></li>
-</ul>
-<p>具体如何安装使用请自行搜索。</p>
-<h3 id="项目部署">项目部署</h3>
-<p>1.在<code>Github</code>上创建一个仓库并取名为
-<code>用户名.github.io</code></p>
-<p>2.准备一个空文件夹，在文件夹里打开终端，使用<code>npm</code>一键安装
-<code>Hexo</code>博客程序</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> hexo-cli</code></pre>
-<p>3.进行<code>Hexo</code>初始化</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo init </code></pre>
-<p>4.使用<code>npm</code>安装<code>package.json</code>里面的依赖</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span></code></pre>
-<p>5.安装用于部署的包<code>hexo-deployer-git</code></p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-deployer-git <span class="token parameter variable">--save</span></code></pre>
-<p>6.修改<code>_config.yml</code>文件末尾的<code>Deployment</code>部分（善用查找！）</p>
-<p><strong>这里建议大家用<code>SSH</code>配置，可以避免网络等问题</strong>。</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42569846/article/details/105808683">Hexo使用SSH连接GitHub_hexo的ssh连接github-CSDN博客</a></p>
-<pre class="language-none"><code class="language-none">deploy:  
-  type: git
-  repo: git@github.com:你的用户名&#x2F;你的仓库名.git  
-  branch: main</code></pre>
-<h3 id="主题安装">主题安装</h3>
-<p>我选择的是<code>matery</code>，大家也可以去搜索自己喜欢的主题。</p>
-<p><a target="_blank" rel="noopener" href="https://bgithub.xyz/blinkfox/hexo-theme-matery">GitHub -
-blinkfox/hexo-theme-matery</a></p>
-<p>具体安装视官方文档而定，大部分可以这么安装。</p>
-<pre class="language-none"><code class="language-none">cd &lt;Your Location&gt;
-git clone https:&#x2F;&#x2F;github.com&#x2F;blinkfox&#x2F;hexo-theme-matery.git</code></pre>
-<p>随后，请修改<strong>主文件夹下的</strong><code>_config.yml</code>的<code>theme</code>。</p>
-<blockquote>
-<p>有两个<code>_config.yml</code>？</p>
-</blockquote>
-<h3 id="公式-mathjax">公式-Mathjax</h3>
-<p>1.卸载部分插件</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> un hexo-math
-<span class="token function">npm</span> un hexo-renderer-marked</code></pre>
-<p>2.安装<code>hexo-renderer-pandoc</code>渲染器</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> i hexo-renderer-pandoc</code></pre>
-<p>3.配置主题配置下的<code>mathjax</code>设置(文件位置在<code>\themes\{主题名}\ _config.yml</code></p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># MathJax</span>
-mathjax:
-  enable: <span class="token boolean">true</span>
-  per_page: <span class="token boolean">true</span></code></pre>
-<p>4.安装<code>Pandoc</code></p>
-<p>去<code>Pandoc</code>官网下载最新版本：<a target="_blank" rel="noopener" href="https://pandoc.org/index.html">Pandoc - About pandoc</a></p>
-<p>安装完将<code>_post</code>里的<code>md</code>文件写入公式测试即可。</p>
-<h3 id="图片">图片</h3>
-<p>修改<code>_config.yml</code>如下：</p>
-<pre class="language-text" data-language="text"><code class="language-text">post_asset_folder: true
-marked:
-  prependRoot: true
-  postAsset: true</code></pre>
-<p>在文件夹下打开终端，使用<code>hexo new [layout] &lt;title&gt;</code>命令创建一篇新文章（也可以手动创建），此时会在<code>source/_post</code>目录下创建一个同名的文件夹和<code>md</code>文件。接着可以把所有该文章有关的资源文件都放在同名的目录中，在<code>md</code>文件中使用引入格式<code>![image1](image1.png)</code>即可引入图片（如果是网络资源引用网址即可）。</p>
-<h2 id="四大命令">四大命令</h2>
-<pre class="language-bash" data-language="bash"><code class="language-bash">hexo clean <span class="token comment"># 清除生成的网页文件</span>
-hexo g     <span class="token comment"># 生成静态网页</span>
-hexo s     <span class="token comment"># 本地运行博客</span>
-hexo d     <span class="token comment"># 将网页文件推送至远程服务器</span></code></pre>
-<h2 id="问题记录">问题记录</h2>
-<blockquote>
-<p>所有问题的排查，请善用F12控制台的报错信息</p>
-</blockquote>
-<h3 id="渲染报错">渲染报错</h3>
-<pre class="language-none"><code class="language-none">Uncaught TypeError: $(...).lightGallery is not a function</code></pre>
-<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/ask/sof/113583944">Uncaught：$(.).lightGallery不是函数-腾讯云开发者社区-腾讯云</a></p>
-<p>把所有本地硬编码替换成<code>cdn</code>，包括<code>_config.yml</code>里的<code>lib</code>和<code>main-style.ejs/layout.ejs</code>的引用。</p>
-<pre class="language-none"><code class="language-none">lightgallery:https:&#x2F;&#x2F;cdnjs.cloudflare.com&#x2F;ajax&#x2F;libs&#x2F;lightgallery&#x2F;1.10.0&#x2F;css&#x2F;lightgallery.css</code></pre>
-<pre class="language-none"><code class="language-none">&lt;script src&#x3D;&quot;&lt;%- theme.libs.js.lightgallery %&gt;&quot;&gt;&lt;&#x2F;script&gt;</code></pre>
-<pre class="language-none"><code class="language-none">&lt;link rel&#x3D;&quot;stylesheet&quot; type&#x3D;&quot;text&#x2F;css&quot; href&#x3D;&quot;&lt;%- theme.libs.css.lightgallery %&gt;&quot;&gt;</code></pre>
+                <h2 id="scp">scp</h2>
+<p>手动拉拽不支持文件夹，<code>Linux</code>和<code>Powershell</code>均支持<code>scp</code>命令。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">-P</span> <span class="token number">21075</span> /media/dzc/Data/GeoPixel-7B root@connect.westc.gpuhub.com:/root/autodl-tmp/</code></pre>
+<p><code>-r</code>表示文件夹，<code>-P</code>
+表示端口，<code>/media/dzc/Data/GeoPixel-7B</code>是待上传文件
+，<code>root@connect.westc.gpuhub.com</code>是远程<code>SSH</code>主机，<code>/root/autodl-tmp/GeoPixel</code>是远程主机的文件夹，随后根据提示输入密码，等待上传即可。</p>
+<h2 id="缓存清理">缓存清理</h2>
+<p>参考<a target="_blank" rel="noopener" href="https://www.autodl.com/docs/">AutoDL帮助文档</a></p>
+<p>以下两个是可以直接删除，不影响系统运行的目录。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> <span class="token parameter variable">-sh</span> /root/miniconda3/pkgs/ <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> <span class="token parameter variable">-rf</span> /root/miniconda3/pkgs/*      <span class="token comment"># conda的历史包</span>
+<span class="token function">du</span> <span class="token parameter variable">-sh</span> /root/.local/share/Trash <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> <span class="token parameter variable">-rf</span> /root/.local/share/Trash   <span class="token comment"># jupyterlab的回收站</span></code></pre>
+<p>以下两个是可能占用较大空间，但需要根据实际情况清理的目录。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">du</span> <span class="token parameter variable">-sh</span> /tmp/         <span class="token comment">#查看/tmp占用的空间大小</span>
+<span class="token function">du</span> <span class="token parameter variable">-sh</span> /root/.cache  <span class="token comment">#查看/root/.cache占用的空间大小</span></code></pre>
+<h2 id="连接不上服务器">连接不上服务器</h2>
+<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_46106285/article/details/132360266?spm=1001.2014.3001.5506">【经验】VScode
+远程 SSH 连接 Ubuntu 或 TrueNas 出错，Could not establish
+connection</a><br>
+</p>
+<p>本人的遇到的报错这里没有提到。</p>
+<pre class="language-none"><code class="language-none">Setting up SSH Host connect.westb.seetacloud.com: Waiting for other windows to connect
+LocalLockTimeout │ Error: LocalLockTimeout (Timed out while waiting for the local startup lock)                                                                       </code></pre>
+<p>检查一下<code>output</code></p>
+<pre class="language-none"><code class="language-none">[20:49:01.519] Log Level: 2
+[20:49:01.533] SSH Resolver called for &quot;ssh-remote+connect.westb.seetacloud.com&quot;, attempt 1
+[20:49:01.537] remote.SSH.useLocalServer &#x3D; true
+[20:49:01.537] remote.SSH.useExecServer &#x3D; true
+[20:49:01.537] remote.SSH.bindHost &#x3D; &#123;&#125;
+[20:49:01.537] remote.SSH.path &#x3D; 
+[20:49:01.537] remote.SSH.configFile &#x3D; 
+[20:49:01.537] remote.SSH.useFlock &#x3D; true
+[20:49:01.537] remote.SSH.lockfilesInTmp &#x3D; false
+[20:49:01.537] remote.SSH.localServerDownload &#x3D; auto
+[20:49:01.537] remote.SSH.remoteServerListenOnSocket &#x3D; false
+[20:49:01.537] remote.SSH.defaultExtensions &#x3D; []
+[20:49:01.537] remote.SSH.defaultExtensionsIfInstalledLocally &#x3D; []
+[20:49:01.537] remote.SSH.loglevel &#x3D; 2
+[20:49:01.538] remote.SSH.enableDynamicForwarding &#x3D; true
+[20:49:01.538] remote.SSH.enableRemoteCommand &#x3D; false
+[20:49:01.538] remote.SSH.serverPickPortsFromRange &#x3D; &#123;&#125;
+[20:49:01.538] remote.SSH.serverInstallPath &#x3D; &#123;&#125;
+[20:49:01.538] remote.SSH.permitPtyAllocation &#x3D; false
+[20:49:01.538] remote.SSH.preferredLocalPortRange &#x3D; undefined
+[20:49:01.538] remote.SSH.useCurlAndWgetConfigurationFiles &#x3D; false
+[20:49:01.538] remote.SSH.experimental.chat &#x3D; true
+[20:49:01.538] remote.SSH.experimental.enhancedSessionLogs &#x3D; true
+[20:49:01.538] remote.SSH.httpProxy &#x3D; &#123;&quot;*&quot;:&quot;&quot;&#125;
+[20:49:01.538] remote.SSH.httpsProxy &#x3D; &#123;&quot;*&quot;:&quot;&quot;&#125;
+[20:49:01.544] VS Code version: 1.104.1
+[20:49:01.544] Remote-SSH version: remote-ssh@0.120.0
+[20:49:01.544] linux x64
+[20:49:01.547] SSH Resolver called for host: connect.westb.seetacloud.com
+[20:49:01.547] Setting up SSH remote &quot;connect.westb.seetacloud.com&quot;
+[20:49:01.551] Acquiring local install lock: &#x2F;media&#x2F;dzc&#x2F;Data&#x2F;tmp&#x2F;vscode-remote-ssh-43daf7d8-install.lock
+[20:49:03.052] Starting to look for password prompt from another window
+[20:51:01.698] Resolver error: Error: Timed out while waiting for the local startup lock
+    at y.Create (&#x2F;home&#x2F;dzc&#x2F;.vscode&#x2F;extensions&#x2F;ms-vscode-remote.remote-ssh-0.120.0&#x2F;out&#x2F;extension.js:2:744751)
+    at &#x2F;home&#x2F;dzc&#x2F;.vscode&#x2F;extensions&#x2F;ms-vscode-remote.remote-ssh-0.120.0&#x2F;out&#x2F;extension.js:2:793216
+    at r (&#x2F;home&#x2F;dzc&#x2F;.vscode&#x2F;extensions&#x2F;ms-vscode-remote.remote-ssh-0.120.0&#x2F;out&#x2F;extension.js:2:507932)
+    at &#x2F;home&#x2F;dzc&#x2F;.vscode&#x2F;extensions&#x2F;ms-vscode-remote.remote-ssh-0.120.0&#x2F;out&#x2F;extension.js:2:508185
+    at FSReqCallback.oncomplete (node:fs:188:23)
+[20:51:01.707]  ---------- [Session Summary] ----------- 
+[20:51:01.707] [LocalLockTimeout]: Error: LocalLockTimeout (Timed out while waiting for the local startup lock)</code></pre>
+<p>删除锁文件，重启<code>Vscode</code>连接即可。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">rm</span> <span class="token parameter variable">-f</span> /media/dzc/Data/tmp/vscode-remote-ssh-43daf7d8-install.lock</code></pre>
+<h2 id="先下载模型文件再下载">先下载模型文件再下载</h2>
+<p>想直接在云服务器用<code>VPN</code>下载可以参考这个仓库<a target="_blank" rel="noopener" href="https://github.com/VocabVictor/clash-for-AutoDL">clash-for-AutoDL</a></p>
+<p>但我个人建议，还是先在本地用<code>VPN</code>下载后再用<code>scp</code>上传，注意，有些代码会自动从网站下载文件，你需要修改代码让它从本地读取。</p>
+<h2 id="安装依赖项">安装依赖项</h2>
+<p><code>pip</code>和<code>conda</code>使用镜像源能加速下载依赖包，但部分镜像源高峰期比较拥挤。切换源方法：</p>
+<figure>
+<img src="https://www.autodl.com/docs/source.assets/image-20220419113133712.png" alt="image-20220419113133712">
+<figcaption aria-hidden="true">image-20220419113133712</figcaption>
+</figure>
+<figure>
+<img src="https://www.autodl.com/docs/source.assets/image-20220419113057670.png" alt="image-20220419113057670">
+<figcaption aria-hidden="true">image-20220419113057670</figcaption>
+</figure>
+<p>直接点击确定即可，无需重启实例。另外也可以通过命令行修改配置文件(<code>.condarc</code>)，不详细展开。</p>
 
                 
             </div>
@@ -546,7 +530,7 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://saintcen.github.io/2025/09/25/Hexo-Blog%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/">https://saintcen.github.io/2025/09/25/Hexo-Blog%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/</a>
+                    <a href="https://saintcen.github.io/2025/09/25/AutoDL%E5%B0%8Ftrick%EF%BC%88%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/">https://saintcen.github.io/2025/09/25/AutoDL%E5%B0%8Ftrick%EF%BC%88%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -584,8 +568,8 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%BC%80%E5%8F%91/">
-                                    <span class="chip bg-color">开发</span>
+                                <a href="/tags/AI/">
+                                    <span class="chip bg-color">AI</span>
                                 </a>
                             
                         </div>
@@ -668,13 +652,13 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2025/09/26/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88C%E8%AF%AD%E8%A8%80%E7%89%88%EF%BC%89/">
+                <a href="/2025/09/25/Hexo-Blog%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="数据结构（C语言版）">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Hexo-Blog搭建教程">
                         
-                        <span class="card-title">数据结构（C语言版）</span>
+                        <span class="card-title">Hexo-Blog搭建教程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -685,14 +669,14 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-09-26
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-09-25
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AC%94%E8%AE%B0/" class="post-category">
-                                    笔记
+                            <a href="/categories/%E6%95%99%E7%A8%8B/" class="post-category">
+                                    教程
                                 </a>
                             
                             
@@ -702,8 +686,8 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CS%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">CS基础</span>
+                    <a href="/tags/%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">开发</span>
                     </a>
                     
                 </div>
@@ -714,14 +698,14 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
                 <a href="/2025/09/25/AutoDL%E5%B0%8Ftrick%EF%BC%88%E6%9B%B4%E6%96%B0%E4%B8%AD%EF%BC%89/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="AutoDL小trick（更新中）">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="AutoDL小trick（更新中）">
                         
                         <span class="card-title">AutoDL小trick（更新中）</span>
                     </div>
@@ -748,6 +732,7 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
