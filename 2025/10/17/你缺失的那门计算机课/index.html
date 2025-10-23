@@ -503,9 +503,11 @@ Writing For HIC Dev Group
 <span class="token comment"># Verify the configuration</span>
 <span class="token function">npm</span> config get registry
 <span class="token comment"># Output: https://registry.npmmirror.com</span></code></pre>
-<p>另一个<code>python</code>下载源<code>pip</code>同理，通过命令行设置它会自动在系统目录下创建<code>/pip/pip.ini</code>配置文件，后续可以通过修改配置文件来控制下载源功能，下面展示了路径和内容的查找方法。</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash">pip config <span class="token builtin class-name">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+<p>另一个<code>python</code>下载源<code>pip</code>同理，通过命令行设置镜像源，它会自动在系统目录下创建<code>/pip/pip.ini</code>配置文件，后续可以通过修改配置文件来控制下载源功能，下面展示了路径和内容的查找方法。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置镜像源</span>
+pip config <span class="token builtin class-name">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
+<span class="token comment"># 查找配置文件路径</span>
 C:<span class="token punctuation">\</span>Users<span class="token punctuation">\</span><span class="token number">2587</span><span class="token operator"><span class="token file-descriptor important">8</span>></span>pip config list <span class="token parameter variable">-v</span>
 For variant <span class="token string">'global'</span>, will try loading <span class="token string">'C:\ProgramData\pip\pip.ini'</span>
 For variant <span class="token string">'user'</span>, will try loading <span class="token string">'C:\Users\25878\pip\pip.ini'</span>
@@ -513,6 +515,7 @@ For variant <span class="token string">'user'</span>, will try loading <span cla
 For variant <span class="token string">'site'</span>, will try loading <span class="token string">'c:\users\25878\appdata\local\programs\python\python38\pip.ini'</span>
 global.index-url<span class="token operator">=</span><span class="token string">'https://pypi.tuna.tsinghua.edu.cn/simple'</span>
 
+<span class="token comment"># 配置文件内容</span>
 C:<span class="token punctuation">\</span>Users<span class="token punctuation">\</span><span class="token number">2587</span><span class="token operator"><span class="token file-descriptor important">8</span>></span>pip config list
 global.index-url<span class="token operator">=</span><span class="token string">'https://pypi.tuna.tsinghua.edu.cn/simple'</span></code></pre>
 <h3 id="下载速度太慢">下载速度太慢</h3>
@@ -717,7 +720,7 @@ global.index-url<span class="token operator">=</span><span class="token string">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="你缺失的那门计算机课">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="你缺失的那门计算机课">
                         
                         <span class="card-title">你缺失的那门计算机课</span>
                     </div>
@@ -767,7 +770,7 @@ global.index-url<span class="token operator">=</span><span class="token string">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="MoeCTF2025_Misc_wp">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="MoeCTF2025_Misc_wp">
                         
                         <span class="card-title">MoeCTF2025_Misc_wp</span>
                     </div>
