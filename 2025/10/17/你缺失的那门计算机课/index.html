@@ -496,13 +496,25 @@ Writing For HIC Dev Group
 <li><strong>配置文件配置镜像源</strong></li>
 </ul>
 <p>我这里指的配置文件是一些控制下载资源的包管理器的配置文件，我这里举两个例子。</p>
-<p>1.<code>Anaconda</code>可以控制<code>python</code>包的下载，如果使用基础的<code>pip</code>源下载速度比较慢，我们需要配置镜像源。它有配置文件<code>.condarc</code>（当然配置远远不止镜像源）。在<code>linux</code>系统中，我们可以用<code>VIM</code>工具直接修改，在<code>windows</code>系统中我们直接找到文件修改即可，具体修改内容上网自行搜索，各个包管理器不太相同。</p>
+<p>1.<code>Anaconda</code>可以控制<code>python</code>包的下载，如果使用基础的<code>conda</code>源下载速度比较慢，我们需要配置镜像源。它有一个配置文件<code>.condarc</code>（当然配置远远不止镜像源）。在<code>linux</code>系统中一般在根目录，而且可以用<code>vim</code>工具直接修改，在<code>windows</code>系统中一般在<code>C:/Users/用户名</code>下，直接找到文件修改即可，具体修改内容上网自行搜索，各个包管理器不太相同。</p>
 <p>2.<code>npm</code>是未来组会我们制作个人主页需要用到的<code>Node.js</code>包管理器。我们可以通过命令行直接设置镜像源。</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Set Taobao mirror as the npm registry</span>
 <span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmmirror.com
 <span class="token comment"># Verify the configuration</span>
 <span class="token function">npm</span> config get registry
 <span class="token comment"># Output: https://registry.npmmirror.com</span></code></pre>
+<p>另一个<code>python</code>下载源<code>pip</code>同理，通过命令行设置它会自动在系统目录下创建<code>/pip/pip.ini</code>配置文件，后续可以通过修改配置文件来控制下载源功能，下面展示了路径和内容的查找方法。</p>
+<pre class="language-python" data-language="python"><code class="language-python">pip config <span class="token builtin">set</span> <span class="token keyword">global</span><span class="token punctuation">.</span>index<span class="token operator">-</span>url https<span class="token punctuation">:</span><span class="token operator">//</span>pypi<span class="token punctuation">.</span>tuna<span class="token punctuation">.</span>tsinghua<span class="token punctuation">.</span>edu<span class="token punctuation">.</span>cn<span class="token operator">/</span>simple
+
+C<span class="token punctuation">:</span>\Users\<span class="token number">25878</span><span class="token operator">></span>pip config <span class="token builtin">list</span> <span class="token operator">-</span>v
+For variant <span class="token string">'global'</span><span class="token punctuation">,</span> will <span class="token keyword">try</span> loading <span class="token string">'C:\ProgramData\pip\pip.ini'</span>
+For variant <span class="token string">'user'</span><span class="token punctuation">,</span> will <span class="token keyword">try</span> loading <span class="token string">'C:\Users\25878\pip\pip.ini'</span>
+For variant <span class="token string">'user'</span><span class="token punctuation">,</span> will <span class="token keyword">try</span> loading <span class="token string">'C:\Users\25878\AppData\Roaming\pip\pip.ini'</span>
+For variant <span class="token string">'site'</span><span class="token punctuation">,</span> will <span class="token keyword">try</span> loading <span class="token string">'c:\users\25878\appdata\local\programs\python\python38\pip.ini'</span>
+<span class="token keyword">global</span><span class="token punctuation">.</span>index<span class="token operator">-</span>url<span class="token operator">=</span><span class="token string">'https://pypi.tuna.tsinghua.edu.cn/simple'</span>
+
+C<span class="token punctuation">:</span>\Users\<span class="token number">25878</span><span class="token operator">></span>pip config <span class="token builtin">list</span>
+<span class="token keyword">global</span><span class="token punctuation">.</span>index<span class="token operator">-</span>url<span class="token operator">=</span><span class="token string">'https://pypi.tuna.tsinghua.edu.cn/simple'</span></code></pre>
 <h3 id="下载速度太慢">下载速度太慢</h3>
 <p>如果下载一些比较大的文件实在等不及，我们可以使用多线程下载工具。</p>
 <p>在<code>linux</code>系统中，命令行就有<code>aria2</code>，而<code>windows</code>系统中，我推荐有<code>GUI</code>的<code>Motrix</code>，大家可以自己搜索。</p>
@@ -705,7 +717,7 @@ Writing For HIC Dev Group
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="你缺失的那门计算机课">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="你缺失的那门计算机课">
                         
                         <span class="card-title">你缺失的那门计算机课</span>
                     </div>
@@ -755,7 +767,7 @@ Writing For HIC Dev Group
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="MoeCTF2025_Misc_wp">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="MoeCTF2025_Misc_wp">
                         
                         <span class="card-title">MoeCTF2025_Misc_wp</span>
                     </div>
