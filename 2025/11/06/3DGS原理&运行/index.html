@@ -559,16 +559,20 @@ y)]^\gamma}_{\text{结构}}\\
 $$</span> 其中 <span class="math inline">(<em>x</em>, <em>y</em>)</span>
 为待比较的图像块（通常为局部窗口），<span class="math inline">(<em>α</em>, <em>β</em>, <em>γ</em>)</span>
 为权重参数（默认均为<code>1</code>）。</p>
-<p>先将图像划分为<span class="math inline"><em>N</em></span>的局部窗口（通常<span class="math inline"><em>N</em></span>=<code>8</code>或<code>11</code>）。</p>
-<p>对每个窗口计算： 1. <strong>均值（亮度）</strong>： <span class="math display">$$
-   \mu_x = \frac{1}{N^2} \sum_{i=1}^N \sum_{j=1}^N x(i,j)
-   $$</span> 2. <strong>方差（对比度）</strong>： <span class="math display">$$
-   \sigma_x^2 = \frac{1}{N^2 - 1} \sum_{i=1}^N \sum_{j=1}^N (x(i,j) -
+<p>先将图像划分为<span class="math inline"><em>N</em></span>的局部窗口（通常<span class="math inline"><em>N</em></span>=<code>8</code>或<code>11</code>），接着对每个窗口计算以下值。</p>
+<ol type="1">
+<li><strong>均值（亮度）</strong>： <span class="math display">$$
+\mu_x = \frac{1}{N^2} \sum_{i=1}^N \sum_{j=1}^N x(i,j)
+$$</span></li>
+<li><strong>方差（对比度）</strong>： <span class="math display">$$
+\sigma_x^2 = \frac{1}{N^2 - 1} \sum_{i=1}^N \sum_{j=1}^N (x(i,j) -
 \mu_x)^2
-   $$</span> 3. <strong>协方差（结构）</strong>： <span class="math display">$$
-   \sigma_{xy} = \frac{1}{N^2 - 1} \sum_{i=1}^N \sum_{j=1}^N (x(i,j) -
+$$</span></li>
+<li><strong>协方差（结构）</strong>： <span class="math display">$$
+\sigma_{xy} = \frac{1}{N^2 - 1} \sum_{i=1}^N \sum_{j=1}^N (x(i,j) -
 \mu_x)(y(i,j) - \mu_y)
-   $$</span></p>
+$$</span></li>
+</ol>
 <p>计算所有窗口的SSIM，并对所有窗口的<code>SSIM</code>取均值，得到全局<code>SSIM</code>：
 <span class="math display">$$
 \text{SSIM}(x, y) = \frac{(2\mu_x\mu_y + C_1)(2\sigma_{xy} +
@@ -799,7 +803,7 @@ python render.py -m &lt;Your Location&gt; # 填写输出目录，即output&#x2F;
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="3DGS原理&amp;运行">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="3DGS原理&amp;运行">
                         
                         <span class="card-title">3DGS原理&amp;运行</span>
                     </div>
@@ -849,7 +853,7 @@ python render.py -m &lt;Your Location&gt; # 填写输出目录，即output&#x2F;
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="CodeX With MCP">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="CodeX With MCP">
                         
                         <span class="card-title">CodeX With MCP</span>
                     </div>
