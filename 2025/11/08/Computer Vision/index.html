@@ -560,7 +560,7 @@ mjx-container[display="true"] + br {
 <p>一般来说，会依据具体的任务设计预处理/模块/网络/正则化，通过训练和调参来缓解这些问题。分类任务作为最基本的任务能衍生许多方法，成为了我们研究视觉任务的抓手。</p>
 <h3 id="k-nearest-neighborknn">K-Nearest Neighbor(KNN)</h3>
 <p>俗话说“物以类聚，人以群分”，如果有一个很大的样本库（如<code>CIFAR-10</code>），里面有各种类型的图像，我们可以通过比较需要分类的图像它们之间的相似度来选出最有可能的类别。</p>
-<p>最直接的我们可以对图像的每个像素点进行直接比较<span class="math inline"><em>d</em><sub>1</sub>(<em>I</em><sub>1</sub>, <em>I</em><sub>2</sub>) = ∑<sub><em>p</em></sub>|<em>I</em><sub>1</sub><sup><em>p</em></sup> − <em>I</em><sub>2</sub><sup><em>p</em></sup>|</span>。</p>
+<p>最直接的我们可以对图像的每个像素点进行直接比较<span class="math inline"><em>d</em><sub>1</sub>(<em>I</em><sub>1</sub>, <em>I</em><sub>2</sub>) = ∑<sub><em>p</em></sub>|<em>I</em><sub>1</sub><sup><em>p</em></sup> − <em>I</em><sub>2</sub><sup><em>p</em></sup>|</span></p>
 <p>当然，按照<code>KNN</code>的想法，我们有欧式距离<span class="math inline">$d_2(I_1,I_2)=\sqrt{\sum_p(I_1^p-I_2^p)}$</span>衡量不同图像的差异，并且设置超参数（<code>hypermarameters</code>），对需要分类的图像距离最近的<span class="math inline"><em>k</em></span>个类型进行投票，票数最高的就是预测的类别，超参数<span class="math inline"><em>k</em></span>往往需要通过实验获得。实验设置上我们往往要分<code>train</code>(训练集)/<code>validation</code>(评估集)/<code>test</code>(测试集)，评估集的作用主要是惩罚训练集的过拟合，而测试集检验了模型的泛化能力。</p>
 <p>但是，<code>KNN</code>会有两个致命的问题：一个是随着参数量上升导致的维度爆炸，另一个是过于关注像素点而忽略图像某个区域的特征，无法表示视觉感知的差异。</p>
 <h3 id="linear-classification">Linear-Classification</h3>
@@ -1294,7 +1294,7 @@ writer<span class="token punctuation">.</span>close<span class="token punctuatio
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Computer Vision">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Computer Vision">
                         
                         <span class="card-title">Computer Vision</span>
                     </div>
@@ -1344,7 +1344,7 @@ writer<span class="token punctuation">.</span>close<span class="token punctuatio
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="3DGS原理&amp;运行">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="3DGS原理&amp;运行">
                         
                         <span class="card-title">3DGS原理&amp;运行</span>
                     </div>
