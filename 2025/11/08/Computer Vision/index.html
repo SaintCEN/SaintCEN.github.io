@@ -464,13 +464,12 @@ Networks</h3>
 <p>如果将卷积核逐步移动遍历整个<code>32*32*3</code>的图像，最后会得到<code>28*28*1</code>的<code>activation maps</code>，如果用不同的<span class="math inline"><em>n</em></span>个卷积核就会得到<span class="math inline"><em>n</em></span>层（不同的卷积核有不同的权重，可以理解为提取不同的特征）。</p>
 <p>在卷积操作之后，我们往往会连接激活函数并输入新的卷积神经元，卷积核尺寸随新的输入改变，经历多次卷积，图像特征也会从低阶到复杂。本质上，每一次卷积操作就是一个神经元，有几个卷积核神经元就有多少层，通过降低平面尺寸提取了特征，但过多的特征提取也会导致信息的丢失。</p>
 <p>卷积核遍历的时候我们可以设置一些参数，比如<code>stride</code>（步长），对于<code>7*7</code>图像，<code>3*3</code>卷积核，步长为<code>1</code>会得到<code>5*5</code>，而步长为<code>2</code>会得到<code>3*3</code>，但步长为<code>3</code>会无法对齐，为了解决这个问题，我们会引入<code>padding</code>，在边缘处补上人为设定数值的边框（一般为<code>0</code>/镜像值等），让卷积核移动时可以填满图像的边缘。在实际操作中，我们往往把卷积核的步长设为<code>1</code>。</p>
-<p><code>map</code>的边长计算公式总结如下： <span class="math display"><em>x</em> = (<em>N</em> − <em>F</em> + 2 * <em>p</em><em>a</em><em>d</em><em>d</em><em>i</em><em>n</em><em>g</em>)/<em>s</em><em>t</em><em>r</em><em>i</em><em>d</em><em>e</em> + 1</span></p>
+<p><code>map</code>的边长计算公式总结如下：<span class="math inline"><em>x</em> = (<em>N</em> − <em>F</em> + 2 * <em>p</em><em>a</em><em>d</em><em>d</em><em>i</em><em>n</em><em>g</em>)/<em>s</em><em>t</em><em>r</em><em>i</em><em>d</em><em>e</em> + 1</span></p>
 <p><strong>Pooling</strong></p>
 <p>如果网络中只有卷积层，我们的参数量依旧过大，不利于计算，我们需要引入平面的池化操作。</p>
 <p>例如，<code>Max Pooling</code>即最大池化，设定一定尺寸的池化核，无交叉铺满图像块（如果大小超出边缘也无所谓，取最大即可，因此不需要<code>padding</code>），在每一个池化核内取最大值，代表“图像任意区域的受激程度”，既降低了数据的维度，又保留了每一个图像块的特征。一般我们会设置核大小为<code>2*2</code>，步长为<code>2</code>。</p>
-<p>至此，我们得到了最基本的卷积神经网络循环结构，但具体的网络结构和超参数设置往往需要通过实验对比获得。
-<span class="math display"><em>C</em><em>o</em><em>n</em><em>v</em> + <em>R</em><em>e</em><em>L</em><em>U</em> + <em>P</em><em>o</em><em>o</em><em>l</em></span></p>
-<h2 id="cnn">CNN</h2>
+<p>至此，我们得到了最基本的卷积神经网络循环结构<code>Conv+ReLU+Pool</code>，但具体的网络结构和超参数设置往往需要通过实验对比获得。
+## CNN</p>
 <p><code>CNN</code>本质上结合了深度学习和卷积神经网络的思想，通过增加深度和特征提取来处理视觉任务。</p>
 <h3 id="alexnet">AlexNet</h3>
 <p>最早的<code>CNN</code>，根据实验得出了参数良好的卷积神经网络。<code>CNN</code>的原理我们已在上文提及，一般还会有<code>Linear</code>层控制数据的维度。</p>
@@ -735,9 +734,9 @@ Existing Features</h3>
 <code>output image</code>（从<code>noise</code>开始优化），随后我们通过<code>CNN</code>特征提取并用<code>Gram</code>进行风格转换，损失函数包括内容损失和风格损失，损失函数权重的改变会导致内容和风格的倾向。
 <span class="math display">$$
 \mathcal{L}_{\text{content}} = \frac{1}{2}\|\Phi^l(\hat{y}) -
-\Phi^l(y_c)\|^2
+\Phi^l(y_c)\|^2 \\ \mathcal{L}_{\text{style}} = \sum_l w_l
+\|G^l(\hat{y}) - G^l(y_s)\|^2
 $$</span></p>
-<p><span class="math display">ℒ<sub>style</sub> = ∑<sub><em>l</em></sub><em>w</em><sub><em>l</em></sub>∥<em>G</em><sup><em>l</em></sup>(<em>ŷ</em>) − <em>G</em><sup><em>l</em></sup>(<em>y</em><sub><em>s</em></sub>)∥<sup>2</sup></span></p>
 <p><img src="/2025/11/08/Computer%20Vision/55.png"></p>
 <p><img src="/2025/11/08/Computer%20Vision/56.png"></p>
 <p>但原始方法每生成一张图都要从随机噪声开始反复迭代优化，计算量极大、无法实时使用。<code>Fast Style Transfer</code>
@@ -768,30 +767,24 @@ $$</span></p>
 <p>通过推导得到似然下界： <span class="math display">log <em>p</em><sub><em>θ</em></sub>(<em>x</em>) ≥ 𝔼<sub><em>z</em> ∼ <em>q</em><sub><em>ϕ</em></sub>(<em>z</em>|<em>x</em>)</sub>[log <em>p</em><sub><em>θ</em></sub>(<em>x</em>|<em>z</em>)] − <em>D</em><sub><em>K</em><em>L</em></sub>(<em>q</em><sub><em>ϕ</em></sub>(<em>z</em>|<em>x</em>) || <em>p</em><sub><em>θ</em></sub>(<em>z</em>))</span>
 其中，重建项最大化输入数据的重建似然，使生成结果接近原图；<code>KL</code>散度项约束编码器输出分布接近标准正态先验，使潜在空间连续且可采样。</p>
 <p><img src="/2025/11/08/Computer%20Vision/64.png"></p>
-<p>由于积分形式的边缘似然<span class="math inline"><em>p</em><sub><em>θ</em></sub>(<em>x</em>) = ∫<em>p</em><sub><em>θ</em></sub>(<em>z</em>)<em>p</em><sub><em>θ</em></sub>(<em>x</em>|<em>z</em>)<em>d</em><em>z</em></span>无法直接优化，因此通过从<span class="math inline"><em>x</em></span>编码到潜变量<span class="math inline"><em>z</em></span>，再从<span class="math inline"><em>z</em></span>解码回<span class="math inline"><em>x</em></span>​时引入高斯分布以增加随机性，用均值和协方差对潜在空间进行建模。
-<span class="math display"><em>z</em> = <em>μ</em><sub><em>z</em>|<em>x</em></sub> + <em>Σ</em><sub><em>z</em>|<em>x</em></sub><sup>1/2</sup> ⋅ <em>ϵ</em>,  <em>ϵ</em> ∼ 𝒩(0, <em>I</em>)</span>
-这样可将随机性从网络参数中分离，使得整个过程能够反向传播。最终的优化目标为：
-$$ (x;,) = <em>{z q</em>(z|x)}[p_(x|z)]</p>
-<ul>
-<li>D_{KL}(q_(z|x),||,p_(z)) ] $$
-训练时通过三步完成：首先前向传播完成“编码 → 采样 →
-解码”，然后计算重建误差与<code>KL</code>散度，最后反向传播以联合优化编码器与解码器参数<span class="math inline">(<em>θ</em>, <em>ϕ</em>)</span>。</li>
-</ul>
+<p>由于积分形式的边缘似然<span class="math inline"><em>p</em><sub><em>θ</em></sub>(<em>x</em>) = ∫<em>p</em><sub><em>θ</em></sub>(<em>z</em>)<em>p</em><sub><em>θ</em></sub>(<em>x</em>|<em>z</em>)<em>d</em><em>z</em></span>无法直接优化，因此通过从<span class="math inline"><em>x</em></span>编码到潜变量<span class="math inline"><em>z</em></span>，再从<span class="math inline"><em>z</em></span>解码回<span class="math inline"><em>x</em></span>​时引入高斯分布以增加随机性，用均值和协方差对潜在空间进行建模：<span class="math inline"><em>z</em> = <em>μ</em><sub><em>z</em>|<em>x</em></sub> + <em>Σ</em><sub><em>z</em>|<em>x</em></sub><sup>1/2</sup> ⋅ <em>ϵ</em>,  <em>ϵ</em> ∼ 𝒩(0, <em>I</em>)</span></p>
+<p>这样可将随机性从网络参数中分离，使得整个过程能够反向传播。最终的优化目标为：<span class="math inline">ℒ(<em>x</em>; <em>θ</em>, <em>ϕ</em>) = 𝔼 * <em>z</em> ∼ <em>q</em> * <em>ϕ</em>(<em>z</em>|<em>x</em>)[log <em>p</em><sub><em>θ</em></sub>(<em>x</em>|<em>z</em>)] − <em>D</em><sub><em>K</em><em>L</em></sub>(<em>q</em><sub><em>ϕ</em></sub>(<em>z</em>|<em>x</em>), ||,<em>p</em><sub><em>θ</em></sub>(<em>z</em>))</span></p>
+<p>训练时通过三步完成：首先前向传播完成“编码 → 采样 →
+解码”，然后计算重建误差与<code>KL</code>散度，最后反向传播以联合优化编码器与解码器参数<span class="math inline">(<em>θ</em>, <em>ϕ</em>)</span>。</p>
 <p><img src="/2025/11/08/Computer%20Vision/65.png"></p>
 <h3 id="gangeneration-adversial-network">GAN(Generation Adversial
 Network)</h3>
 <p>生成对抗网络的本质依然是输入任意噪声经过网络输出图像。网络分为<code>Generator Network</code>和<code>Discriminator Network</code>。生成网络生成<code>fake images</code>，和<code>real images</code>对比训练<code>Discriminator</code>。</p>
 <p><img src="/2025/11/08/Computer%20Vision/66.png"></p>
-<p>目标函数是<code>minmax</code>函数博弈。 $$ _{<em>g} </em>{_d} </p>
-<ul>
-<li>_{z p(z)}[(1 - D_{<em>d}(G</em>{_g}(z)))] ] $$ 其中，<span class="math inline"><em>D</em><sub><em>θ</em><sub><em>d</em></sub></sub>(<em>x</em>)</span>：判别器对真实样本
+<p>目标函数是<code>minmax</code>函数博弈。</p>
+<p><span class="math inline">min<sub><em>θ</em><sub><em>g</em></sub></sub>max<sub><em>θ</em><sub><em>d</em></sub></sub>[𝔼<sub><em>x</em> ∼ <em>p</em><sub>data</sub>(<em>x</em>)</sub>[log <em>D</em><sub><em>θ</em><sub><em>d</em></sub></sub>(<em>x</em>)] − 𝔼<sub><em>z</em> ∼ <em>p</em>(<em>z</em>)</sub>[log (1 − <em>D</em><sub><em>θ</em><sub><em>d</em></sub></sub>(<em>G</em><sub><em>θ</em><sub><em>g</em></sub></sub>(<em>z</em>)))]]</span></p>
+<p>其中，<span class="math inline"><em>D</em><sub><em>θ</em><sub><em>d</em></sub></sub>(<em>x</em>)</span>：判别器对真实样本
 <span class="math inline"><em>x</em></span>
 输出为真的概率（<code>0–1</code>），<span class="math inline"><em>D</em><sub><em>θ</em><sub><em>d</em></sub></sub>(<em>G</em><sub><em>θ</em><sub><em>g</em></sub></sub>(<em>z</em>))</span>为判别器对生成样本
 <span class="math inline"><em>G</em>(<em>z</em>)</span> 输出为真的概率
 。判别器希望最大化该目标函数，使真伪样本区分得更好（对真实图像 <span class="math inline"><em>x</em></span>：输出 <span class="math inline"><em>D</em>(<em>x</em>) ≈ 1</span>；对生成图像 <span class="math inline"><em>G</em>(<em>z</em>)</span>：输出 <span class="math inline"><em>D</em>(<em>G</em>(<em>z</em>)) ≈ 0</span>）。判别器的训练相当于一个二分类问题，真实样本标记为<code>1</code>，生成样本标记为<code>0</code>。生成器希望最小化该目标函数，使得生成样本尽可能逼真。目标是让判别器认为生成图像也是真实的，即<span class="math inline"><em>D</em>(<em>G</em>(<em>z</em>)) ≈ 1</span>，生成器不断优化，使
 <span class="math inline"><em>G</em>(<em>z</em>)</span>
-更接近真实数据分布 <span class="math inline"><em>p</em><sub>data</sub>(<em>x</em>)</span>。</li>
-</ul>
+更接近真实数据分布 <span class="math inline"><em>p</em><sub>data</sub>(<em>x</em>)</span>。</p>
 <p>训练过程构成一个零和博弈：判别器最大化损失 <span class="math inline">⇒</span> 学会区分真假，生成器最小化损失 <span class="math inline">⇒</span> 欺骗判别器，当二者达到平衡时<span class="math inline"><em>p</em><sub><em>G</em></sub>(<em>x</em>) = <em>p</em><sub>data</sub>(<em>x</em>),  <em>D</em>(<em>x</em>) = 0.5</span>，判别器无法再区分真假样本。</p>
 <p><img src="/2025/11/08/Computer%20Vision/67.png"></p>
 <p><img src="/2025/11/08/Computer%20Vision/70.png"></p>
@@ -799,8 +792,8 @@ Network)</h3>
 <span class="math inline">∇<sub><em>θ</em><sub><em>g</em></sub></sub>log (1 − <em>D</em>(<em>G</em>(<em>z</em>)))</span>
 极小，导致生成器几乎无法更新，训练停滞。为增强梯度信号，提出改用以下目标，即不再最小化
 <span class="math inline">log (1 − <em>D</em>(<em>G</em>(<em>z</em>)))</span>，而是最大化<span class="math inline">log <em>D</em>(<em>G</em>(<em>z</em>))</span>，这样即使生成样本较差，梯度仍保持较大，生成器能持续学习。</p>
-<p><span class="math display">max<sub><em>θ</em><sub><em>g</em></sub></sub>𝔼<sub><em>z</em> ∼ <em>p</em>(<em>z</em>)</sub>[log <em>D</em><sub><em>θ</em><sub><em>d</em></sub></sub>(<em>G</em><sub><em>θ</em><sub><em>g</em></sub></sub>(<em>z</em>))]</span>
-<img src="/2025/11/08/Computer%20Vision/68.png"></p>
+<p><span class="math inline">max<sub><em>θ</em><sub><em>g</em></sub></sub>𝔼<sub><em>z</em> ∼ <em>p</em>(<em>z</em>)</sub>[log <em>D</em><sub><em>θ</em><sub><em>d</em></sub></sub>(<em>G</em><sub><em>θ</em><sub><em>g</em></sub></sub>(<em>z</em>))]</span></p>
+<p><img src="/2025/11/08/Computer%20Vision/68.png"></p>
 <p><img src="/2025/11/08/Computer%20Vision/69.png"></p>
 <p><code>CNN</code>能更好地建模局部相关性与空间层次信息，相比全连接层，通过<code>Convolutional Architectures</code>能够帮助<code>Generator</code>生成更好的样本。</p>
 <p><img src="/2025/11/08/Computer%20Vision/71.png"></p>
@@ -1189,7 +1182,7 @@ writer<span class="token punctuation">.</span>close<span class="token punctuatio
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Computer Vision">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Computer Vision">
                         
                         <span class="card-title">Computer Vision</span>
                     </div>
@@ -1239,7 +1232,7 @@ writer<span class="token punctuation">.</span>close<span class="token punctuatio
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="3DGS原理&amp;运行">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="3DGS原理&amp;运行">
                         
                         <span class="card-title">3DGS原理&amp;运行</span>
                     </div>
