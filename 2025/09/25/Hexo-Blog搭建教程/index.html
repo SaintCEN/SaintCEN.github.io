@@ -602,19 +602,34 @@ git clone https:&#x2F;&#x2F;github.com&#x2F;blinkfox&#x2F;hexo-theme-matery.git<
 <h3 id="公式">公式</h3>
 <p>由于上传的博客是<code>markdown</code>格式，因此需要配置<code>markdown</code>内容的呈现。</p>
 <p>1.卸载部分插件</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> un hexo-math
-<span class="token function">npm</span> un hexo-renderer-marked</code></pre>
-<p>2.安装<code>hexo-renderer-pandoc</code>渲染器</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> i hexo-renderer-pandoc</code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> uninstall hexo-math
+<span class="token function">npm</span> uninstall hexo-renderer-marked</code></pre>
+<p>2.安装插件</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-renderer-pandoc
+<span class="token function">npm</span> <span class="token function">install</span> hexo-filter-mathjax </code></pre>
 <p>3.配置主题配置下的<code>mathjax</code>设置</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># MathJax</span>
-mathjax:
-  enable: <span class="token boolean">true</span>
-  per_page: <span class="token boolean">true</span></code></pre>
+<pre class="language-bash" data-language="bash"><code class="language-bash">mathjax:
+  tags: all
+  single_dollars: <span class="token boolean">true</span>
+  cjk_width: <span class="token number">0.9</span>
+  normal_width: <span class="token number">0.6</span>
+  append_css: <span class="token boolean">true</span>
+  every_page: <span class="token boolean">false</span>
+  extension_options: <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span></code></pre>
+<p>这一步我在做的时候出现了问题，可能报错各不相同，我的解决方案是：</p>
+<p>修改<code>node_modules/hexo-filter-mathjax/lib/filter.js</code></p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'mathjax-full/js/util/asyncLoad/node.js'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 在开头加上</span></code></pre>
+<p>修改<code>node_modules/hexo-filter-mathjax/index.js</code></p>
+<pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 修改前</span>
+data<span class="token punctuation">.</span>content <span class="token operator">=</span> <span class="token function">mathjax</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>content<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 修改后</span>
+data<span class="token punctuation">.</span>content <span class="token operator">=</span> data<span class="token punctuation">.</span>content<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span>
+  <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\\[\(\[].*?\\[\)\]]&lt;\/span></span><span class="token regex-delimiter">/</span><span class="token regex-flags">gs</span></span><span class="token punctuation">,</span>
+  <span class="token parameter">match</span> <span class="token operator">=></span> <span class="token function">mathjax</span><span class="token punctuation">(</span>match<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>4.安装<code>Pandoc</code></p>
 <p>去<code>Pandoc</code>官网下载最新版本：<a target="_blank" rel="noopener" href="https://pandoc.org/index.html">Pandoc - About pandoc</a></p>
-<p>安装完将<code>_post</code>里的<code>md</code>文件写入公式测试即可。</p>
-<p>后来我依然发现了公式渲染问题，参考这篇解决方案<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35988761">Hexo构建blog时渲染LaTeX数学公式的问题-知乎</a></p>
+<p>安装完将<code>_post</code>里的<code>md</code>文件写入公式测试即可，注意文件开头有<code>mathjax: true</code>。</p>
 <h3 id="图片">图片</h3>
 <p>修改<code>_config.yml</code>如下：</p>
 <pre class="language-text" data-language="text"><code class="language-text">post_asset_folder: true
@@ -796,7 +811,7 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="AutoDL小trick（更新中）">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="AutoDL小trick（更新中）">
                         
                         <span class="card-title">AutoDL小trick（更新中）</span>
                     </div>
@@ -845,7 +860,7 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Hexo-Blog搭建教程">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Hexo-Blog搭建教程">
                         
                         <span class="card-title">Hexo-Blog搭建教程</span>
                     </div>
