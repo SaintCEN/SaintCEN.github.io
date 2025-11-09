@@ -69,7 +69,119 @@ Hexo提供了优秀的">
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 8.0.0"><link rel="alternate" href="/atom.xml" title="Sa1ntCHENの小窝" type="application/atom+xml">
+<meta name="generator" content="Hexo 8.0.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="Sa1ntCHENの小窝" type="application/atom+xml">
 </head>
 
 
@@ -502,6 +614,7 @@ mathjax:
 <p>4.安装<code>Pandoc</code></p>
 <p>去<code>Pandoc</code>官网下载最新版本：<a target="_blank" rel="noopener" href="https://pandoc.org/index.html">Pandoc - About pandoc</a></p>
 <p>安装完将<code>_post</code>里的<code>md</code>文件写入公式测试即可。</p>
+<p>后来我依然发现了公式渲染问题，参考这篇解决方案<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35988761">Hexo构建blog时渲染LaTeX数学公式的问题-知乎</a></p>
 <h3 id="图片">图片</h3>
 <p>修改<code>_config.yml</code>如下：</p>
 <pre class="language-text" data-language="text"><code class="language-text">post_asset_folder: true
@@ -683,7 +796,7 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="AutoDL小trick（更新中）">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="AutoDL小trick（更新中）">
                         
                         <span class="card-title">AutoDL小trick（更新中）</span>
                     </div>
@@ -732,7 +845,7 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Hexo-Blog搭建教程">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Hexo-Blog搭建教程">
                         
                         <span class="card-title">Hexo-Blog搭建教程</span>
                     </div>
