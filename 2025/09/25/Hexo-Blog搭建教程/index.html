@@ -627,8 +627,8 @@ git clone https:&#x2F;&#x2F;github.com&#x2F;blinkfox&#x2F;hexo-theme-matery.git<
 <pre class="language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 修改前</span>
 data<span class="token punctuation">.</span>content <span class="token operator">=</span> <span class="token function">mathjax</span><span class="token punctuation">(</span>data<span class="token punctuation">.</span>content<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">// 修改后</span>
-data<span class="token punctuation">.</span>content <span class="token operator">=</span> data<span class="token punctuation">.</span>content<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span>
-  <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">\\[\(\[].*?\\[\)\]]&lt;\/span></span><span class="token regex-delimiter">/</span><span class="token regex-flags">gs</span></span><span class="token punctuation">,</span>
+  data<span class="token punctuation">.</span>content <span class="token operator">=</span> data<span class="token punctuation">.</span>content<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span>
+  <span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">(?:\\[\(\[].*?\\[\)\]]|\$\$[\s\S]*?\$\$|\$[\s\S]*?\$)&lt;\/span></span><span class="token regex-delimiter">/</span><span class="token regex-flags">gs</span></span><span class="token punctuation">,</span>
   <span class="token parameter">match</span> <span class="token operator">=></span> <span class="token function">mathjax</span><span class="token punctuation">(</span>match<span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>安装完将<code>_post</code>里的<code>md</code>文件写入公式测试即可，注意文件开头有<code>mathjax: true</code>。</p>
@@ -813,7 +813,7 @@ hexo d     <span class="token comment"># 将网页文件推送至远程服务器
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="AutoDL小trick（更新中）">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="AutoDL小trick（更新中）">
                         
                         <span class="card-title">AutoDL小trick（更新中）</span>
                     </div>
