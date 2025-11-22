@@ -431,6 +431,15 @@ scp -r -P 21075 /media/dzc/Data/GeoPixel-7B root@connect.westc.gpuhub.com:/ro">
 <p><code>-r</code>表示文件夹，<code>-P</code>
 表示端口，<code>/media/dzc/Data/GeoPixel-7B</code>是待上传文件
 ，<code>root@connect.westc.gpuhub.com</code>是远程<code>SSH</code>主机，<code>/root/autodl-tmp/GeoPixel</code>是远程主机的文件夹，随后根据提示输入密码，等待上传即可。</p>
+<p>同时，设置<code>SSH</code>密钥可以避免我们每次上传都需要输密码。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="token parameter variable">-b</span> <span class="token number">4096</span>
+<span class="token builtin class-name">type</span> C:<span class="token punctuation">\</span>Users<span class="token punctuation">\</span><span class="token number">25878</span><span class="token punctuation">\</span>.ssh<span class="token punctuation">\</span>id_rsa.pub
+<span class="token function">ssh</span> <span class="token parameter variable">-p</span> <span class="token number">24891</span> root@connect.westc.gpuhub.com
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> ~/.ssh
+<span class="token builtin class-name">echo</span> <span class="token string">"&lt;Your Key>"</span> <span class="token operator">>></span> ~/.ssh/authorized_keys
+<span class="token function">chmod</span> <span class="token number">700</span> ~/.ssh
+<span class="token function">chmod</span> <span class="token number">600</span> ~/.ssh/authorized_keys
+<span class="token builtin class-name">exit</span></code></pre>
 <h2 id="缓存清理">缓存清理</h2>
 <p>参考<a target="_blank" rel="noopener" href="https://www.autodl.com/docs/">AutoDL帮助文档</a></p>
 <p>以下两个是可以直接删除，不影响系统运行的目录。</p>
@@ -653,7 +662,7 @@ LocalLockTimeout │ Error: LocalLockTimeout (Timed out while waiting for the lo
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="数据结构（C语言版）">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="数据结构（C语言版）">
                         
                         <span class="card-title">数据结构（C语言版）</span>
                     </div>
@@ -702,7 +711,7 @@ LocalLockTimeout │ Error: LocalLockTimeout (Timed out while waiting for the lo
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Hexo-Blog搭建教程">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Hexo-Blog搭建教程">
                         
                         <span class="card-title">Hexo-Blog搭建教程</span>
                     </div>

@@ -459,7 +459,7 @@ $$</span>
 <span class="math display">$$
 f(x,w)=wx+b \\
 $$</span>
-例如，我们要分<code>10</code>种类型，通过线性分类模型，我们最后会得到一个<code>10*1</code>的矩阵，每个元素代表“该分类的评分”，我们把<code>32*32*3</code>的<code>RGB</code>图像展平成一个<code>3072*1</code>的向量，根据矩阵运算法则，我们需要构建一个<code>10*3072</code>的<span class="math inline"><em>w</em></span>矩阵，和一个<code>10*1</code>的<span class="math inline"><em>b</em></span>向量，当我们输入图像的向量后，输出<code>10</code>个评分，值最大的就是预测的类别。而<span class="math inline"><em>w</em></span>和<span class="math inline"><em>b</em></span>参数的矩阵需要通过对神经网络进行训练获得。然而，线性关系还是很难捕捉图像和标签之间的复杂关系，引入非线性关系是必要的。</p>
+例如，我们要分<code>10</code>种类型，通过线性分类模型，我们最后会得到一个<code>10*1</code>的矩阵，每个元素代表“该分类的评分”，我们把<code>32*32*3</code>的<code>RGB</code>图像展平成一个<code>3072*1</code>的向量，根据矩阵运算法则，我们需要构建一个<code>10*3072</code>的<span class="math inline">$w\\$</span>矩阵，和一个<code>10*1</code>的<span class="math inline">$b\\$</span>向量，当我们输入图像的向量后，输出<code>10</code>个评分，值最大的就是预测的类别。而<span class="math inline">$w\\$</span>和<span class="math inline">$b\\$</span>参数的矩阵需要通过对神经网络进行训练获得。然而，线性关系还是很难捕捉图像和标签之间的复杂关系，引入非线性关系是必要的。</p>
 <h3 id="convolutionnal-nueral-networks">Convolutionnal Nueral
 Networks</h3>
 <p>为了捕捉图像和标签之间的非线性关系，我们引入了卷积神经网络。卷积神经网络的结构与常规的神经网络并没有区别，关键在于“卷积层”可以提取“图像特征”，也因此被广泛用于分类/识别/理解等视觉任务。</p>
@@ -863,7 +863,7 @@ second_moment <span class="token operator">=</span> <span class="token number">0
 <p><strong>Loss</strong></p>
 <p>我们回顾一下各大损失函数的特点。但一般来说，<code>ReLU</code>是最常用的。</p>
 <ul>
-<li><p><code>sigmoid</code>：值域<code>[0,1]</code>，但是存在梯度消失（<span class="math inline"><em>x</em></span>过大时斜率趋近于<code>0</code>)，<code>e</code>增加计算资源，激活函数输出不是以<code>0</code>为中心（恒为正，不同参数梯度方向全部相同）等问题。（有时预处理会用零均值化：<span class="math inline">$\hat{x_i}=x_i-\mu\\$</span>，改变数据分布近似以<code>0</code>为中心）</p></li>
+<li><p><code>sigmoid</code>：值域<code>[0,1]</code>，但是存在梯度消失（<span class="math inline">$x\\$</span>过大时斜率趋近于<code>0</code>)，<code>e</code>增加计算资源，激活函数输出不是以<code>0</code>为中心（恒为正，不同参数梯度方向全部相同）等问题。（有时预处理会用零均值化：<span class="math inline">$\hat{x_i}=x_i-\mu\\$</span>，改变数据分布近似以<code>0</code>为中心）</p></li>
 <li><p><code>tanh</code>：值域<code>[-1,1]</code>，优化了<code>sigmoid</code>的输出问题，但是梯度消失无法解决。</p></li>
 <li><p><code>(Leaky) ReLU</code>：<span class="math inline">$max(0,x)\\$</span>，虽然解决了梯度消失问题，但是<span class="math inline">$x&lt;0\\$</span>时神经元会死亡。引入<code>Leaky ReLU</code>，在负数区域引入小斜率<span class="math inline"><em>α</em></span>，表达式为<span class="math inline">$max(\alpha x,x)\\$</span></p></li>
 <li><p><code>ELU</code>：<span class="math inline"><em>x</em> &lt; 0</span>时<span class="math inline">$\alpha(e^x-1)\\$</span>，引入非线性关系，更鲁棒。</p></li>
@@ -1221,7 +1221,7 @@ writer<span class="token punctuation">.</span>close<span class="token punctuatio
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Computer Vision">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Computer Vision">
                         
                         <span class="card-title">Computer Vision</span>
                     </div>
@@ -1267,13 +1267,13 @@ writer<span class="token punctuation">.</span>close<span class="token punctuatio
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/11/06/3DGS%E5%8E%9F%E7%90%86&%E8%BF%90%E8%A1%8C/">
+                <a href="/2025/11/06/CodeX%20With%20MCP/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="3DGS原理&amp;运行">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="CodeX With MCP">
                         
-                        <span class="card-title">3DGS原理&amp;运行</span>
+                        <span class="card-title">CodeX With MCP</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1290,8 +1290,8 @@ writer<span class="token punctuation">.</span>close<span class="token punctuatio
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%A7%91%E7%A0%94/" class="post-category">
-                                    科研
+                            <a href="/categories/%E6%95%99%E7%A8%8B/" class="post-category">
+                                    教程
                                 </a>
                             
                             
@@ -1301,8 +1301,8 @@ writer<span class="token punctuation">.</span>close<span class="token punctuatio
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/AI/">
-                        <span class="chip bg-color">AI</span>
+                    <a href="/tags/%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">开发</span>
                     </a>
                     
                 </div>
