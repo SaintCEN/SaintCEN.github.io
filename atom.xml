@@ -6,7 +6,7 @@
   <link href="https://saintcen.github.io/atom.xml" rel="self"/>
   
   <link href="https://saintcen.github.io/"/>
-  <updated>2025-11-09T09:11:29.142Z</updated>
+  <updated>2026-03-28T10:56:55.764Z</updated>
   <id>https://saintcen.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何优雅地在SSH服务器上使用Codex</title>
+    <link href="https://saintcen.github.io/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/"/>
+    <id>https://saintcen.github.io/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/</id>
+    <published>2026-03-27T16:00:00.000Z</published>
+    <updated>2026-03-28T10:56:55.764Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="如何优雅地在ssh服务器上使用codex">如何优雅地在SSH服务器上使用Codex</h1><p><img src="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/1.png"></p><h2 id="上传本地codex授权文件">1.上传本地Codex授权文件</h2><p>在本地<code>IDE</code>中登录<code>Codex</code>成功后将自动在项目根目录生成<code>.codex</code>文件，我们将其上传至服务器。</p><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># local</span><span class="token function">tar</span> <span class="token parameter variable">-cf</span> codex.tar ~/.codex<span class="token function">scp</span> <span class="token parameter variable">-P</span> <span class="token operator">&lt;</span>port<span class="token operator">></span> codex.tar user@ip:<span class="token operator">&lt;</span>file path<span class="token operator">></span><span class="token comment"># remote</span><span class="token function">tar</span> <span class="token parameter variable">-xf</span> codex.tar <span class="token parameter variable">-C</span> ~/<span class="token comment"># 出现.codex则上传完成</span><span class="token function">ls</span> <span class="token parameter variable">-al</span> ~/</code></pre><h2 id="配置ssh端口转发">2.配置SSH端口转发</h2><p><img src="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/2.png"></p><p>首先，在<code>VPN</code>中设置确保本地代理允许局域网访问。</p><p><img src="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/3.png"></p><p>随后，根据本地设置的端口（此处为7890）， 然后在 SSH配置文件中加入端口转发<code>RemoteForward</code>。</p><h2 id="服务器代理设置">3.服务器代理设置</h2><p>在服务器的 <code>~/.bashrc</code> 添加以下内容。</p><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">http_proxy</span><span class="token operator">=</span>http://127.0.0.1:7890<span class="token builtin class-name">export</span> <span class="token assign-left variable">https_proxy</span><span class="token operator">=</span>http://127.0.0.1:7890<span class="token builtin class-name">source</span> ~/.bashrc</code></pre><p>随后，在远程服务器窗口下，在<code>IDE</code>中按下<code>Ctrl + Shift + P</code>，输入<code>Open Remote Settings</code>，进入远程服务器的设置面板，搜索<code>「proxy」</code>，将：<code>http-proxy</code> 设置为 <code>http://127.0.0.1:7890</code>。</p><p><img src="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/4.png"></p><p>然后关闭并重新连接<code>Remote</code>，按下<code>Ctrl + Shift + P → Close Remote Connection</code>。</p><h2 id="安装插件与启动">4.安装插件与启动</h2><p>重新连接服务器后，在插件市场安装<code>Codex</code>，和在本地一样正常登录使用即可。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;如何优雅地在ssh服务器上使用codex&quot;&gt;如何优雅地在SSH服务器上使用Codex&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%</summary>
+      
+    
+    
+    
+    <category term="教程" scheme="https://saintcen.github.io/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+    <category term="开发" scheme="https://saintcen.github.io/tags/%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
   
   <entry>
     <title>Computer Vision</title>
@@ -67,32 +92,6 @@
     
     
     <category term="AI" scheme="https://saintcen.github.io/tags/AI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CodeX With MCP</title>
-    <link href="https://saintcen.github.io/2025/11/06/CodeX%20With%20MCP/"/>
-    <id>https://saintcen.github.io/2025/11/06/CodeX%20With%20MCP/</id>
-    <published>2025-11-05T16:00:00.000Z</published>
-    <updated>2025-11-08T08:40:36.550Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="codex-with-mcp">CodeX With MCP</h1><p><a href="https://developers.openai.com/codex">Codex官方文档</a></p><h2 id="setup-codex">Setup CodeX</h2><p>据说<code>Codex</code>的上下文能力比<code>Cursor</code>更强，且目前的科研或开发依赖思考能力强的大模型，号称地表最强的<code>gpt5-codex-high</code>自然需要尝尝鲜。在推出<code>CodeX CLI</code>过后，<code>Openai</code>推出了兼容<code>IDE</code>的插件，配置上更方便，且使用上更灵活，我安装的也是<code>Codex IDE Extension</code>。</p><p><code>Windows</code>用户建议在<code>WSL2</code>中使用<code>CodeX</code>，因为<code>Codex</code>目前存在和<code>Windows</code>部分不兼容的问题。我们可以通过<code>VSCode</code>的<code>WSL</code>插件连接本机<code>WSL2</code>，注意项目文件需要迁移到<code>WSL2</code>的文件系统中才能完全兼容。</p><pre class="language-bash" data-language="bash"><code class="language-bash">wsl <span class="token parameter variable">--install</span> <span class="token comment"># 安装wsl</span>wsl <span class="token parameter variable">-l</span> <span class="token parameter variable">-v</span> <span class="token comment"># 检查wsl安装</span><span class="token function">cp</span> <span class="token parameter variable">-r</span> /mnt/<span class="token operator">&lt;</span>Your Folder<span class="token operator">></span> ~/ <span class="token comment"># 拷贝文件到根目录</span></code></pre><p>点击<code>VSCode</code>左下角的远程连接蓝色按钮即有弹窗连接<code>WSL</code>。</p><p><img src="/2025/11/06/CodeX%20With%20MCP/2.png"></p><p>在<code>VSCode</code>中搜索插件<code>CodeX</code>，注意是<code>Openai</code>发布的。安装后活动栏会出现<code>ChatGPT</code>的标志，点击后即出现了<code>GUI</code>界面（默认是左边，可以拖动到右边）。登录你的<code>ChatGPT</code>账号，你就可以像使用<code>Cursor</code>一样使用<code>CodeX</code>了。（开<code>TUN</code>模式）</p><p><img src="/2025/11/06/CodeX%20With%20MCP/1.png"></p><p>注意，你先需要拥有<code>20$ per month</code>的<code>ChatGPT Plus</code>才能使用。1.可搜索中转站或代充站开通2.<code>ios</code>用户可以通过美区<code>apple id</code>+支付宝礼品卡（修改地区为美国搜索<code>PockytShop</code>）在手机的<code>ChatGPT</code>上开通。</p><p>注意，现在<code>Codex</code>插件有两个非常致命的问题，需要等待官方维护：</p><ul><li>经常出现<code>undo</code>不了的情况（口头回退，最好<code>git</code>备份）</li><li><code>SSH</code>远程连接无法正常使用</li></ul><h2 id="setup-mcp">Setup MCP</h2><p>在设置中找到<code>config.toml</code></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;codex-with-mcp&quot;&gt;CodeX With MCP&lt;/h1&gt;
-&lt;p&gt;&lt;a href=&quot;https://developers.openai.com/codex&quot;&gt;Codex官方文档&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;setup-codex&quot;&gt;Setup </summary>
-      
-    
-    
-    
-    <category term="教程" scheme="https://saintcen.github.io/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-    <category term="开发" scheme="https://saintcen.github.io/tags/%E5%BC%80%E5%8F%91/"/>
     
   </entry>
   
