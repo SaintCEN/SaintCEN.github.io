@@ -6,7 +6,7 @@
   <link href="https://saintcen.github.io/atom.xml" rel="self"/>
   
   <link href="https://saintcen.github.io/"/>
-  <updated>2026-03-30T11:40:31.727Z</updated>
+  <updated>2026-03-30T11:42:42.791Z</updated>
   <id>https://saintcen.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>穷鬼使用Claude Code + 中转站指南</title>
     <link href="https://saintcen.github.io/2026/03/30/%E7%A9%B7%E9%AC%BC%E4%BD%BF%E7%94%A8Claude%20Code%20+%20%E4%B8%AD%E8%BD%AC%E7%AB%99%E6%8C%87%E5%8D%97/"/>
     <id>https://saintcen.github.io/2026/03/30/%E7%A9%B7%E9%AC%BC%E4%BD%BF%E7%94%A8Claude%20Code%20+%20%E4%B8%AD%E8%BD%AC%E7%AB%99%E6%8C%87%E5%8D%97/</id>
-    <published>2026-03-30T11:30:49.709Z</published>
-    <updated>2026-03-30T11:40:31.727Z</updated>
+    <published>2026-03-29T16:00:00.000Z</published>
+    <updated>2026-03-30T11:42:42.791Z</updated>
     
     <content type="html"><![CDATA[<h1 id="穷鬼使用claude-code-中转站指南">穷鬼使用Claude Code +中转站指南</h1><h2 id="下载cluade-code">下载Cluade Code</h2><p>首先确保本地环境已安装<code>node.js</code>，在<code>terminal</code>中执行：</p><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> @anthropic-ai/claude-codeclaude <span class="token parameter variable">--version</span>claude</code></pre><h2 id="安装cc-switch">安装cc-switch</h2><p><code>Github</code>仓库地址：https://github.com/farion1231/cc-switch/releases/</p><p><code>Windows</code>用户下载<code>CC-Switch-v3.12.3-Windows.msi</code>并按指令安装即可。</p><p><img src="/2026/03/30/%E7%A9%B7%E9%AC%BC%E4%BD%BF%E7%94%A8Claude%20Code%20+%20%E4%B8%AD%E8%BD%AC%E7%AB%99%E6%8C%87%E5%8D%97/1.png"></p><p>随后选择“添加新供应商”-&gt;“自定义配置”，供应商名称随便填，<code>API Key</code>和请求地址按照中转站的来。如果是国内中转站，我们是不用开代理也可以使用<code>Claude Code</code>的。推荐一手<a href>https://aicoding.sh。</a></p><h2 id="可选安装vscode插件">（可选）安装vscode插件</h2><p>直接在<code>vscode</code>中搜索<code>Claude Code</code>插件，如果前面没有配置过会让你登录，配置完就可以直接用：</p><p><img src="/2026/03/30/%E7%A9%B7%E9%AC%BC%E4%BD%BF%E7%94%A8Claude%20Code%20+%20%E4%B8%AD%E8%BD%AC%E7%AB%99%E6%8C%87%E5%8D%97/2.png"></p><h2 id="可选配置skills">（可选）配置skills</h2><p>首先安装<code>openskills</code>，可以直接到<code>Github</code>上拉取相关<code>skills</code>并在目录生成<code>.claude</code>文件夹，<code>CC</code>会自动调用。</p><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> i <span class="token parameter variable">-g</span> openskillsopenskills <span class="token parameter variable">--version</span></code></pre><p>随后可直接通过命令行安装，例如：</p><pre class="language-bash" data-language="bash"><code class="language-bash">npx openskills <span class="token function">install</span> zechenzhangAGI/AI-research-SKILLsnpx openskills <span class="token function">install</span> anthropics/skills</code></pre>]]></content>
     
@@ -36,6 +36,10 @@
     
     
     
+    <category term="开发" scheme="https://saintcen.github.io/categories/%E5%BC%80%E5%8F%91/"/>
+    
+    
+    <category term="教程" scheme="https://saintcen.github.io/tags/%E6%95%99%E7%A8%8B/"/>
     
   </entry>
   
