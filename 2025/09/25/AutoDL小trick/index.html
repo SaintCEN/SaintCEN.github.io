@@ -436,7 +436,7 @@
 <p>先阅读仓库的<code>README</code>文件，确定<code>CUDA</code>版本后选择服务器，根据显存考虑显卡型号。环境可以开无卡模式在服务器上配置（假设没有依赖<code>torch</code>的<code>C++</code>编译），运行再开<code>GPU</code>，无<code>GPU</code>可以克隆实例。服务器都是自带<code>torch</code>的，如果配置指南里没有确认的<code>torch</code>版本，可以直接用<code>base</code>环境的<code>torch</code>，跳过这一安装步骤。</p>
 <h2 id="免密登录">免密登录</h2>
 <p>设置<code>SSH</code>密钥可以避免我们每次登录/使用都需要输密码。执行命令后一直回车输一次密码即可。</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Windowes Powershell</span>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Windows Powershell</span>
 ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="token parameter variable">-b</span> <span class="token number">4096</span> <span class="token parameter variable">-f</span> <span class="token string">"<span class="token variable">$env</span>:USERPROFILE\.ssh\id_rsa"</span> <span class="token parameter variable">-N</span> <span class="token string">""</span><span class="token punctuation">;</span> <span class="token builtin class-name">type</span> <span class="token string">"<span class="token variable">$env</span>:USERPROFILE\.ssh\id_rsa.pub"</span> <span class="token operator">|</span> <span class="token function">ssh</span> user@serverip <span class="token string">"cat >> ~/.ssh/authorized_keys"</span>
 
 <span class="token comment"># Linux</span>
@@ -613,7 +613,7 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="数据结构（C语言版）">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="数据结构（C语言版）">
                         
                         <span class="card-title">数据结构（C语言版）</span>
                     </div>
@@ -662,7 +662,7 @@ ssh-keygen <span class="token parameter variable">-t</span> rsa <span class="tok
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Hexo-Blog搭建教程">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Hexo-Blog搭建教程">
                         
                         <span class="card-title">Hexo-Blog搭建教程</span>
                     </div>
