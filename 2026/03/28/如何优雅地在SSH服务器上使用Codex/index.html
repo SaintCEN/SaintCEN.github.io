@@ -447,8 +447,8 @@ tar -cf codex.tar ~/.">
 配置文件中加入端口转发<code>RemoteForward</code>。</p>
 <h2 id="服务器代理设置">3.服务器代理设置</h2>
 <p>在服务器的 <code>~/.bashrc</code> 添加以下内容。</p>
-<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable">http_proxy</span><span class="token operator">=</span>http://127.0.0.1:7890
-<span class="token builtin class-name">export</span> <span class="token assign-left variable">https_proxy</span><span class="token operator">=</span>http://127.0.0.1:7890
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">'export http_proxy=http://127.0.0.1:7890'</span> <span class="token operator">>></span> ~/.bashrc
+<span class="token builtin class-name">echo</span> <span class="token string">'export https_proxy=http://127.0.0.1:7890'</span> <span class="token operator">>></span> ~/.bashrc
 <span class="token builtin class-name">source</span> ~/.bashrc</code></pre>
 <p>随后，在远程服务器窗口下，在<code>IDE</code>中按下<code>Ctrl + Shift + P</code>，输入<code>Open Remote Settings</code>，进入远程服务器的设置面板，搜索<code>「proxy」</code>，将：
 <code>http-proxy</code> 设置为 <code>http://127.0.0.1:7890</code>。</p>
@@ -608,7 +608,7 @@ tar -cf codex.tar ~/.">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="穷鬼使用Claude Code + 中转站指南">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="穷鬼使用Claude Code + 中转站指南">
                         
                         <span class="card-title">穷鬼使用Claude Code + 中转站指南</span>
                     </div>
@@ -657,7 +657,7 @@ tar -cf codex.tar ~/.">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="Computer Vision">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Computer Vision">
                         
                         <span class="card-title">Computer Vision</span>
                     </div>
