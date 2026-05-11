@@ -7,10 +7,11 @@
     <meta name="keywords" content="如何优雅地在SSH服务器上使用Codex, Sa1ntCHENの小窝">
     <meta name="description" content="如何优雅地在SSH服务器上使用Codex
 
+官方Auth
 1.上传本地Codex授权文件
 在本地IDE中登录Codex成功后将自动在项目根目录生成.codex文件，我们将其上传至服务器。
 # local
-tar -cf codex.tar ~/.">
+tar -cf codex">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -379,8 +380,8 @@ tar -cf codex.tar ~/.">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%BC%80%E5%8F%91/">
-                                <span class="chip bg-color">开发</span>
+                            <a href="/tags/AI/">
+                                <span class="chip bg-color">AI</span>
                             </a>
                         
                     </div>
@@ -391,8 +392,8 @@ tar -cf codex.tar ~/.">
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%99%E7%A8%8B/" class="post-category">
-                                教程
+                            <a href="/categories/%E7%A7%91%E7%A0%94/" class="post-category">
+                                科研
                             </a>
                         
                     </div>
@@ -430,7 +431,8 @@ tar -cf codex.tar ~/.">
             <div id="articleContent">
                 <h1 id="如何优雅地在ssh服务器上使用codex">如何优雅地在SSH服务器上使用Codex</h1>
 <p><img src="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/1.png"></p>
-<h2 id="上传本地codex授权文件">1.上传本地Codex授权文件</h2>
+<h2 id="官方auth">官方Auth</h2>
+<h3 id="上传本地codex授权文件">1.上传本地Codex授权文件</h3>
 <p>在本地<code>IDE</code>中登录<code>Codex</code>成功后将自动在项目根目录生成<code>.codex</code>文件，我们将其上传至服务器。</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># local</span>
 <span class="token function">tar</span> <span class="token parameter variable">-cf</span> codex.tar ~/.codex
@@ -439,13 +441,13 @@ tar -cf codex.tar ~/.">
 <span class="token function">tar</span> <span class="token parameter variable">-xf</span> codex.tar <span class="token parameter variable">-C</span> ~/
 <span class="token comment"># 出现.codex则上传完成</span>
 <span class="token function">ls</span> <span class="token parameter variable">-al</span> ~/</code></pre>
-<h2 id="配置ssh端口转发">2.配置SSH端口转发</h2>
+<h3 id="配置ssh端口转发">2.配置SSH端口转发</h3>
 <p><img src="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/2.png"></p>
 <p>首先，在<code>VPN</code>中设置确保本地代理允许局域网访问。</p>
 <p><img src="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/3.png"></p>
 <p>随后，根据本地设置的端口（此处为7890）， 然后在 SSH
 配置文件中加入端口转发<code>RemoteForward</code>。</p>
-<h2 id="服务器代理设置">3.服务器代理设置</h2>
+<h3 id="服务器代理设置">3.服务器代理设置</h3>
 <p>在服务器的 <code>~/.bashrc</code> 添加以下内容。</p>
 <pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">'export http_proxy=http://127.0.0.1:7890'</span> <span class="token operator">>></span> ~/.bashrc
 <span class="token builtin class-name">echo</span> <span class="token string">'export https_proxy=http://127.0.0.1:7890'</span> <span class="token operator">>></span> ~/.bashrc
@@ -454,8 +456,22 @@ tar -cf codex.tar ~/.">
 <code>http-proxy</code> 设置为 <code>http://127.0.0.1:7890</code>。</p>
 <p><img src="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/4.png"></p>
 <p>然后关闭并重新连接<code>Remote</code>，按下<code>Ctrl + Shift + P → Close Remote Connection</code>。</p>
-<h2 id="安装插件与启动">4.安装插件与启动</h2>
+<h3 id="安装插件与启动">4.安装插件与启动</h3>
 <p>重新连接服务器后，在插件市场安装<code>Codex</code>，和在本地一样正常登录使用即可。</p>
+<h2 id="中转站">中转站</h2>
+<h3 id="打开cc-switch">1.打开CC-Switch</h3>
+<p>关于<code>CC-Switch</code>的配置，这里就不做赘述，请参照中转站的技术文档。点开你的中转<code>API</code>详细信息，复制<code>auth.json</code>和<code>config.toml</code>的内容。</p>
+<h3 id="修改配置文件">2.修改配置文件</h3>
+<p>注意<code>config.toml</code>中的一项配置<code>requires_openai_auth = false</code>即可，删掉此字段也可以。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">cat</span> <span class="token operator">></span> ~/.codex/config.toml <span class="token operator">&lt;&lt;</span> <span class="token string">'EOF'
+&lt;YOUR CONFIG.TOML>
+EOF</span>
+
+<span class="token function">cat</span> <span class="token operator">></span> ~/.codex/auth.json <span class="token operator">&lt;&lt;</span> <span class="token string">'EOF'
+&lt;YOUR AUTH.JSON>
+EOF</span></code></pre>
+<h3 id="重新启动插件">3.重新启动插件</h3>
+<p>重新连接服务器即可，如果是国内的中转不走本地代理依旧可以使用。</p>
 
                 
             </div>
@@ -520,8 +536,8 @@ tar -cf codex.tar ~/.">
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%BC%80%E5%8F%91/">
-                                    <span class="chip bg-color">开发</span>
+                                <a href="/tags/AI/">
+                                    <span class="chip bg-color">AI</span>
                                 </a>
                             
                         </div>
@@ -657,7 +673,7 @@ tar -cf codex.tar ~/.">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Computer Vision">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Computer Vision">
                         
                         <span class="card-title">Computer Vision</span>
                     </div>
