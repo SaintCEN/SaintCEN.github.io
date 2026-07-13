@@ -712,13 +712,31 @@ figure.highlight .section {
   color: #1a1a1a;
 }
 
-.profile-title {
-  margin: 0.35rem 0 0;
-  font-family: "Source Code Pro", monospace, "Microsoft YaHei";
+.profile-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65em;
+  max-width: 100%;
+  margin: 0.55rem 0 0;
+  padding: 0.28rem 0.58rem;
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  line-height: 1.35;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #9a9a9a;
+  border: 1px solid #dbdbdb;
+  border-radius: 2px;
+  background: #fff;
+}
+.profile-status .profile-status-icon,
+.profile-status svg {
+  flex: 0 0 auto;
+  color: currentColor;
+  font-size: 0.62rem;
+}
+.profile-status span {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .profile-bio {
