@@ -276,9 +276,23 @@ a.tag.article-tag {
   font-size: 0.9rem;
   background: transparent;
 }
+.footer .container {
+  max-width: none;
+  width: auto;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
 .footer .content {
   padding-top: 2rem;
-  border-top: 1px solid #dbdbdb;
+  justify-content: flex-end;
+}
+.footer .footer-copyright {
+  text-align: right !important;
+}
+@media screen and (max-width: 768px) {
+  .footer .footer-copyright {
+    text-align: center !important;
+  }
 }
 
 .searchbox {
@@ -630,8 +644,13 @@ figure.highlight .section {
   .home-aside {
     flex: 0 0 240px;
     width: 240px;
-    position: sticky;
+  }
+  .home-aside .profile {
+    position: fixed;
     top: 5.75rem;
+    width: 240px;
+    max-height: calc(100vh - 6.5rem);
+    overflow-y: auto;
   }
 }
 
@@ -744,6 +763,7 @@ figure.highlight .section {
   font-size: 0.95rem;
   line-height: 1.65;
   color: #555;
+  white-space: pre-line;
 }
 
 .profile-meta {
