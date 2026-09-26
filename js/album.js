@@ -5,6 +5,7 @@
     'use strict';
     var root = document.querySelector('.album-world');
     if (!root) return;
+    var scope = window.MinosPage.scope;
     var reduced = matchMedia('(prefers-reduced-motion: reduce)');
     var desktop = matchMedia('(min-width: 768px) and (min-height: 740px)');
     var showcase = root.querySelector('.album-showcase');
@@ -44,10 +45,11 @@
             slides.forEach(function (slide, index) { slide.inert = enabled && index !== active; });
             update();
         }
-        window.addEventListener('scroll', function () { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
-        window.addEventListener('resize', configure);
-        window.addEventListener('pageshow', configure);
-        reduced.addEventListener('change', configure);
+        scope.listen(window, 'scroll', function () { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+        scope.listen(window, 'resize', configure);
+        scope.listen(window, 'pageshow', configure);
+        scope.listen(reduced, 'change', configure);
+        scope.cleanup(function () { cancelAnimationFrame(frame); clearTimeout(reset); });
         configure();
     }
 
@@ -61,10 +63,12 @@
             });
         }, { rootMargin: '0px 0px -40px 0px' });
         photos.forEach(function (photo) { photo.classList.add('will-reveal'); observer.observe(photo); });
+        scope.cleanup(function () { observer.disconnect(); });
     }
 
     var dialog = document.querySelector('.album-lightbox');
     if (dialog && typeof dialog.showModal === 'function') {
+        scope.cleanup(function () { if (dialog.open) dialog.close(); });
         var selected = 0, opener;
         var picture = dialog.querySelector('img');
         var caption = dialog.querySelector('figcaption');
@@ -124,8 +128,9 @@
             if (!cursorFrame) cursorFrame = requestAnimationFrame(moveCursor);
         });
         root.addEventListener('pointerleave', hideCursor);
-        window.addEventListener('scroll', hideCursor, { passive: true });
-        window.addEventListener('pagehide', hideCursor);
-        reduced.addEventListener('change', function () { root.classList.toggle('has-cursor', !reduced.matches); hideCursor(); });
+        scope.listen(window, 'scroll', hideCursor, { passive: true });
+        scope.listen(window, 'pagehide', hideCursor);
+        scope.listen(reduced, 'change', function () { root.classList.toggle('has-cursor', !reduced.matches); hideCursor(); });
+        scope.cleanup(function () { cancelAnimationFrame(cursorFrame); cursor.remove(); });
     }
 })();

@@ -6,8 +6,15 @@
  */
 (function () {
     'use strict';
+    var mounted = null, dispose = null;
+    function mount() {
     var container = document.querySelector('.gooey-nav-container');
+    if (container && container === mounted) { container.dispatchEvent(new Event('minos:nav-sync')); return; }
+    if (dispose) dispose();
+    mounted = container;
     if (!container) return;
+    var scope = window.MinosPage.createScope();
+    dispose = function () { scope.dispose(); };
     var nav = container.querySelector('nav');
     var items = Array.from(nav.querySelectorAll('ul > li'));
     var links = items.map(function (item) { return item.querySelector('.gooey-link'); });
@@ -138,21 +145,35 @@
         tools.classList.toggle('is-active', open);
         position();
     });
-    document.addEventListener('click', function (event) {
+    scope.listen(document, 'click', function (event) {
         if (!bar.contains(event.target)) closeMenu();
     });
     bar.addEventListener('keydown', function (event) {
         if (event.key !== 'Escape') return;
         if (burger.getAttribute('aria-expanded') === 'true') { closeMenu(); burger.focus(); }
     });
-    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(position).observe(container);
-    window.addEventListener('resize', position);
-    window.addEventListener('pageshow', function (event) {
+    if (typeof ResizeObserver !== 'undefined') {
+        var observer = new ResizeObserver(position);
+        observer.observe(container);
+        scope.cleanup(function () { observer.disconnect(); });
+    }
+    scope.cleanup(clearParticles);
+    scope.listen(window, 'resize', position);
+    scope.listen(window, 'pageshow', function (event) {
         if (event.persisted) { closeMenu(); select(routeIndex, false); }
     });
-    window.addEventListener('pagehide', clearParticles);
-    reduced.addEventListener('change', function () { if (reduced.matches) clearParticles(); });
-    if (document.fonts) document.fonts.ready.then(position);
+    scope.listen(window, 'pagehide', clearParticles);
+    scope.listen(reduced, 'change', function () { if (reduced.matches) clearParticles(); });
+    if (document.fonts) document.fonts.ready.then(function () { if (scope.active) position(); });
+    container.addEventListener('minos:nav-sync', function () {
+        routeIndex = Math.max(0, items.findIndex(function (item) { return item.classList.contains('active'); }));
+        closeMenu();
+        if (routeIndex !== activeIndex) select(routeIndex, false);
+        else position();
+    });
     container.classList.add('gooey-ready');
     select(activeIndex, false);
+    }
+    document.addEventListener('minos:navbar-ready', mount);
+    mount();
 })();

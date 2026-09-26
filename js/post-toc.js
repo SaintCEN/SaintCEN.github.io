@@ -3,6 +3,7 @@
 
     var toc = document.querySelector('.post-toc');
     if (!toc) return;
+    var scope = window.MinosPage.scope;
 
     var scroller = toc.querySelector('.post-toc-scroll');
     var list = toc.querySelector('.post-toc-list');
@@ -74,6 +75,7 @@
     }
 
     function scheduleReading(measure) {
+        if (!scope.active) return;
         if (measure === true) measureNeeded = true;
         if (readingFrame === null) readingFrame = requestAnimationFrame(updateReadingPosition);
     }
@@ -102,13 +104,17 @@
         paintProximity();
     });
 
-    window.addEventListener('scroll', scheduleReading, { passive: true });
-    window.addEventListener('resize', function () { scheduleReading(true); });
-    window.addEventListener('hashchange', function () { scheduleReading(true); });
-    window.addEventListener('pageshow', function () { scheduleReading(true); });
-    window.addEventListener('load', function () { scheduleReading(true); });
+    scope.listen(window, 'scroll', scheduleReading, { passive: true });
+    scope.listen(window, 'resize', function () { scheduleReading(true); });
+    scope.listen(window, 'hashchange', function () { scheduleReading(true); });
+    scope.listen(window, 'pageshow', function () { scheduleReading(true); });
+    scope.listen(window, 'load', function () { scheduleReading(true); });
+    scope.listen(document, 'minos:content-ready', function () { scheduleReading(true); });
+    scope.cleanup(function () { cancelAnimationFrame(readingFrame); cancelAnimationFrame(pointerFrame); });
     if (typeof ResizeObserver !== 'undefined' && article) {
-        new ResizeObserver(function () { scheduleReading(true); }).observe(article);
+        var observer = new ResizeObserver(function () { scheduleReading(true); });
+        observer.observe(article);
+        scope.cleanup(function () { observer.disconnect(); });
     }
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(function () { scheduleReading(true); });

@@ -60,6 +60,9 @@
 
 
 <meta name="page-transition-title" content="如何优雅地在SSH服务器上使用Codex">
+<meta name="page-kind" content="article">
+<meta name="site-bundle" content="/site-bundle.json">
+<script src="/js/page-lifecycle.js"></script>
 <script src="/js/page-transitions.js"></script>
 <script defer src="/js/gooey-nav.js"></script>
 
@@ -68,12 +71,15 @@
 
     
     
+
     
     
     
     
+
     
     
+
     
     
 
@@ -82,6 +88,7 @@
 
 <meta name="generator" content="Hexo 5.4.2"></head>
 <body>
+    <div id="site-navigation-shell">
     
 <nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
     <div class="container">
@@ -157,6 +164,8 @@
     .navbar-main .navbar-menu { display: flex; flex-wrap: wrap; }
 </style></noscript>
 
+    </div>
+    <div id="site-page">
     
 <section class="section post-section has-toc">
     <div class="post-layout">
@@ -459,7 +468,7 @@ EOF
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
-<script>
+<script data-minos-once="outdated-browser">
     $(document).ready(function () {
         // plugin function, place inside DOM ready function
         outdatedBrowser({
@@ -480,6 +489,9 @@ EOF
 
     
     
+<script>
+    window.MathJax = window.MathJax || { skipStartupTypeset: true };
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <script>
     MathJax.Hub.Config({
@@ -499,7 +511,15 @@ EOF
             ]
         }
     });
+    (function () {
+        var scope = window.MinosPage.scope;
+        var article = document.querySelector('.article-entry');
+        window.MinosRouter.whenRevealed().then(function () {
+            if (scope.active && article) MathJax.Hub.Queue(['Typeset', MathJax.Hub, article]);
+        });
+    })();
 </script>
+
 
     
     
@@ -509,17 +529,24 @@ EOF
 <script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
 <script>
     (function ($) {
-        $(document).ready(function () {
+        var scope = window.MinosPage.scope;
+        scope.listen(document, 'minos:article-ready', function () {
+            if (!scope.active) return;
             if (typeof($.fn.lightGallery) === 'function') {
                 $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+                var galleries = $('.article.gallery');
+                scope.cleanup(function () {
+                    galleries.each(function () { var gallery = $(this).data('lightGallery'); if (gallery) gallery.destroy(true); });
+                });
             }
             if (typeof($.fn.justifiedGallery) === 'function') {
                 $('.justified-gallery > p > .gallery-item').unwrap();
                 $('.justified-gallery').justifiedGallery();
             }
-        });
+        }, { once: true });
     })(jQuery);
 </script>
+
 
     
     
@@ -529,7 +556,7 @@ EOF
             position: relative;
         }
 
-        .hljs .clipboard-btn {
+        .hljs .clipboard-btn, .article-entry pre .clipboard-btn {
             float: right;
             color: #9a9a9a;
             background: none;
@@ -557,10 +584,16 @@ EOF
         }
     </style>
     <script>
+      (function () {
+      var scope = window.MinosPage.scope;
       $(document).ready(function () {
-        $('figure.hljs').each(function(i, figure) {
+        if (!scope.active) return;
+        $('figure.hljs, .article-entry pre').filter(function () {
+          return this.matches('figure.hljs') || !$(this).closest('figure.hljs').length;
+        }).each(function(i, figure) {
           var codeId = 'code-' + i;
-          var code = figure.querySelector('.code');
+          var code = figure.querySelector('.code, code');
+          if (!code) return;
           var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
           code.id = codeId;
           copyButton.addClass('clipboard-btn');
@@ -580,11 +613,14 @@ EOF
             return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
           }
         });
+        scope.cleanup(function () { clipboard.destroy(); });
         clipboard.on('success', function(e) {
           e.clearSelection();
         })
       })
+      })();
     </script>
+
 
     
     
@@ -594,6 +630,7 @@ EOF
 
 
 <script src="/js/script.js"></script>
+
 
 
     
@@ -629,5 +666,6 @@ EOF
 
     
     
+    </div>
 </body>
 </html>

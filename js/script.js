@@ -20,4 +20,5 @@
             $(this).text(moment($(this).attr('datetime')).fromNow());
         });
     }
+    document.dispatchEvent(new Event('minos:article-ready'));
 })(jQuery);

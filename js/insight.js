@@ -3,7 +3,11 @@
  * @author PPOffice { @link https://github.com/ppoffice }
  */
 (function ($, CONFIG) {
+    var scope = window.MinosPage.scope;
+    $(document).off('.minosSearch');
+    scope.cleanup(function () { $(document).off('.minosSearch'); });
     var $main = $('.ins-search');
+    scope.cleanup(function () { $main.remove(); });
     var $input = $main.find('.ins-search-input');
     var $wrapper = $main.find('.ins-section-wrapper');
     var $container = $main.find('.ins-section-container');
@@ -104,7 +108,7 @@
     function weight (keywords, obj, fields, weights) {
         var value = 0;
         parseKeywords(keywords).forEach(function (keyword) {
-            var pattern = new RegExp(keyword, 'img'); // Global, Multi-line, Case-insensitive
+            var pattern = new RegExp(keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'img');
             fields.forEach(function (field, index) {
                 if (obj.hasOwnProperty(field)) {
                     var matches = obj[field].match(pattern);
@@ -184,11 +188,14 @@
 
     function gotoLink ($item) {
         if ($item && $item.length) {
-            location.href = $item.attr('data-url');
+            $main.removeClass('show');
+            if (window.MinosRouter) window.MinosRouter.navigate($item.attr('data-url'));
+            else location.href = $item.attr('data-url');
         }
     }
 
-    $.getJSON(CONFIG.CONTENT_URL, function (json) {
+    function initializeSearch(json) {
+        if (!scope.active) return;
         if (location.hash.trim() === '#ins-search') {
             $main.addClass('show');
         }
@@ -197,25 +204,27 @@
             searchResultToDOM(search(json, keywords));
         });
         $input.trigger('input');
-    });
+    }
+    if (window.MinosRouter) window.MinosRouter.getJSON(CONFIG.CONTENT_URL).then(initializeSearch).catch(function (error) { console.warn('Search data unavailable.', error); });
+    else $.getJSON(CONFIG.CONTENT_URL, initializeSearch);
 
     var touch = false;
-    $(document).on('click focus', '.navbar-main .search', function () {
+    $(document).on('click.minosSearch focus.minosSearch', '.navbar-main .search', function () {
         $main.addClass('show');
         $main.find('.ins-search-input').focus();
-    }).on('click touchend', '.ins-search-item', function (e) {
+    }).on('click.minosSearch touchend.minosSearch', '.ins-search-item', function (e) {
         if (e.type !== 'click' && !touch) {
             return;
         }
         gotoLink($(this));
         touch = false;
-    }).on('click touchend', '.ins-close', function (e) {
+    }).on('click.minosSearch touchend.minosSearch', '.ins-close', function (e) {
         if (e.type !== 'click' && !touch) {
             return;
         }
         $main.removeClass('show');
         touch = false;
-    }).on('keydown', function (e) {
+    }).on('keydown.minosSearch', function (e) {
         if (!$main.hasClass('show')) return;
         switch (e.keyCode) {
             case 27: // ESC
@@ -227,9 +236,9 @@
             case 13: //ENTER
                 gotoLink($container.find('.ins-selectable.active').eq(0)); break;
         }
-    }).on('touchstart', function (e) {
+    }).on('touchstart.minosSearch', function (e) {
         touch = true;
-    }).on('touchmove', function (e) {
+    }).on('touchmove.minosSearch', function (e) {
         touch = false;
     });
 })(jQuery, window.INSIGHT_CONFIG);

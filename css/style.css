@@ -1813,6 +1813,10 @@ body:has(.post-toc) {
     box-shadow: none;
   }
 }
+#site-page h1[tabindex="-1"]:focus {
+  outline: none;
+}
+
 @view-transition {
   navigation: none;
 }

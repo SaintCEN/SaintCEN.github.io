@@ -5,6 +5,7 @@
     'use strict';
     var root = document.querySelector('.home-hero');
     if (!root) return;
+    var scope = window.MinosPage.scope;
     var buttons = Array.from(root.querySelectorAll('.home-button'));
     var canvas = root.querySelector('canvas');
     var photo = root.querySelector('img');
@@ -101,11 +102,12 @@
         if (motion.matches) { ripples = []; draw(); }
         else frame = requestAnimationFrame(tick);
     }
-    window.addEventListener('resize', resize);
-    document.addEventListener('visibilitychange', syncMotion);
-    motion.addEventListener('change', syncMotion);
-    window.addEventListener('pagehide', function () { cancelAnimationFrame(frame); frame = 0; });
-    window.addEventListener('pageshow', syncMotion);
+    scope.listen(window, 'resize', resize);
+    scope.listen(document, 'visibilitychange', syncMotion);
+    scope.listen(motion, 'change', syncMotion);
+    scope.listen(window, 'pagehide', function () { cancelAnimationFrame(frame); frame = 0; });
+    scope.listen(window, 'pageshow', syncMotion);
+    scope.cleanup(function () { cancelAnimationFrame(frame); });
     resize();
     var imageReady = photo.decode ? photo.decode() : new Promise(function (resolve) {
         if (photo.complete) resolve();
@@ -115,6 +117,7 @@
         }
     });
     imageReady.catch(function () {}).then(function () {
+        if (!scope.active) return;
         ready = true;
         draw();
         root.classList.add('has-waves');
