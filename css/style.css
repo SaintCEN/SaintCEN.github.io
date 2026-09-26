@@ -1269,12 +1269,18 @@ figure.highlight .section {
     gap: clamp(1.5rem, 3vw, 3.5rem);
   }
   .post-aside {
-    position: sticky;
-    top: 5.75rem;
     width: 100%;
     margin: 0;
-    max-height: calc(100vh - 6.5rem);
+  }
+  .post-aside .profile {
+    box-sizing: border-box;
+    position: fixed;
+    top: var(--post-toc-top, 5.75rem);
+    width: clamp(180px, 16vw, 240px);
+    max-height: calc(100vh - var(--post-toc-top, 5.75rem) - 0.75rem);
+    max-height: calc(100dvh - var(--post-toc-top, 5.75rem) - 0.75rem);
     overflow-y: auto;
+    overscroll-behavior: contain;
     padding-top: 7px;
     padding-left: 7px;
   }
