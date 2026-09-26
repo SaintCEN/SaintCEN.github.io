@@ -1,52 +1,124 @@
-/* One shared curve reveal for home, navigation and article links.
- * Real document navigation preserves each page's scripts and browser history.
+/* Hexo document navigation with Olivier Larose's Curve geometry and timing.
+ * Reference: https://github.com/olivierlarose/nextjs-framer-page-transition/tree/main/src/components/Layout/Curve
+ * Exit: SVG 750ms; text 500ms after 400ms. Enter: 750ms after 350ms.
+ * Use a real SVG quadratic path, matching anim.js; no rounded-box substitute.
  */
 (function () {
     'use strict';
-    var key = 'minos-page-transition';
-    var pending = false;
-    var cleanup;
+    var key = 'minos-curve-route';
     var reduced = matchMedia('(prefers-reduced-motion: reduce)');
     var navigation = performance.getEntriesByType('navigation')[0];
+    var pending = false, leaving = null, frame = 0, layer = null;
+    var svg, path, label, width, height;
+    var safety;
     function route(url) { return url.pathname.replace(/\/$/, '') + url.search; }
     try {
         var saved = JSON.parse(sessionStorage.getItem(key) || 'null');
         sessionStorage.removeItem(key);
         pending = !!saved && Date.now() - saved.time < 60000 && saved.route === route(location)
             && (!navigation || navigation.type !== 'reload');
-    } catch (error) { /* Links still work when storage is unavailable. */ }
+    } catch (error) { /* Navigation remains available without storage. */ }
     if (navigation && navigation.type === 'back_forward') pending = true;
+    if (pending && !reduced.matches) document.documentElement.classList.add('curve-entering');
 
-    function clearCurtain() {
-        clearTimeout(cleanup);
-        document.querySelectorAll('.page-transition-curtain').forEach(function (el) { el.remove(); });
+    function clear() {
+        cancelAnimationFrame(frame);
+        clearTimeout(safety);
+        frame = 0;
+        if (layer) layer.remove();
+        layer = null;
+        document.documentElement.classList.remove('curve-entering');
     }
-
+    function measure() { width = innerWidth; height = innerHeight; }
+    function shape(amount) {
+        return 'M0 300 Q' + width / 2 + ' 0 ' + width + ' 300 L' + width + ' ' + (height + 300 * amount)
+            + ' Q' + width / 2 + ' ' + (height + 600 * amount) + ' 0 ' + (height + 300 * amount) + ' L0 0';
+    }
+    function create(phase) {
+        clear();
+        measure();
+        layer = document.createElement('div');
+        layer.className = 'page-curve is-' + phase;
+        layer.setAttribute('aria-hidden', 'true');
+        svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('focusable', 'false');
+        path = document.createElementNS(svg.namespaceURI, 'path');
+        svg.appendChild(path);
+        label = document.createElement('p');
+        label.className = 'route';
+        var title = document.querySelector('meta[name="page-transition-title"]');
+        label.textContent = title ? title.content : document.title;
+        layer.appendChild(svg);
+        layer.appendChild(label);
+        (document.body || document.documentElement).appendChild(layer);
+    }
+    function cubic(t, p1, p2) { return 3 * (1 - t) * (1 - t) * t * p1 + 3 * (1 - t) * t * t * p2 + t * t * t; }
+    function ease(progress, x1, y1, x2, y2) {
+        if (progress <= 0) return 0;
+        if (progress >= 1) return 1;
+        var low = 0, high = 1, t = progress;
+        for (var i = 0; i < 18; i++) {
+            t = (low + high) / 2;
+            if (cubic(t, x1, x2) < progress) low = t;
+            else high = t;
+        }
+        return cubic(t, y1, y2);
+    }
+    function paint(phase, elapsed) {
+        var enter = phase === 'entering';
+        var curve = ease((elapsed - (enter ? 350 : 0)) / 750, 0.76, 0, 0.24, 1);
+        var text = enter ? curve : ease((elapsed - 400) / 500, 0.33, 1, 0.68, 1);
+        path.setAttribute('d', shape(enter ? 1 - curve : curve));
+        svg.style.top = (enter ? -300 + (300 - height) * curve : height + (-300 - height) * curve) + 'px';
+        label.style.top = (enter ? height * 0.4 + (-100 - height * 0.4) * text : height * (0.475 - 0.075 * text)) + 'px';
+        label.style.opacity = enter ? 1 - text : text;
+    }
+    function play(phase, done) {
+        create(phase);
+        paint(phase, 0);
+        var start = performance.now();
+        var duration = phase === 'entering' ? 1100 : 900;
+        function tick(now) {
+            if (!layer) return;
+            var elapsed = now - start;
+            paint(phase, elapsed);
+            if (elapsed < duration) frame = requestAnimationFrame(tick);
+            else { frame = 0; done(); }
+        }
+        frame = requestAnimationFrame(tick);
+    }
     function reveal() {
         if (!pending) return;
         pending = false;
-        if (reduced.matches) return;
-        clearCurtain();
-        var curtain = document.createElement('div');
-        curtain.className = 'page-transition-curtain';
-        curtain.setAttribute('aria-hidden', 'true');
-        (document.body || document.documentElement).appendChild(curtain);
-        curtain.addEventListener('animationend', clearCurtain, { once: true });
-        cleanup = setTimeout(clearCurtain, 1000);
+        if (reduced.matches) { clear(); return; }
+        play('entering', clear);
+        safety = setTimeout(clear, 2500);
+    }
+    function navigate() {
+        if (!leaving) return;
+        var destination = leaving;
+        try { sessionStorage.setItem(key, JSON.stringify({ route: route(destination), time: Date.now() })); } catch (error) {}
+        location.assign(destination.href);
+        // If a navigation is cancelled or cannot finish, never trap the page.
+        safety = setTimeout(function () { leaving = null; clear(); }, 12000);
     }
 
-    // This listener must be registered in the head before the first paint.
+    // Reveal at the first paint opportunity; CDN plugins may finish later.
+    // Every trigger consumes the same pending flag, so it cannot run twice.
     window.addEventListener('pagereveal', reveal);
-    if (!('onpagereveal' in window)) document.addEventListener('DOMContentLoaded', reveal, { once: true });
+    document.addEventListener('DOMContentLoaded', reveal, { once: true });
+    if (pending) safety = setTimeout(reveal, 2000);
     window.addEventListener('pageshow', function (event) {
-        if (event.persisted) {
-            pending = true;
-        }
+        if (event.persisted) { leaving = null; pending = true; }
         reveal();
     });
-    window.addEventListener('pagehide', clearCurtain);
-    reduced.addEventListener('change', function () { if (reduced.matches) clearCurtain(); });
-
+    window.addEventListener('pagehide', clear);
+    window.addEventListener('resize', measure);
+    reduced.addEventListener('change', function () {
+        if (!reduced.matches) return;
+        clear();
+        if (leaving) navigate();
+    });
     document.addEventListener('click', function (event) {
         if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || reduced.matches) return;
         var link = event.target.closest('a[href]');
@@ -55,6 +127,9 @@
         try { url = new URL(link.href); } catch (error) { return; }
         if (url.origin !== location.origin || route(url) === route(location)) return;
         if (/\.[^/]+$/.test(url.pathname) && !/\.html?$/.test(url.pathname)) return;
-        try { sessionStorage.setItem(key, JSON.stringify({ route: route(url), time: Date.now() })); } catch (error) {}
+        event.preventDefault();
+        if (leaving) return;
+        leaving = url;
+        play('exiting', navigate);
     });
 })();

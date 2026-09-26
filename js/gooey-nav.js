@@ -1,119 +1,152 @@
-/* Native ink adaptation of React Bits Gooey Nav.
- * Reference: https://reactbits.dev/components/gooey-nav
+/* React Bits Gooey Nav, DOM integration for Hexo.
+ * Copyright (c) 2026 David Haz. MIT + Commons Clause: /licenses/react-bits.txt
+ * Source: https://github.com/DavidHDev/react-bits/tree/main/src/content/Components/GooeyNav
+ * Use the public demo's props: animationTime=500, distances=[90,0],
+ * particleCount=15, particleR=100, timeVariance=300. Animation math is upstream.
  */
 (function () {
     'use strict';
-    var nav = document.querySelector('.gooey-nav');
-    if (!nav) return;
-    var links = Array.from(nav.querySelectorAll('.gooey-link'));
-    var effect = nav.querySelector('.gooey-effect');
-    var current = nav.querySelector('.gooey-link.is-active');
-    var target = null;
+    var container = document.querySelector('.gooey-nav-container');
+    if (!container) return;
+    var nav = container.querySelector('nav');
+    var items = Array.from(nav.querySelectorAll('ul > li'));
+    var links = items.map(function (item) { return item.querySelector('.gooey-link'); });
+    var filter = container.querySelector('.effect.filter');
+    var text = container.querySelector('.effect.text');
+    var activeIndex = Math.max(0, items.findIndex(function (item) { return item.classList.contains('active'); }));
+    var routeIndex = activeIndex;
     var reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    var bar = document.querySelector('.navbar-main');
+    var timers = [], frames = [];
+    var bar = container.closest('.navbar-main');
+    var menu = container.closest('.navbar-start');
     var burger = bar.querySelector('.navbar-burger');
     var tools = bar.querySelector('.navbar-end');
     var category = nav.querySelector('.navbar-categories');
     var categoryButton = category && category.querySelector('button');
-    var cleanup;
 
-    function clearDrops() {
-        clearTimeout(cleanup);
-        effect.querySelectorAll('.gooey-dot').forEach(function (dot) { dot.remove(); });
+    var animationTime = 500, particleCount = 15, particleDistances = [90, 0];
+    var particleR = 100, timeVariance = 300, colors = [1, 2, 3, 1, 2, 3, 1, 4];
+    function noise(n) { if (n === undefined) n = 1; return n / 2 - Math.random() * n; }
+    function getXY(distance, pointIndex, totalPoints) {
+        var angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180);
+        return [distance * Math.cos(angle), distance * Math.sin(angle)];
     }
-
-    function place(link, burst) {
-        clearDrops();
-        links.forEach(function (item) { item.classList.toggle('is-gooey-target', item === link); });
-        target = link;
-        if (!link || !link.getClientRects().length) {
-            effect.style.opacity = '0';
-            return;
+    function createParticle(i, t, d, r) {
+        var rotate = noise(r / 10);
+        return {
+            start: getXY(d[0], particleCount - i, particleCount),
+            end: getXY(d[1] + noise(7), particleCount - i, particleCount),
+            time: t,
+            scale: 1 + noise(0.2),
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10
+        };
+    }
+    function clearParticles() {
+        timers.forEach(clearTimeout);
+        frames.forEach(cancelAnimationFrame);
+        timers = []; frames = [];
+        filter.querySelectorAll('.particle').forEach(function (particle) { particle.remove(); });
+    }
+    function makeParticles() {
+        filter.style.setProperty('--time', (animationTime * 2 + timeVariance) + 'ms');
+        for (var i = 0; i < particleCount; i++) {
+            var t = animationTime * 2 + noise(timeVariance * 2);
+            var p = createParticle(i, t, particleDistances, particleR);
+            filter.classList.remove('active');
+            (function (particleData) {
+                timers.push(setTimeout(function () {
+                    var particle = document.createElement('span');
+                    var point = document.createElement('span');
+                    particle.classList.add('particle');
+                    particle.style.setProperty('--start-x', particleData.start[0] + 'px');
+                    particle.style.setProperty('--start-y', particleData.start[1] + 'px');
+                    particle.style.setProperty('--end-x', particleData.end[0] + 'px');
+                    particle.style.setProperty('--end-y', particleData.end[1] + 'px');
+                    particle.style.setProperty('--time', particleData.time + 'ms');
+                    particle.style.setProperty('--scale', particleData.scale);
+                    particle.style.setProperty('--color', 'var(--color-' + particleData.color + ', white)');
+                    particle.style.setProperty('--rotate', particleData.rotate + 'deg');
+                    point.classList.add('point');
+                    particle.appendChild(point);
+                    filter.appendChild(particle);
+                    frames.push(requestAnimationFrame(function () { filter.classList.add('active'); }));
+                    timers.push(setTimeout(function () { particle.remove(); }, particleData.time));
+                }, 30));
+            })(p);
         }
-        var bounds = nav.getBoundingClientRect();
-        var rect = link.getBoundingClientRect();
-        effect.style.width = rect.width + 'px';
-        effect.style.height = rect.height + 'px';
-        effect.style.transform = 'translate(' + (rect.left - bounds.left) + 'px,' + (rect.top - bounds.top) + 'px)';
-        effect.style.opacity = '1';
-        if (!burst || reduced.matches) return;
-        for (var i = 0; i < 8; i++) {
-            var angle = (i + Math.sin(i * 2) * 0.2) * Math.PI / 4;
-            var dot = document.createElement('span');
-            dot.className = 'gooey-dot';
-            dot.style.setProperty('--drop-size', (7 + i * 3 % 5) + 'px');
-            dot.style.setProperty('--drop-x', (Math.cos(angle) * (rect.width / 2 + 8 + i % 4)) + 'px');
-            dot.style.setProperty('--drop-y', (Math.sin(angle) * (rect.height / 2 + 5 + i % 6)) + 'px');
-            dot.style.setProperty('--drop-delay', (i % 3 * 25) + 'ms');
-            effect.appendChild(dot);
-        }
-        cleanup = setTimeout(clearDrops, 850);
     }
-
-    function restore() {
-        var focused = document.activeElement.closest('.gooey-link');
-        place(focused && nav.contains(focused) ? focused : current, false);
+    function position() {
+        if (!items[activeIndex].getClientRects().length) return;
+        var bounds = container.getBoundingClientRect();
+        var rect = items[activeIndex].getBoundingClientRect();
+        var styles = { left: (rect.x - bounds.x) + 'px', top: (rect.y - bounds.y) + 'px', width: rect.width + 'px', height: rect.height + 'px' };
+        Object.assign(filter.style, styles);
+        Object.assign(text.style, styles);
+        text.innerText = links[activeIndex].innerText;
     }
-
+    function select(index, animate) {
+        if (animate && activeIndex === index) return;
+        activeIndex = index;
+        items.forEach(function (item, i) { item.classList.toggle('active', i === activeIndex); });
+        position();
+        clearParticles();
+        text.classList.remove('active');
+        void text.offsetWidth;
+        text.classList.add('active');
+        if (animate && !reduced.matches) makeParticles();
+    }
     function closeCategories() {
         if (!category) return;
         category.classList.remove('is-open');
         categoryButton.setAttribute('aria-expanded', 'false');
     }
-
     function closeMenu() {
         burger.classList.remove('is-active');
         burger.setAttribute('aria-expanded', 'false');
-        nav.classList.remove('is-active');
+        menu.classList.remove('is-active');
         tools.classList.remove('is-active');
         closeCategories();
     }
-
-    links.forEach(function (link) {
-        link.addEventListener('pointerenter', function (event) {
-            if (event.pointerType !== 'touch') place(link, target !== link);
+    links.forEach(function (link, index) {
+        // Original behavior: selection changes on click, never on hover.
+        link.addEventListener('click', function (event) {
+            if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            select(index, true);
         });
-        link.addEventListener('focus', function () { place(link, true); });
-        link.addEventListener('click', function () { place(link, true); });
+        link.addEventListener('keydown', function (event) {
+            if (event.key === ' ' && link.tagName === 'A') { event.preventDefault(); link.click(); }
+        });
     });
-    nav.addEventListener('pointerleave', restore);
-    nav.addEventListener('focusout', function () { requestAnimationFrame(restore); });
     burger.addEventListener('click', function () {
         var open = burger.getAttribute('aria-expanded') !== 'true';
         burger.setAttribute('aria-expanded', String(open));
         burger.classList.toggle('is-active', open);
-        nav.classList.toggle('is-active', open);
+        menu.classList.toggle('is-active', open);
         tools.classList.toggle('is-active', open);
         if (!open) closeCategories();
-        place(current, false);
+        position();
     });
-    if (category) {
-        categoryButton.addEventListener('click', function () {
-            var open = categoryButton.getAttribute('aria-expanded') !== 'true';
-            categoryButton.setAttribute('aria-expanded', String(open));
-            category.classList.toggle('is-open', open);
-        });
-    }
+    if (category) categoryButton.addEventListener('click', function () {
+        var open = categoryButton.getAttribute('aria-expanded') !== 'true';
+        categoryButton.setAttribute('aria-expanded', String(open));
+        category.classList.toggle('is-open', open);
+    });
     document.addEventListener('click', function (event) {
-        if (!bar.contains(event.target)) { closeMenu(); restore(); }
+        if (!bar.contains(event.target)) closeMenu();
         else if (category && !category.contains(event.target)) closeCategories();
     });
     bar.addEventListener('keydown', function (event) {
         if (event.key !== 'Escape') return;
-        if (category && category.classList.contains('is-open')) {
-            closeCategories();
-            categoryButton.focus();
-        } else if (burger.getAttribute('aria-expanded') === 'true') {
-            closeMenu();
-            burger.focus();
-        }
+        if (category && category.classList.contains('is-open')) { closeCategories(); categoryButton.focus(); }
+        else if (burger.getAttribute('aria-expanded') === 'true') { closeMenu(); burger.focus(); }
     });
-    function resize() { place(target || current, false); }
-    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(resize).observe(nav);
-    window.addEventListener('resize', resize);
-    window.addEventListener('pageshow', function () { closeMenu(); place(current, false); });
-    reduced.addEventListener('change', function () { place(current, false); });
-    if (document.fonts) document.fonts.ready.then(resize);
-    nav.classList.add('gooey-ready');
-    place(current, false);
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(position).observe(container);
+    window.addEventListener('resize', position);
+    window.addEventListener('pageshow', function () { closeMenu(); select(routeIndex, false); });
+    window.addEventListener('pagehide', clearParticles);
+    reduced.addEventListener('change', function () { if (reduced.matches) clearParticles(); });
+    if (document.fonts) document.fonts.ready.then(position);
+    container.classList.add('gooey-ready');
+    select(activeIndex, false);
 })();

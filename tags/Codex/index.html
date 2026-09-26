@@ -48,6 +48,8 @@
 
 <link rel="stylesheet" href="/css/style.css">
 
+
+<meta name="page-transition-title" content="Codex">
 <script src="/js/page-transitions.js"></script>
 <script defer src="/js/gooey-nav.js"></script>
 
@@ -85,25 +87,34 @@
                 <span aria-hidden="true"></span>
             </button>
         </div>
-        <div class="navbar-menu navbar-start gooey-nav" id="site-navigation">
+        <div class="navbar-menu navbar-start" id="site-navigation">
+          <div class="gooey-nav-container">
+           <nav class="gooey-nav" aria-label="Pages">
+            <ul>
             
             
-            <a class="navbar-item gooey-link is-active"
+            <li class="active" style="order: 0">
+            <a class="gooey-link"
                aria-current="location"
-               style="order: 0" href="/archives">Archives</a>
+               href="/archives">Archives</a>
+            </li>
             
-            <a class="navbar-item gooey-link"
+            <li class="" style="order: 2">
+            <a class="gooey-link"
                
-               style="order: 2" href="/album">Album</a>
+               href="/album">Album</a>
+            </li>
             
-            <a class="navbar-item gooey-link"
+            <li class="" style="order: 4">
+            <a class="gooey-link"
                
-               style="order: 4" href="/about">About</a>
+               href="/about">About</a>
+            </li>
             
             
             
-            <div class="navbar-item has-dropdown navbar-categories" style="order: 1">
-                <button type="button" class="navbar-item gooey-link" aria-expanded="false" aria-controls="nav-categories">Categories&nbsp;<i class="fas fa-angle-down is-size-7" aria-hidden="true"></i></button>
+            <li class="navbar-categories" style="order: 1">
+                <button type="button" class="gooey-link" aria-expanded="false" aria-controls="nav-categories">Categories&nbsp;<i class="fas fa-angle-down is-size-7" aria-hidden="true"></i></button>
                 <div class="navbar-dropdown" id="nav-categories">
                     
                     <a class="navbar-item" href="/categories/AI/">
@@ -122,9 +133,13 @@
                     </a>
                     
                 </div>
-            </div>
+            </li>
             
-            <span class="gooey-effect" aria-hidden="true"><span class="gooey-pill"></span></span>
+            </ul>
+           </nav>
+           <span class="effect filter" aria-hidden="true"></span>
+           <span class="effect text" aria-hidden="true"></span>
+          </div>
         </div>
         <div class="navbar-menu navbar-end" id="site-tools">
             
@@ -144,13 +159,11 @@
         </div>
     </div>
 </nav>
-<svg class="gooey-filter" width="0" height="0" aria-hidden="true" focusable="false">
-    <defs>
-        <filter id="nav-ink-merge" x="-60%" y="-120%" width="220%" height="340%" color-interpolation-filters="sRGB">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
-            <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" />
-        </filter>
-    </defs>
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs><filter id="nav-ink-alpha" x="-100%" y="-300%" width="300%" height="700%" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1 0 0 0 1" result="ink" />
+        <feComposite in="ink" in2="SourceGraphic" operator="in" />
+    </filter></defs>
 </svg>
 <noscript><style>
     .navbar-main .navbar-burger { display: none; }
