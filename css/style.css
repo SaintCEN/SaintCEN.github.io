@@ -1062,7 +1062,7 @@ figure.highlight .section {
   margin: 0;
   color: #000;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(2.8rem, 11vw, 10.5rem);
+  font-size: clamp(1.8rem, 8.5vw, 10.5rem);
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.035em;
@@ -1204,7 +1204,7 @@ figure.highlight .section {
 }
 @media screen and (max-height: 480px) and (orientation: landscape) {
   .home-welcome h1 {
-    font-size: clamp(2.8rem, 20vh, 6rem);
+    font-size: clamp(1.8rem, 8.5vw, 6rem);
   }
   .home-actions {
     margin-top: 1.25rem;
