@@ -16,15 +16,13 @@
     var inkContext = ink.getContext('2d');
     var motion = matchMedia('(prefers-reduced-motion: reduce)');
     var duration = Number(root.dataset.duration);
-    var start = performance.now();
+    var start = 0;
     var last = 0;
     var progress = 0;
     var finishedAt = 0;
     var frame = 0;
     var exitTimer = 0;
     var stopped = false;
-    var imageReady = photo.complete;
-    var fontsReady = !document.fonts;
     var width = 0, height = 0, dpr = 1;
     var bounds;
     var cells = [];
@@ -165,7 +163,7 @@
         if (stopped) return;
         var elapsed = now - start;
         var delta = Math.min(now - (last || now), 100);
-        var ready = imageReady && fontsReady && document.readyState !== 'loading';
+        var ready = document.readyState !== 'loading';
         if (motion.matches) {
             progress = 1;
             draw(start + 1800);
@@ -184,16 +182,32 @@
         frame = requestAnimationFrame(tick);
     }
 
-    photo.addEventListener('load', function () { imageReady = true; }, { once: true });
-    photo.addEventListener('error', function () { imageReady = true; }, { once: true });
-    if (document.fonts) {
-        Promise.race([document.fonts.ready, new Promise(function (resolve) { setTimeout(resolve, 900); })])
-            .then(function () { fontsReady = true; if (!stopped) resize(); });
-    }
+    // Decode before the first visible frame, including on cached visits. Start
+    // the fill clock only after the complete scene can be painted together.
+    var imageDecoded = typeof photo.decode === 'function' ? photo.decode() : new Promise(function (resolve, reject) {
+        if (photo.complete) {
+            if (photo.naturalWidth) resolve();
+            else reject(new Error('Background unavailable'));
+        } else {
+            photo.addEventListener('load', resolve, { once: true });
+            photo.addEventListener('error', reject, { once: true });
+        }
+    });
+    var fontReady = document.fonts ? Promise.race([
+        document.fonts.ready,
+        new Promise(function (resolve) { setTimeout(resolve, 900); })
+    ]) : Promise.resolve();
     window.addEventListener('resize', resize);
     window.addEventListener('pagehide', cleanup, { once: true });
     root.addEventListener('pointermove', splash, { passive: true });
     root.addEventListener('pointerdown', splash, { passive: true });
-    resize();
-    frame = requestAnimationFrame(tick);
+    Promise.all([imageDecoded, fontReady]).then(function () {
+        if (stopped) return;
+        start = performance.now();
+        last = start;
+        resize();
+        draw(start);
+        root.classList.add('is-ready');
+        frame = requestAnimationFrame(tick);
+    }).catch(cleanup);
 })();

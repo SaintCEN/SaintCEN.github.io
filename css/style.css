@@ -1064,6 +1064,15 @@ figure.highlight .section {
   visibility: hidden;
 }
 
+.loader-landscape, .loader-paper, .loader-waves, .loader-title {
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+
+.page-loader.is-ready .loader-landscape, .page-loader.is-ready .loader-paper, .page-loader.is-ready .loader-waves, .page-loader.is-ready .loader-title {
+  opacity: 1;
+}
+
 @keyframes loader-safety-exit {
   to {
     visibility: hidden;
@@ -1073,6 +1082,9 @@ figure.highlight .section {
 @media (prefers-reduced-motion: reduce) {
   .page-loader {
     transition-duration: 100ms;
+  }
+  .loader-landscape, .loader-paper, .loader-waves, .loader-title {
+    transition: none;
   }
 }
 html:has(.post-toc) {
