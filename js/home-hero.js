@@ -25,6 +25,10 @@
             var distance = Math.hypot(Math.max(Math.abs(dx) - rect.width / 2, 0), Math.max(Math.abs(dy) - rect.height / 2, 0));
             button.style.setProperty('--shine-angle', (Math.atan2(dy, dx) * 180 / Math.PI + 90) + 'deg');
             button.style.setProperty('--shine', Math.max(0.2, 1 - distance / 240).toFixed(3));
+            if (distance === 0) {
+                button.style.setProperty('--ink-x', ((event.clientX - rect.left) / rect.width * 100).toFixed(1) + '%');
+                button.style.setProperty('--ink-y', ((event.clientY - rect.top) / rect.height * 100).toFixed(1) + '%');
+            }
         });
         if (!ready || event.pointerType === 'touch') return;
         if (ripples.length && time - ripples[ripples.length - 1].time < 0.09) return;

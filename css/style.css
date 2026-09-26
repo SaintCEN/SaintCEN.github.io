@@ -1081,6 +1081,8 @@ figure.highlight .section {
 .home-button {
   --shine: 0.3;
   --shine-angle: 135deg;
+  --ink-x: 50%;
+  --ink-y: 50%;
   position: relative;
   display: inline-flex;
   justify-content: center;
@@ -1099,12 +1101,34 @@ figure.highlight .section {
   letter-spacing: 0.035em;
   text-shadow: none;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09), inset 0 0 0 1px rgba(0, 0, 0, 0.04);
-  transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  isolation: isolate;
+  transition: color 240ms ease, transform 180ms ease, box-shadow 300ms ease;
+}
+.home-button > span {
+  position: relative;
+  z-index: 2;
+}
+.home-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 13px;
+  pointer-events: none;
+  background-color: #171918;
+  background-image: radial-gradient(ellipse, rgba(191, 187, 170, 0.52), transparent 64%), radial-gradient(ellipse, rgba(0, 0, 0, 0.95) 16%, transparent 68%), radial-gradient(ellipse, rgba(157, 159, 148, 0.45), transparent 65%), radial-gradient(ellipse, #080a09 20%, transparent 70%);
+  background-size: 95% 180%, 130% 210%, 85% 190%, 120% 220%;
+  background-position: -110% 30%, 30% 80%, 190% 100%, 150% 30%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  clip-path: circle(0% at var(--ink-x) var(--ink-y));
+  transition: clip-path 650ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 300ms ease;
 }
 .home-button::before {
   content: "";
   position: absolute;
   inset: -2px;
+  z-index: 1;
   border-radius: inherit;
   padding: 2px;
   background: conic-gradient(from var(--shine-angle), transparent 0deg, #000 35deg, transparent 80deg, transparent 180deg, #000 215deg, transparent 260deg);
@@ -1117,9 +1141,14 @@ figure.highlight .section {
   transition: opacity 180ms ease;
 }
 .home-button:hover, .home-button:focus-visible {
-  color: #000;
+  color: #fff;
   background-color: transparent;
-  box-shadow: 0 5px 24px rgba(0, 0, 0, 0.14), 0 0 12px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.22), 0 0 14px rgba(0, 0, 0, 0.18);
+}
+.home-button:hover::after, .home-button:focus-visible::after {
+  opacity: 0.96;
+  clip-path: circle(150% at var(--ink-x) var(--ink-y));
+  animation: home-ink-drift 3.8s ease-in-out infinite alternate;
 }
 .home-button:focus-visible {
   outline: 2px solid #000;
@@ -1129,6 +1158,16 @@ figure.highlight .section {
   transform: scale(0.97);
 }
 
+@keyframes home-ink-drift {
+  50% {
+    background-position: 20% 70%, 100% 20%, 60% 30%, -20% 80%;
+    background-size: 120% 210%, 100% 170%, 110% 160%, 145% 190%;
+  }
+  100% {
+    background-position: 160% 10%, -80% 100%, -100% 80%, 70% 0%;
+    background-size: 90% 150%, 140% 230%, 100% 210%, 105% 180%;
+  }
+}
 .home-social {
   margin-top: clamp(1.75rem, 4vh, 3rem);
 }
@@ -1177,6 +1216,9 @@ figure.highlight .section {
     border-radius: 12px;
     font-size: 0.95rem;
   }
+  .home-button::after {
+    border-radius: 9px;
+  }
 }
 @media screen and (max-height: 480px) and (orientation: landscape) {
   .home-welcome h1 {
@@ -1190,8 +1232,11 @@ figure.highlight .section {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .home-waves, .home-button, .home-button::before {
+  .home-waves, .home-button, .home-button::before, .home-button::after {
     transition: none;
+  }
+  .home-button:hover::after, .home-button:focus-visible::after {
+    animation: none;
   }
   .home-button:active {
     transform: none;
