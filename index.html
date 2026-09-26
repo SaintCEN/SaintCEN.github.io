@@ -72,7 +72,7 @@
         <div class="navbar-brand">
             <a class="navbar-item navbar-logo" href="/">
                 
-                <img src="/images/logo.png" alt="" height="28">
+                <img src="/images/logo.jpg" alt="" height="28">
                 
             </a>
             <div class="navbar-burger">
@@ -142,109 +142,39 @@
 
     
 
-<div id="page-loader" class="page-loader" data-frequency="always" role="status" aria-label="Loading">
-    <div class="loader-inner">
-        
-        <div class="loader-avatar">
-            <svg class="loader-ring" viewBox="0 0 100 100" aria-hidden="true">
-                <circle class="loader-ring-path" cx="50" cy="50" r="47" />
-            </svg>
-            <img src="/images/avatar-profile.jpg" alt="">
-        </div>
-        
-        
-        <div class="loader-title" aria-hidden="true">
-            <span class="loader-char-wrap"><span class="loader-char">S</span></span><span class="loader-char-wrap"><span class="loader-char">a</span></span><span class="loader-char-wrap"><span class="loader-char">1</span></span><span class="loader-char-wrap"><span class="loader-char">n</span></span><span class="loader-char-wrap"><span class="loader-char">t</span></span><span class="loader-char-wrap"><span class="loader-char">C</span></span><span class="loader-char-wrap"><span class="loader-char">H</span></span><span class="loader-char-wrap"><span class="loader-char">E</span></span><span class="loader-char-wrap"><span class="loader-char">N</span></span><span class="loader-char-wrap"><span class="loader-char">の</span></span><span class="loader-char-wrap"><span class="loader-char">H</span></span><span class="loader-char-wrap"><span class="loader-char">o</span></span><span class="loader-char-wrap"><span class="loader-char">m</span></span><span class="loader-char-wrap"><span class="loader-char">e</span></span>
-        </div>
-        
-        <div class="loader-progress" aria-hidden="true"><span class="loader-progress-bar"></span></div>
-        <div class="loader-meta" aria-hidden="true">
-            <span class="loader-status">INITIALIZING</span>
-            <span class="loader-count">0</span>
-        </div>
-    </div>
+<div id="page-loader" class="page-loader" data-frequency="always" data-duration="3200" role="progressbar" aria-label="Sa1ntのHome" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <img class="loader-landscape" src="/images/japan-autumn.jpg" alt="" fetchpriority="high" decoding="async">
+    <div class="loader-paper" aria-hidden="true"></div>
+    <canvas class="loader-waves" aria-hidden="true"></canvas>
+    <div class="loader-title" aria-hidden="true">Sa1ntのHome</div>
 </div>
 <noscript><style>#page-loader{display:none!important}</style></noscript>
 <script>
 (function () {
     var el = document.getElementById('page-loader');
-    if (!el) return;
-    // Frequency gate — runs before first paint so a repeat visit never flashes the overlay.
-    var freq = el.getAttribute('data-frequency'), key = 'minos_loader_seen', skip = false;
+    var frequency = el.dataset.frequency;
+    var key = 'minos_loader_seen';
+    var skip = false;
     try {
         if (sessionStorage.getItem('minos_loader_skip_once') === '1') {
             skip = true;
             sessionStorage.removeItem('minos_loader_skip_once');
         }
-        if (!skip && freq === 'session') { skip = sessionStorage.getItem(key) === '1'; sessionStorage.setItem(key, '1'); }
-        else if (!skip && freq === 'day') {
+        if (!skip && frequency === 'session') {
+            skip = sessionStorage.getItem(key) === '1';
+            sessionStorage.setItem(key, '1');
+        } else if (!skip && frequency === 'day') {
             var today = new Date().toDateString();
-            skip = localStorage.getItem(key) === today; localStorage.setItem(key, today);
+            skip = localStorage.getItem(key) === today;
+            localStorage.setItem(key, today);
         }
     } catch (e) {}
-    if (skip) { el.parentNode.removeChild(el); }
-    else { window.__minosLoader = el; }
+    if (skip) { el.remove(); return; }
+    // A missing script must never trap the visitor.
+    window.__minosLoaderTimeout = setTimeout(function () { el.remove(); }, 9000);
 })();
 </script>
-
-<script src="//cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
-
-<script>(function () {
-    var el = window.__minosLoader;
-    if (!el) return;
-    var done = function () {
-        if (!el || !el.parentNode) return;
-        el.parentNode.removeChild(el);
-        el = null;
-    };
-    window.__minosLoaderFail = done;
-
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function run() {
-        if (typeof gsap === 'undefined') { done(); return; }
-        if (reduce) {
-            gsap.to(el, { autoAlpha: 0, duration: 0.3, onComplete: done });
-            return;
-        }
-        var chars = el.querySelectorAll('.loader-char');
-        var count = el.querySelector('.loader-count');
-        var counter = { v: 0 };
-        var tl = gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: done });
-
-        var ring = el.querySelector('.loader-ring-path');
-        var circ = ring ? ring.getTotalLength() : 0;
-
-        tl.set(el.querySelector('.loader-inner'), { autoAlpha: 1 });
-        if (ring) {
-            gsap.set(ring, { strokeDasharray: circ });
-            tl.fromTo(ring, { strokeDashoffset: circ }, { strokeDashoffset: 0, duration: 0.95, ease: 'power2.inOut' }, 0);
-        }
-        tl.from('.loader-avatar img', { scale: 0.82, autoAlpha: 0, duration: 0.7 }, 0.15)
-          .from(chars, { yPercent: 115, duration: 0.6, stagger: 0.035 }, 0.35)
-          .from('.loader-meta', { autoAlpha: 0, y: 6, duration: 0.5 }, 0.6)
-          .fromTo('.loader-progress-bar', { scaleX: 0 }, { scaleX: 1, duration: 1.05, ease: 'power1.inOut' }, 0.6);
-
-        if (count) {
-            tl.to(counter, {
-                v: 100, duration: 1.05, ease: 'power1.inOut',
-                onUpdate: function () { count.textContent = Math.round(counter.v); }
-            }, 0.6);
-        }
-        // Pure opacity fade — ZERO vertical movement anywhere. The page beneath
-        // was already at its final position the whole time (no scroll lock, no
-        // reflow), so it simply becomes visible in place.
-        tl.to(el, { autoAlpha: 0, duration: 0.55, ease: 'power2.inOut' }, '+=0.3');
-    }
-
-    var waited = 0;
-    (function poll() {
-        if (typeof gsap !== 'undefined') { run(); return; }
-        if ((waited += 50) > 4000) { done(); return; }
-        setTimeout(poll, 50);
-    })();
-})();
-</script>
+<script async src="/js/home-loader.js"></script>
 
 
 <section class="section home-section">
