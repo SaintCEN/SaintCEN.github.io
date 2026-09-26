@@ -1,43 +1,51 @@
-/* Keep real document navigation; use a short curve reveal when browser
- * snapshots are unsupported or skipped (for example on a slow connection).
+/* One shared curve reveal for home, navigation and article links.
+ * Real document navigation preserves each page's scripts and browser history.
  */
 (function () {
     'use strict';
     var key = 'minos-page-transition';
     var pending = false;
-    var handled = false;
+    var cleanup;
     var reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    var navigation = performance.getEntriesByType('navigation')[0];
     function route(url) { return url.pathname.replace(/\/$/, '') + url.search; }
     try {
         var saved = JSON.parse(sessionStorage.getItem(key) || 'null');
         sessionStorage.removeItem(key);
-        pending = !!saved && Date.now() - saved.time < 60000 && saved.route === route(location);
+        pending = !!saved && Date.now() - saved.time < 60000 && saved.route === route(location)
+            && (!navigation || navigation.type !== 'reload');
     } catch (error) { /* Links still work when storage is unavailable. */ }
+    if (navigation && navigation.type === 'back_forward') pending = true;
+
+    function clearCurtain() {
+        clearTimeout(cleanup);
+        document.querySelectorAll('.page-transition-curtain').forEach(function (el) { el.remove(); });
+    }
 
     function reveal() {
-        if (!pending || reduced.matches) return;
+        if (!pending) return;
         pending = false;
+        if (reduced.matches) return;
+        clearCurtain();
         var curtain = document.createElement('div');
-        curtain.className = 'page-transition-fallback';
+        curtain.className = 'page-transition-curtain';
         curtain.setAttribute('aria-hidden', 'true');
         (document.body || document.documentElement).appendChild(curtain);
-        curtain.addEventListener('animationend', function () { curtain.remove(); }, { once: true });
-        setTimeout(function () { curtain.remove(); }, 1000);
+        curtain.addEventListener('animationend', clearCurtain, { once: true });
+        cleanup = setTimeout(clearCurtain, 1000);
     }
 
     // This listener must be registered in the head before the first paint.
-    window.addEventListener('pagereveal', function (event) {
-        handled = true;
-        if (event.viewTransition) event.viewTransition.ready.catch(reveal);
-        else reveal();
-    });
+    window.addEventListener('pagereveal', reveal);
     if (!('onpagereveal' in window)) document.addEventListener('DOMContentLoaded', reveal, { once: true });
     window.addEventListener('pageshow', function (event) {
         if (event.persisted) {
-            pending = false;
-            document.querySelectorAll('.page-transition-fallback').forEach(function (el) { el.remove(); });
-        } else if (!handled) reveal();
+            pending = true;
+        }
+        reveal();
     });
+    window.addEventListener('pagehide', clearCurtain);
+    reduced.addEventListener('change', function () { if (reduced.matches) clearCurtain(); });
 
     document.addEventListener('click', function (event) {
         if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || reduced.matches) return;

@@ -1624,56 +1624,9 @@ body:has(.post-toc) {
   }
 }
 @view-transition {
-  navigation: auto;
+  navigation: none;
 }
-::view-transition {
-  background: #202220;
-}
-
-::view-transition-group(root) {
-  animation: none;
-}
-
-::view-transition-image-pair(root) {
-  isolation: isolate;
-}
-
-::view-transition-old(root), ::view-transition-new(root) {
-  mix-blend-mode: normal;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-}
-
-::view-transition-old(root) {
-  animation: page-ink-out 420ms cubic-bezier(0.65, 0, 0.35, 1) both;
-}
-
-::view-transition-new(root) {
-  animation: page-ink-in 640ms cubic-bezier(0.22, 0.7, 0.2, 1) 130ms both;
-}
-
-@keyframes page-ink-out {
-  from {
-    clip-path: inset(0 0 0 0 round 0 0 0 0);
-    transform: translateY(0);
-  }
-  to {
-    clip-path: inset(0 0 100% 0 round 0 0 45% 45%);
-    transform: translateY(-5%);
-  }
-}
-@keyframes page-ink-in {
-  from {
-    clip-path: inset(100% 0 0 0 round 45% 45% 0 0);
-    transform: translateY(4%);
-  }
-  to {
-    clip-path: inset(0 0 0 0 round 0 0 0 0);
-    transform: translateY(0);
-  }
-}
-.page-transition-fallback {
+.page-transition-curtain {
   position: fixed;
   z-index: 10000;
   inset: -12vh 0 0;
@@ -1700,19 +1653,16 @@ body:has(.post-toc) {
     animation: none;
     display: none;
   }
-  .page-transition-fallback {
+  .page-transition-curtain {
     display: none;
     animation: none;
   }
   .gooey-effect {
     filter: none;
   }
-  ::view-transition-old(root), ::view-transition-new(root) {
-    animation: none;
-  }
 }
 @media print {
-  .gooey-filter, .gooey-effect {
+  .gooey-filter, .gooey-effect, .page-transition-curtain {
     display: none;
   }
 }
