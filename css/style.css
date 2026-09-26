@@ -1089,7 +1089,7 @@ figure.highlight .section {
   min-width: clamp(128px, 13vw, 184px);
   min-height: 56px;
   padding: 1rem 2rem;
-  border: 1px solid rgba(0, 0, 0, 0.72);
+  border: 2px solid rgba(0, 0, 0, 0.72);
   border-radius: 16px;
   background: transparent;
   color: #000;
@@ -1104,7 +1104,7 @@ figure.highlight .section {
 .home-button::before {
   content: "";
   position: absolute;
-  inset: -1px;
+  inset: -2px;
   border-radius: inherit;
   padding: 2px;
   background: conic-gradient(from var(--shine-angle), transparent 0deg, #000 35deg, transparent 80deg, transparent 180deg, #000 215deg, transparent 260deg);
