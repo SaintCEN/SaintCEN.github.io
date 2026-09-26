@@ -172,12 +172,43 @@
     .navbar-main .navbar-menu { display: flex; flex-wrap: wrap; }
 </style></noscript>
 
-    <main class="section">
-    <div class="container content album-page">
-        <h1>Album</h1>
-        <p class="album-empty">相册里还没有照片。</p>
-    </div>
+    
+<main class="album-world album-index">
+    <header class="album-masthead">
+        <h1>Album<span aria-hidden="true">.</span></h1>
+        <p>把走过的地方，留在光影里。</p>
+        <span class="album-label">01 collections</span>
+    </header>
+    
+    <section class="album-showcase" aria-label="相册精选" style="--album-count: 1">
+        <div class="album-stage">
+            
+            <article class="album-slide is-active" data-index="0">
+                <p class="album-label album-category">Travel · 01 / 01</p>
+                <h2 class="album-split-title"><span>Singapore</span><span>新加坡</span></h2>
+                
+                <a class="album-cover-link" href="/album/Singapore/" aria-label="打开相册：Singapore" data-album-cursor="View ↗">
+                    
+                    <span class="album-placeholder"><span class="album-placeholder-number" aria-hidden="true">01</span><span>照片，待续。</span><span class="album-label">A story yet to unfold</span></span>
+                    
+                    <span class="album-cover-hint">View album <span aria-hidden="true">↗</span></span>
+                </a>
+                <p class="album-slide-description">在狮城，记录街巷、光影与日常。</p>
+                <div class="album-counter" aria-hidden="true"><em>01</em><span> / 01</span></div>
+            </article>
+            
+            <div class="album-progress" aria-hidden="true"><span></span></div>
+        </div>
+    </section>
+    <nav class="album-directory" aria-label="所有相册">
+        <p class="album-label">All collections</p>
+        
+        <a href="/album/Singapore/"><span class="album-label">01</span><span>Singapore<small>在狮城，记录街巷、光影与日常。</small></span><span class="album-label">0 photos</span><span aria-hidden="true">↗</span></a>
+        
+    </nav>
+    
 </main>
+<script defer src="/js/album.js"></script>
 
     
     <footer class="footer">

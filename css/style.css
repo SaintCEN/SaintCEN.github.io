@@ -1877,6 +1877,712 @@ html.curve-entering::before {
     display: none;
   }
 }
+.album-world {
+  --album-paper: #faf9f6;
+  --album-ink: #232323;
+  --album-line: #deddd7;
+  background: var(--album-paper);
+  color: var(--album-ink);
+  font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
+}
+.album-world a {
+  color: inherit;
+}
+.album-world img {
+  display: block;
+}
+.album-world a:focus-visible, .album-world button:focus-visible {
+  outline: 2px solid #3273dc;
+  outline-offset: 5px;
+}
+
+.album-label {
+  font-family: "Source Code Pro", monospace, "Microsoft YaHei";
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+.album-masthead {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+  margin: 0 5vw;
+  padding: 2rem 0 1.5rem;
+  border-bottom: 1px solid var(--album-line);
+}
+.album-masthead h1 {
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  font-weight: 400;
+}
+.album-masthead h1 span {
+  color: #99978f;
+}
+.album-masthead p {
+  flex: 1;
+  font-size: 0.95rem;
+  color: #77746c;
+}
+.album-masthead > .album-label {
+  color: #77746c;
+}
+
+.album-stage {
+  position: relative;
+}
+
+.album-slide {
+  position: relative;
+  height: calc(100svh - 3.25rem);
+  min-height: 680px;
+  overflow: hidden;
+}
+.album-slide .album-category {
+  position: absolute;
+  left: 5vw;
+  top: 3rem;
+  color: #77746c;
+  z-index: 4;
+}
+
+.album-split-title {
+  font-size: clamp(2.5rem, 5vw, 7rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+.album-split-title span {
+  position: absolute;
+  top: 43%;
+  max-width: 28vw;
+  overflow-wrap: anywhere;
+  z-index: 4;
+  pointer-events: none;
+}
+.album-split-title span:first-child {
+  left: 5vw;
+}
+.album-split-title span:last-child {
+  right: 5vw;
+  text-align: right;
+}
+
+.album-cover-link {
+  position: absolute;
+  width: 46vw;
+  height: 65%;
+  left: 27vw;
+  top: 14%;
+  z-index: 3;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #ebeae4;
+}
+.album-cover-link img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.album-cover-link:hover img {
+  filter: saturate(1.14) contrast(1.05);
+}
+
+.album-cover-hint {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: space-between;
+  font: 0.65rem "Source Code Pro", monospace, "Microsoft YaHei";
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 5px #000;
+}
+
+.album-scatter {
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 3px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+.album-scatter img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.album-scatter-left {
+  left: 20vw;
+  top: 23%;
+  width: 20vw;
+  height: 28%;
+  transform: rotate(-5deg);
+}
+
+.album-scatter-right {
+  left: 62vw;
+  top: 56%;
+  width: 18vw;
+  height: 26%;
+  transform: rotate(4deg);
+}
+
+.album-slide-description {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 5vw;
+  max-width: min(58vw, 40rem);
+  font-size: 0.95rem;
+  color: #77746c;
+}
+
+.album-counter {
+  position: absolute;
+  right: 5vw;
+  bottom: 2.5rem;
+  color: #77746c;
+  font: 0.65rem "Source Code Pro", monospace, "Microsoft YaHei";
+}
+.album-counter em {
+  font: italic clamp(2.5rem, 5vw, 4.5rem) "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
+  color: #b8b6af;
+}
+
+.album-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--album-line);
+}
+.album-progress span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: var(--album-ink);
+}
+
+.album-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.8rem;
+  background: #eeede8;
+  color: #817e74;
+  border: 1px solid #e0ded6;
+}
+.album-placeholder > span:not(.album-placeholder-number) {
+  position: relative;
+  z-index: 1;
+}
+.album-placeholder .album-placeholder-number {
+  position: absolute;
+  font-size: clamp(10rem, 28vw, 32rem);
+  line-height: 1;
+  font-style: italic;
+  color: #dedcd3;
+}
+.album-placeholder + .album-cover-hint {
+  color: #77746c;
+  text-shadow: none;
+}
+
+.album-showcase.is-enhanced {
+  height: calc((var(--album-count) + 1) * (100svh - 3.25rem));
+}
+.album-showcase.is-enhanced .album-stage {
+  position: sticky;
+  top: 3.25rem;
+  height: calc(100svh - 3.25rem);
+  min-height: 680px;
+}
+.album-showcase.is-enhanced .album-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s;
+  pointer-events: none;
+}
+.album-showcase.is-enhanced .album-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.album-showcase.is-enhanced .album-cover-link {
+  transform: skewY(var(--album-skew, 0deg)) scaleY(var(--album-scale, 1));
+  transition: transform 0.4s ease;
+}
+.album-showcase.is-enhanced .album-split-title span {
+  transition: transform 0.4s ease, opacity 0.35s ease;
+  transform: translateX(-60px);
+  opacity: 0;
+}
+.album-showcase.is-enhanced .album-split-title span:last-child {
+  transform: translateX(60px);
+}
+.album-showcase.is-enhanced .is-active .album-split-title span {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.album-directory {
+  padding: 5rem 8vw 7rem;
+}
+.album-directory > p {
+  margin-bottom: 2rem;
+  color: #77746c;
+}
+.album-directory > a {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto 2rem;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.7rem 0;
+  border-top: 1px solid var(--album-line);
+  font-size: clamp(1.6rem, 3vw, 3rem);
+  transition: padding 0.3s;
+}
+.album-directory > a:hover {
+  padding-left: 0.5rem;
+}
+.album-directory small {
+  display: block;
+  font-size: 0.85rem;
+  color: #77746c;
+  margin-top: 0.35rem;
+}
+
+.album-hero {
+  position: relative;
+  height: 130svh;
+  min-height: 600px;
+  overflow: hidden;
+}
+.album-hero > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.album-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent 60%);
+  pointer-events: none;
+}
+.album-hero a, .album-hero h1, .album-hero p {
+  color: #fff;
+}
+.album-hero.is-empty {
+  height: 70svh;
+  min-height: 400px;
+  background: #eeede8;
+}
+.album-hero.is-empty::after {
+  display: none;
+}
+.album-hero.is-empty a, .album-hero.is-empty h1, .album-hero.is-empty p {
+  color: var(--album-ink);
+}
+.album-hero.is-empty .album-neighbor {
+  border-color: #77746c;
+}
+
+.album-back {
+  position: absolute;
+  top: 2rem;
+  left: 5vw;
+  z-index: 2;
+  padding: 0.75rem 0;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.is-empty .album-back {
+  text-shadow: none;
+}
+
+.album-hero-title {
+  position: absolute;
+  bottom: clamp(6rem, 8vw, 9rem);
+  left: 5vw;
+  right: 5vw;
+  z-index: 2;
+  text-align: center;
+}
+.album-hero-title > p {
+  letter-spacing: 0.5em;
+  margin-bottom: 1.25rem;
+}
+.album-hero-title h1 {
+  font-size: clamp(3rem, 7vw, 8rem);
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  overflow-wrap: anywhere;
+}
+.album-hero-title > a {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.75rem;
+}
+
+.album-neighbor {
+  position: absolute;
+  z-index: 3;
+  bottom: 3rem;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: transform 0.3s;
+}
+.album-neighbor:hover {
+  transform: scale(1.12);
+}
+.album-neighbor.is-previous {
+  left: 5vw;
+}
+.album-neighbor.is-next {
+  right: 5vw;
+}
+
+.album-editorial {
+  padding: 120px clamp(24px, 6vw, 80px);
+  text-align: center;
+}
+.album-editorial .album-description {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
+  line-height: 1.85;
+  white-space: pre-line;
+}
+.album-editorial .album-divider {
+  display: block;
+  height: 1px;
+  width: 60px;
+  margin: 48px auto;
+  background: var(--album-line);
+}
+.album-editorial dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  max-width: 700px;
+  margin: auto;
+}
+.album-editorial dt {
+  font: 0.65rem "Source Code Pro", monospace, "Microsoft YaHei";
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #77746c;
+  margin-bottom: 8px;
+}
+.album-editorial dd {
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.album-photographs {
+  padding: 0 clamp(16px, 4vw, 48px) 80px;
+  scroll-margin-top: 5rem;
+}
+
+.album-masonry {
+  columns: 3;
+  column-gap: 10px;
+}
+
+.album-photo {
+  display: block;
+  position: relative;
+  break-inside: avoid;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.album-photo img {
+  width: 100%;
+  height: auto;
+  transition: filter 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.album-photo:hover img {
+  filter: saturate(1.14) contrast(1.05);
+}
+.album-photo.will-reveal {
+  clip-path: inset(100% 0 0 0);
+}
+.album-photo.is-revealed {
+  clip-path: inset(0);
+  transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--photo-delay, 0s);
+}
+
+.album-photo-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 1rem 1rem;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+  font-size: 0.8rem;
+}
+
+.album-no-photos {
+  text-align: center;
+  padding: 5rem 1rem 7rem;
+}
+.album-no-photos p {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.album-no-photos > span {
+  color: #77746c;
+}
+
+.album-bottom-nav {
+  margin: 0 5vw;
+  padding: 3rem 0 5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  border-top: 1px solid var(--album-line);
+}
+.album-bottom-nav a:last-child {
+  text-align: right;
+}
+.album-bottom-nav .album-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #77746c;
+}
+
+.album-lightbox {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  padding: 4rem clamp(3rem, 6vw, 6rem);
+  background: rgba(0, 0, 0, 0.96);
+  color: #fff;
+  font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
+}
+.album-lightbox::backdrop {
+  background: #000;
+}
+.album-lightbox[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.album-lightbox figure {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+.album-lightbox img {
+  max-width: 100%;
+  max-height: 78dvh;
+  object-fit: contain;
+  margin: auto;
+  display: block;
+}
+.album-lightbox figcaption {
+  margin-top: 16px;
+  font: 0.75rem "Source Code Pro", monospace, "Microsoft YaHei";
+  color: #b9b9b9;
+  letter-spacing: 0.1em;
+}
+.album-lightbox button {
+  position: absolute;
+  background: none;
+  border: 0;
+  color: #fff;
+  font: 2rem "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+}
+.album-lightbox button:focus-visible, .album-lightbox a:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
+
+.album-lightbox-close {
+  top: 1rem;
+  right: 1rem;
+}
+
+.album-lightbox-prev {
+  left: 0.5rem;
+  top: calc(50% - 22px);
+}
+
+.album-lightbox-next {
+  right: 0.5rem;
+  top: calc(50% - 22px);
+}
+
+.album-lightbox-original {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.5rem;
+  font: 0.7rem "Source Code Pro", monospace, "Microsoft YaHei";
+  color: #ccc;
+  padding: 0.75rem;
+}
+
+html:has(.album-lightbox[open]) {
+  overflow: hidden;
+}
+
+.album-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(250, 249, 246, 0.92);
+  color: #232323;
+  font: 0.65rem "Source Code Pro", monospace, "Microsoft YaHei";
+  pointer-events: none;
+  z-index: 25;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .album-world.has-cursor [data-album-cursor] {
+    cursor: none;
+  }
+}
+@media (max-width: 1199px) {
+  .album-masonry {
+    columns: 2;
+  }
+}
+@media (max-width: 1023px) {
+  .album-scatter {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .album-masthead {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.5rem 0;
+  }
+  .album-masthead p {
+    flex-basis: 65%;
+    font-size: 0.8rem;
+  }
+  .album-masthead > .album-label {
+    font-size: 0.55rem;
+  }
+  .album-slide {
+    height: 85svh;
+    min-height: 650px;
+  }
+  .album-slide .album-category {
+    top: 2rem;
+  }
+  .album-split-title {
+    font-size: clamp(2rem, 9vw, 4rem);
+  }
+  .album-split-title span {
+    top: 5rem;
+    max-width: 80vw;
+  }
+  .album-split-title span:last-child {
+    top: auto;
+    bottom: 7rem;
+    font-size: 1.5rem;
+  }
+  .album-cover-link {
+    left: 9vw;
+    top: 24%;
+    width: 82vw;
+    height: 48%;
+  }
+  .album-slide-description {
+    font-size: 0.8rem;
+    bottom: 3rem;
+    max-width: 62vw;
+  }
+  .album-counter {
+    bottom: 3rem;
+  }
+  .album-directory {
+    padding: 3rem 5vw;
+  }
+  .album-directory > a {
+    grid-template-columns: 1.5rem 1fr auto;
+    gap: 0.8rem;
+  }
+  .album-directory > a > .album-label:nth-child(3) {
+    display: none;
+  }
+  .album-masonry {
+    columns: 1;
+  }
+  .album-hero {
+    height: 110svh;
+    min-height: 520px;
+  }
+  .album-editorial {
+    padding: 70px 24px;
+  }
+  .album-editorial dl {
+    gap: 12px;
+  }
+  .album-editorial dt {
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+  }
+  .album-editorial dd {
+    font-size: 0.8rem;
+  }
+  .album-bottom-nav {
+    font-size: 0.9rem;
+  }
+  .album-cursor {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .album-world *, .album-world *::before, .album-world *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .album-photo.will-reveal {
+    clip-path: none;
+  }
+  .album-cursor {
+    display: none;
+  }
+}
 .ins-section-container {
   position: relative;
   background: #f7f7f7;
