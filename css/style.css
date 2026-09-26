@@ -1861,6 +1861,11 @@ html.curve-entering::before {
   pointer-events: none;
 }
 
+html.curve-home .navbar-main {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gooey-nav-container .particle, .page-curve, html.curve-entering::before {
     display: none;

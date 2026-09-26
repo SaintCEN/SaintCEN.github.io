@@ -16,7 +16,7 @@
     var activeIndex = Math.max(0, items.findIndex(function (item) { return item.classList.contains('active'); }));
     var routeIndex = activeIndex;
     var reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    var timers = [], frames = [];
+    var timers = [], frames = [], finishParticles = null;
     var bar = container.closest('.navbar-main');
     var menu = container.closest('.navbar-start');
     var burger = bar.querySelector('.navbar-burger');
@@ -43,12 +43,23 @@
         };
     }
     function clearParticles() {
+        if (finishParticles) finishParticles();
         timers.forEach(clearTimeout);
         frames.forEach(cancelAnimationFrame);
         timers = []; frames = [];
         filter.querySelectorAll('.particle').forEach(function (particle) { particle.remove(); });
     }
     function makeParticles() {
+        var complete, remaining = particleCount;
+        var finished = new Promise(function (resolve) { complete = resolve; });
+        var finish = function () {
+            if (finishParticles === finish) finishParticles = null;
+            complete();
+        };
+        finishParticles = finish;
+        // Animation events account for the original -350ms delay. Fall back
+        // if the tab is hidden or a browser suppresses animation events.
+        timers.push(setTimeout(finish, 1500));
         filter.style.setProperty('--time', (animationTime * 2 + timeVariance) + 'ms');
         for (var i = 0; i < particleCount; i++) {
             var t = animationTime * 2 + noise(timeVariance * 2);
@@ -68,6 +79,9 @@
                     particle.style.setProperty('--color', 'var(--color-' + particleData.color + ', white)');
                     particle.style.setProperty('--rotate', particleData.rotate + 'deg');
                     point.classList.add('point');
+                    point.addEventListener('animationend', function (event) {
+                        if (event.animationName === 'point' && --remaining === 0) finish();
+                    });
                     particle.appendChild(point);
                     filter.appendChild(particle);
                     frames.push(requestAnimationFrame(function () { filter.classList.add('active'); }));
@@ -75,6 +89,7 @@
                 }, 30));
             })(p);
         }
+        return finished;
     }
     function position() {
         if (!items[activeIndex].getClientRects().length) return;
@@ -94,7 +109,12 @@
         text.classList.remove('active');
         void text.offsetWidth;
         text.classList.add('active');
-        if (animate && !reduced.matches) makeParticles();
+        if (animate && !reduced.matches) {
+            var finished = makeParticles();
+            container.dispatchEvent(new CustomEvent('minos:nav-animation', {
+                bubbles: true, detail: { link: links[index], finished: finished }
+            }));
+        }
     }
     function closeCategories() {
         if (!category) return;
@@ -143,7 +163,9 @@
     });
     if (typeof ResizeObserver !== 'undefined') new ResizeObserver(position).observe(container);
     window.addEventListener('resize', position);
-    window.addEventListener('pageshow', function () { closeMenu(); select(routeIndex, false); });
+    window.addEventListener('pageshow', function (event) {
+        if (event.persisted) { closeMenu(); select(routeIndex, false); }
+    });
     window.addEventListener('pagehide', clearParticles);
     reduced.addEventListener('change', function () { if (reduced.matches) clearParticles(); });
     if (document.fonts) document.fonts.ready.then(position);

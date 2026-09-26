@@ -6,20 +6,37 @@
 (function () {
     'use strict';
     var key = 'minos-curve-route';
+    var previousKey = 'minos-curve-previous';
     var reduced = matchMedia('(prefers-reduced-motion: reduce)');
     var navigation = performance.getEntriesByType('navigation')[0];
     var pending = false, leaving = null, frame = 0, layer = null;
+    var fromHome = false, committed = false, request = 0;
+    var isHome = !document.documentElement.classList.contains('has-navbar-fixed-top');
+    var navAnimations = new WeakMap();
     var svg, path, label, width, height;
     var safety;
     function route(url) { return url.pathname.replace(/\/$/, '') + url.search; }
+    function previousWasHome() {
+        try {
+            var previous = JSON.parse(sessionStorage.getItem(previousKey) || 'null');
+            return !!previous && previous.home && Date.now() - previous.time < 60000;
+        } catch (error) { return false; }
+    }
     try {
         var saved = JSON.parse(sessionStorage.getItem(key) || 'null');
         sessionStorage.removeItem(key);
         pending = !!saved && Date.now() - saved.time < 60000 && saved.route === route(location)
             && (!navigation || navigation.type !== 'reload');
+        fromHome = pending && !!saved.fromHome;
     } catch (error) { /* Navigation remains available without storage. */ }
-    if (navigation && navigation.type === 'back_forward') pending = true;
-    if (pending && !reduced.matches) document.documentElement.classList.add('curve-entering');
+    if (navigation && navigation.type === 'back_forward') { pending = true; fromHome = previousWasHome(); }
+    function markHomeTransition() {
+        document.documentElement.classList.toggle('curve-home', isHome || fromHome);
+    }
+    if (pending && !reduced.matches) {
+        document.documentElement.classList.add('curve-entering');
+        markHomeTransition();
+    }
 
     function clear() {
         cancelAnimationFrame(frame);
@@ -27,7 +44,7 @@
         frame = 0;
         if (layer) layer.remove();
         layer = null;
-        document.documentElement.classList.remove('curve-entering');
+        document.documentElement.classList.remove('curve-entering', 'curve-home');
     }
     function measure() { width = innerWidth; height = innerHeight; }
     function shape(amount) {
@@ -36,6 +53,7 @@
     }
     function create() {
         clear();
+        markHomeTransition();
         measure();
         layer = document.createElement('div');
         layer.className = 'page-curve is-entering';
@@ -92,12 +110,13 @@
         safety = setTimeout(clear, 2500);
     }
     function navigate() {
-        if (!leaving) return;
+        if (!leaving || committed) return;
+        committed = true;
         var destination = leaving;
-        try { sessionStorage.setItem(key, JSON.stringify({ route: route(destination), time: Date.now() })); } catch (error) {}
+        try { sessionStorage.setItem(key, JSON.stringify({ route: route(destination), fromHome: isHome, time: Date.now() })); } catch (error) {}
         location.assign(destination.href);
         // If a navigation is cancelled or cannot finish, never trap the page.
-        safety = setTimeout(function () { leaving = null; clear(); }, 12000);
+        safety = setTimeout(function () { leaving = null; committed = false; clear(); }, 12000);
     }
 
     // Reveal at the first paint opportunity; CDN plugins may finish later.
@@ -106,15 +125,21 @@
     document.addEventListener('DOMContentLoaded', reveal, { once: true });
     if (pending) safety = setTimeout(reveal, 2000);
     window.addEventListener('pageshow', function (event) {
-        if (event.persisted) { leaving = null; pending = true; }
+        if (event.persisted) { leaving = null; committed = false; request++; pending = true; fromHome = previousWasHome(); }
         reveal();
     });
-    window.addEventListener('pagehide', clear);
+    window.addEventListener('pagehide', function () {
+        try { sessionStorage.setItem(previousKey, JSON.stringify({ home: isHome, time: Date.now() })); } catch (error) {}
+        clear();
+    });
     window.addEventListener('resize', measure);
     reduced.addEventListener('change', function () {
         if (!reduced.matches) return;
         clear();
         if (leaving) navigate();
+    });
+    document.addEventListener('minos:nav-animation', function (event) {
+        navAnimations.set(event.detail.link, event.detail.finished);
     });
     document.addEventListener('click', function (event) {
         if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || reduced.matches) return;
@@ -125,8 +150,16 @@
         if (url.origin !== location.origin || route(url) === route(location)) return;
         if (/\.[^/]+$/.test(url.pathname) && !/\.html?$/.test(url.pathname)) return;
         event.preventDefault();
-        if (leaving) return;
+        if (committed) return;
         leaving = url;
-        navigate();
+        var ticket = ++request;
+        var finished = navAnimations.get(link);
+        if (finished) {
+            finished.then(function () {
+                // A new selection can resolve the old animation inside its
+                // click handler. Let that click finish bubbling before commit.
+                setTimeout(function () { if (ticket === request) navigate(); }, 0);
+            });
+        } else navigate();
     });
 })();
