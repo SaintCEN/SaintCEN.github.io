@@ -1827,7 +1827,7 @@ body:has(.post-toc) {
 .page-curve {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: 29;
   pointer-events: none;
   overflow: hidden;
 }
@@ -1857,7 +1857,7 @@ html.curve-entering::before {
   position: fixed;
   inset: 0;
   background: #000;
-  z-index: 9999;
+  z-index: 28;
   pointer-events: none;
 }
 
