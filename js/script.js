@@ -5,12 +5,6 @@
         $('.navbar-main .navbar-end').toggleClass('is-active');
     });
 
-    $('.navbar-logo').click(function () {
-        try {
-            sessionStorage.setItem('minos_loader_skip_once', '1');
-        } catch (e) {}
-    });
-
     $('.article.gallery img:not(".not-gallery-item")').each(function () {
         // wrap images with link and add caption if possible
         if ($(this).parent('a').length === 0) {
