@@ -1,136 +1,383 @@
-/* Crafteako-inspired editorial photography, using static Hexo documents.
- * Reference: https://github.com/rijulpoudel/crafteako-website
+/* MenuFullGrid by Codrops, MIT (licenses/menu-full-grid.txt).
+ * Original selection / open / back GSAP timelines; scoped to Hexo's page lifecycle.
+ * Native cursor only. All album content is already present in this document.
  */
 (function () {
     'use strict';
-    var root = document.querySelector('.album-world');
-    if (!root) return;
-    var scope = window.MinosPage.scope;
-    var reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    var desktop = matchMedia('(min-width: 768px) and (min-height: 740px)');
-    var showcase = root.querySelector('.album-showcase');
-    if (showcase) {
-        var slides = Array.from(showcase.querySelectorAll('.album-slide'));
-        var progress = showcase.querySelector('.album-progress span');
-        var frame = 0, reset, lastY = scrollY, lastTime = performance.now(), active = 0;
-        function update() {
-            frame = 0;
-            if (!showcase.classList.contains('is-enhanced')) return;
-            var bounds = showcase.getBoundingClientRect();
-            var distance = showcase.offsetHeight - showcase.querySelector('.album-stage').offsetHeight;
-            var percent = Math.max(0, Math.min(1, (52 - bounds.top) / Math.max(1, distance)));
-            var next = Math.min(slides.length - 1, Math.floor(percent * slides.length));
-            if (active !== next) {
-                slides.forEach(function (slide, index) {
-                    slide.classList.toggle('is-active', index === next);
-                    slide.inert = index !== next;
-                });
-                active = next;
+    const root = document.querySelector('.album-grid');
+    if (!root || !window.gsap || !window.MinosPage) return;
+    const scope = window.MinosPage.scope;
+    const gsap = window.gsap;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const animations = new Set();
+    let activeTimeline, scrollFrame;
+    function timeline(options) {
+        const complete = options.onComplete;
+        const animation = gsap.timeline(Object.assign({}, options, {
+            onComplete: () => { animations.delete(animation); if (complete) complete(); }
+        }));
+        if (reduced.matches) animation.timeScale(1000000);
+        animations.add(animation);
+        activeTimeline = animation;
+        return animation;
+    }
+    function calcWinsize() { return {width: innerWidth, height: innerHeight}; }
+    function scrollIt(destination, duration, easing, complete) {
+        cancelAnimationFrame(scrollFrame);
+        const start = scrollY;
+        const target = root.getBoundingClientRect().top + scrollY - 52 + destination;
+        const started = performance.now();
+        function step(now) {
+            if (!scope.active) return;
+            const t = reduced.matches ? 1 : Math.min(1, (now - started) / duration);
+            scrollTo({top: start + (target - start) * t * (2 - t), behavior: 'instant'});
+            if (t < 1) scrollFrame = requestAnimationFrame(step); else complete();
+        }
+        scrollFrame = requestAnimationFrame(step);
+    }
+    scope.cleanup(() => {
+        cancelAnimationFrame(scrollFrame);
+        animations.forEach(animation => animation.kill());
+        gsap.killTweensOf([root, ...root.querySelectorAll('*')]);
+    });
+
+class ContentPage {
+    constructor(el) {
+        this.DOM = {
+            el: el
+        };
+        this.DOM.backCtrl = this.DOM.el.querySelector('.content__back');
+        this.DOM.title = this.DOM.el.querySelector('.content__title');
+        this.DOM.titleInner = this.DOM.title.querySelector('span');
+        this.DOM.intro = this.DOM.el.querySelector('.content__intro');
+        this.DOM.introInner = this.DOM.intro.querySelector('span');
+        this.DOM.date = this.DOM.el.querySelector('.content__date');
+        this.DOM.dateInner = this.DOM.date.querySelector('span');
+        this.DOM.gallery = this.DOM.el.querySelector('.gallery');
+        this.DOM.galleryItems = this.DOM.gallery.querySelectorAll('.gallery__figure');
+        this.bgcolor = this.DOM.el.dataset.bgcolor;
+    }
+}
+
+class MenuItem {
+    constructor(el, galleryEl, contentEl) {
+        this.DOM = {
+            el: el,
+            gallery: galleryEl,
+            content: contentEl
+        };
+        this.DOM.title = this.DOM.el.querySelector('.menu__item-title');
+        this.DOM.deco = this.DOM.el.querySelector('.menu__item-deco');
+        this.DOM.cta = this.DOM.el.querySelector('.menu__item-cta');
+        this.DOM.ctaInner = this.DOM.cta.querySelector('span');
+        this.DOM.galleryItems = [...this.DOM.gallery.querySelectorAll('.bg-gallery__item')];
+        
+        this.contentPage = new ContentPage(this.DOM.content);
+        
+        this.isCurrent = false;
+    }
+    highlight() {
+        this.toggleCurrent();
+
+        gsap.set([this.DOM.deco, this.DOM.cta], {opacity: 1});
+        gsap.to(this.DOM.galleryItems, {
+            duration: reduced.matches ? 0 : 1, 
+            ease: 'expo',
+            startAt: {scale: 0.01, rotation: gsap.utils.random(-20,20)},
+            scale: 1,
+            opacity: +this.isCurrent,
+            rotation: 0,
+            stagger: 0.05
+        });
+    }
+    toggleCurrent() {
+        this.DOM.el.classList[this.isCurrent ? 'remove' : 'add']('menu__item--selected');
+        this.isCurrent = !this.isCurrent;
+    }
+}
+
+// Calculate the viewport size
+let winsize = calcWinsize();
+scope.listen(window, 'resize', () => winsize = calcWinsize());
+
+class MenuController {
+    constructor(el) {
+        this.DOM = {el: el};
+        // Set of small images each selected menu item has on the background
+        this.DOM.galleries = [...root.querySelectorAll('.bg-gallery-wrap > .bg-gallery')];
+        // Content DOM
+        this.DOM.pagePreview = root.querySelector('.page--preview');
+        this.DOM.content = [...this.DOM.pagePreview.querySelectorAll('.content')];
+        // "Choose a project" element (line + text)
+        this.DOM.headline = {
+            deco: this.DOM.el.querySelector('.menu__headline > .menu__headline-deco'),
+            text: this.DOM.el.querySelector('.menu__headline > .menu__headline-text > span')
+        };
+        // array of all MenuItems
+        this.menuItems = [];
+        [...this.DOM.el.querySelectorAll('.menu__item')].forEach((item, pos) => {
+            this.menuItems.push(new MenuItem(item, this.DOM.galleries[pos], this.DOM.content[pos]));
+        });
+        
+        this.init();
+    }
+    init() {
+        // Current menu item index (starting with the first one).
+        this.current = Math.max(0, this.menuItems.findIndex(item => item.DOM.el.dataset.folder === root.dataset.selected));
+        // Highlight the current menu item
+        this.menuItems[this.current].highlight();
+        // Init/Bind events
+        this.DOM.content.forEach(content => content.inert = true);
+        this.initEvents();
+        if (root.dataset.selected) {
+            this.showContent(this.menuItems[this.current]);
+            activeTimeline.progress(1);
+        }
+    }
+    initEvents() {
+        for (const [pos, item] of this.menuItems.entries()) {
+            
+            // Click/Select a menu item
+            scope.listen(item.DOM.el, 'click', ev => {
+                ev.preventDefault();
+                if ( pos === this.current || this.isAnimating || this.isOpen ) return;
+                
+                const direction = this.current < pos ? 'up' : 'down';
+
+                this.toggleMenuItems(item, direction);
+
+                // Update current value
+                this.current = pos;
+            });
+
+            // click on the menu item's explore 
+            scope.listen(item.DOM.cta, 'click', ev => {
+                ev.preventDefault(); ev.stopPropagation();
+                if ( this.isAnimating || this.isOpen ) return;
+                this.showContent(item);
+            });
+
+            // Click on the back control when at the page preview
+            scope.listen(item.contentPage.DOM.backCtrl, 'click', ev => {
+                ev.preventDefault();
+                if ( this.isAnimating || !this.isOpen ) return;
+                
+                this.showMenu(item);
+            });
+
+        }
+    }
+    // Click/Select a menu item
+    // Animate all the bg images out and animate the new menu item's in
+    toggleMenuItems(upcomingItem, direction = 'up') {
+        this.isAnimating = true;
+        const currentItem = this.menuItems[this.current];
+        const dir = direction === 'up' ? 1 : -1;
+        
+        currentItem.toggleCurrent();
+        upcomingItem.toggleCurrent();
+        
+        timeline({
+            defaults: {
+                duration: 1, 
+                ease: 'expo.inOut'
+            },
+            onStart: () => this.isAnimating = true,
+            onComplete: () => this.isAnimating = false
+        })
+        .to(upcomingItem.DOM.title, {
+            ease: 'expo.in',
+            duration: 0.5,
+            y: dir*-100+'%',
+        }, 0)
+        .to(upcomingItem.DOM.title, {
+            ease: 'expo',
+            duration: 0.8,
+            startAt: {y: dir*100+'%'},
+            y: '0%'
+        }, 0.5)
+        .to(currentItem.DOM.deco, {
+            scaleY: 0,
+            opacity: 0
+        }, 0)
+        .to(currentItem.DOM.cta, {
+            y: '100%',
+            opacity: 0
+        }, 0)
+        .to(currentItem.DOM.galleryItems, {
+            y: dir*-winsize.height*1.2,
+            stagger: dir*0.05,
+            rotation: gsap.utils.random(-30,30)
+        }, 0)
+        .addLabel('upcomingImages', 0.1)
+        .to(upcomingItem.DOM.deco, {
+            startAt: {scaleY: 0},
+            scaleY: 1,
+            opacity: 1
+        }, 'upcomingImages')
+        .to(upcomingItem.DOM.cta, {
+            startAt: {y: dir*100+'%'},
+            y: '0%',
+            opacity: 1
+        }, 'upcomingImages')
+        .to(upcomingItem.DOM.galleryItems, {
+            startAt: {y: dir*winsize.height*1.2, rotation: gsap.utils.random(-30,30)},
+            y: 0,
+            opacity: 1,
+            rotation: 0,
+            stagger: dir*0.05
+        }, 'upcomingImages');
+    }
+    // Hide the menu items and all other initial elements, and show the content for this menu item
+    showContent(menuItem) {
+        if (this.isAnimating || this.isOpen) return;
+        this.isAnimating = true;
+        this.isOpen = true;
+        this.DOM.el.inert = true;
+        menuItem.DOM.content.inert = false;
+        menuItem.DOM.el.setAttribute('aria-expanded', 'true');
+        root.classList.add('is-open');
+        gsap.killTweensOf(menuItem.DOM.galleryItems);
+        const timelineDefaults = {
+            duration: 0.8, 
+            ease: 'expo.inOut'
+        };
+
+        timeline({
+            defaults: timelineDefaults,
+            onStart: () => this.isAnimating = true,
+            onComplete: () => {
+                this.isAnimating = false;
+                menuItem.contentPage.DOM.backCtrl.focus({preventScroll: true});
             }
-            progress.style.transform = 'scaleX(' + percent + ')';
-            var now = performance.now();
-            var velocity = (scrollY - lastY) / Math.max(16, now - lastTime);
-            showcase.style.setProperty('--album-skew', Math.max(-8, Math.min(8, velocity * -0.3)) + 'deg');
-            showcase.style.setProperty('--album-scale', Math.max(0.92, 1 - Math.abs(velocity) * 0.015));
-            lastY = scrollY; lastTime = now;
-            clearTimeout(reset);
-            reset = setTimeout(function () {
-                showcase.style.setProperty('--album-skew', '0deg');
-                showcase.style.setProperty('--album-scale', '1');
-            }, 120);
-        }
-        function configure() {
-            var enabled = desktop.matches && !reduced.matches && slides.length > 1;
-            showcase.classList.toggle('is-enhanced', enabled);
-            slides.forEach(function (slide, index) { slide.inert = enabled && index !== active; });
-            update();
-        }
-        scope.listen(window, 'scroll', function () { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
-        scope.listen(window, 'resize', configure);
-        scope.listen(window, 'pageshow', configure);
-        scope.listen(reduced, 'change', configure);
-        scope.cleanup(function () { cancelAnimationFrame(frame); clearTimeout(reset); });
-        configure();
-    }
+        })
+        .to(menuItem.DOM.deco, {scaleY: 0})
+        .to(menuItem.DOM.ctaInner, {y: '100%'}, 0)
+        .to(menuItem.DOM.galleryItems, {
+            y: -winsize.height*1.2,
+            opacity: 0,
+            stagger: 0.05,
+            rotation: gsap.utils.random(-30,30)
+        }, 0)
+        .to(this.menuItems.map(item => item.DOM.title), {
+            y: '100%',
+            stagger: {each: 0.03, from: 'end'}
+        }, 0)
+        .to(this.DOM.headline.deco, {scaleX: 0}, 0)
+        .to(this.DOM.headline.text, {y: '100%'}, 0)
+        .addLabel('showPageContent', timelineDefaults.duration*.1)
+        .to(menuItem.contentPage.DOM.backCtrl, {
+            startAt: {x: '50%'},
+            x: '0%',
+            opacity: 1
+        }, 'showPageContent')
+        .to([menuItem.contentPage.DOM.titleInner, menuItem.contentPage.DOM.introInner, menuItem.contentPage.DOM.dateInner], {
+            startAt: {y: '-100%'},
+            onStart: () => {
+                gsap.set([menuItem.contentPage.DOM.title, menuItem.contentPage.DOM.intro, menuItem.contentPage.DOM.date], {
+                    opacity: 1, 
+                    stagger: -0.06
+                })
+            },
+            y: '0%',
+            stagger: -0.06
+        }, 'showPageContent')
+        .to(menuItem.contentPage.DOM.galleryItems, {
+            startAt: {y: '100%', rotation: () => gsap.utils.random(-20,20)},
+            y: '0%',
+            rotation: 0,
+            opacity: 1,
+            stagger: 0.08
+        }, 'showPageContent')
+        .to(root, {backgroundColor: menuItem.contentPage.bgcolor}, 0);
 
-    var photos = Array.from(root.querySelectorAll('.album-photo'));
-    if ('IntersectionObserver' in window && !reduced.matches) {
-        var observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('is-revealed');
-                observer.unobserve(entry.target);
-            });
-        }, { rootMargin: '0px 0px -40px 0px' });
-        photos.forEach(function (photo) { photo.classList.add('will-reveal'); observer.observe(photo); });
-        scope.cleanup(function () { observer.disconnect(); });
+        this.DOM.pagePreview.classList.remove('page--preview');
+        menuItem.DOM.content.classList.add('content--current');
     }
+    // Show back the menu
+    showMenu(menuItem) {
+        if (this.isAnimating || !this.isOpen) return;
+        this.isAnimating = true;
+        const timelineDefaults = {
+            duration: 0.8, 
+            ease: 'expo.inOut'
+        };
 
-    var dialog = document.querySelector('.album-lightbox');
-    if (dialog && typeof dialog.showModal === 'function') {
-        scope.cleanup(function () { if (dialog.open) dialog.close(); });
-        var selected = 0, opener;
-        var picture = dialog.querySelector('img');
-        var caption = dialog.querySelector('figcaption');
-        var original = dialog.querySelector('.album-lightbox-original');
-        function show(index) {
-            selected = (index + photos.length) % photos.length;
-            var photo = photos[selected];
-            picture.src = photo.dataset.preview;
-            picture.alt = photo.querySelector('img').alt;
-            caption.textContent = String(selected + 1).padStart(2, '0') + ' / ' + String(photos.length).padStart(2, '0') + (photo.dataset.caption ? ' — ' + photo.dataset.caption : '');
-            original.href = photo.href;
-        }
-        photos.forEach(function (photo, index) {
-            photo.addEventListener('click', function (event) {
-                if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-                event.preventDefault();
-                opener = photo; show(index); dialog.showModal();
-            });
+        // Scroll up first
+        scrollIt(0, 300, 'easeOutQuad', () => {
+            timeline({
+                defaults: timelineDefaults,
+                onStart: () => this.isAnimating = true,
+                onComplete: () => {
+                    this.DOM.pagePreview.classList.add('page--preview');
+                    menuItem.DOM.content.classList.remove('content--current');
+                    this.isAnimating = false;
+                    this.isOpen = false;
+                    this.DOM.el.inert = false;
+                    menuItem.DOM.content.inert = true;
+                    menuItem.DOM.el.setAttribute('aria-expanded', 'false');
+                    root.classList.remove('is-open');
+                    menuItem.DOM.el.focus({preventScroll: true});
+                }
+            })
+            .to(root, {backgroundColor: '#fff'}, 0)
+            .to(menuItem.contentPage.DOM.galleryItems, {
+                y: '100%',
+                rotation: () => gsap.utils.random(-20,20),
+                opacity: 0,
+                stagger: 0.08
+            }, 0)
+            .to([menuItem.contentPage.DOM.titleInner, menuItem.contentPage.DOM.introInner, menuItem.contentPage.DOM.dateInner], {
+                onComplete: () => {
+                    gsap.set([menuItem.contentPage.DOM.title, menuItem.contentPage.DOM.intro, menuItem.contentPage.DOM.date], {
+                        opacity: 0
+                    })
+                },
+                y: '-100%',
+                stagger: 0.06
+            }, 0)
+            .to(menuItem.contentPage.DOM.backCtrl, {
+                x: '50%',
+                opacity: 0
+            }, 0)
+            .addLabel('showMenuItems', timelineDefaults.duration*.1)
+            .to(this.DOM.headline.text, {y: '0%'}, 'showMenuItems')
+            .to(this.DOM.headline.deco, {scaleX: 1}, 'showMenuItems')
+            .to(this.menuItems.map(item => item.DOM.title), {
+                y: '0%',
+                stagger: {each: 0.03, from: 'start'}
+            }, 'showMenuItems')
+            .to(menuItem.DOM.galleryItems, {
+                startAt: {rotation: gsap.utils.random(-30,30)},
+                y: 0,
+                stagger: -0.05,
+                rotation: 0,
+                opacity: 1
+            }, 'showMenuItems')
+            .to(menuItem.DOM.ctaInner, {y: '0%'}, 'showMenuItems')
+            .to(menuItem.DOM.deco, {scaleY: 1}, 'showMenuItems')
         });
-        dialog.querySelector('.album-lightbox-close').addEventListener('click', function () { dialog.close(); });
-        dialog.querySelector('.album-lightbox-prev').addEventListener('click', function () { show(selected - 1); });
-        dialog.querySelector('.album-lightbox-next').addEventListener('click', function () { show(selected + 1); });
-        dialog.addEventListener('click', function (event) { if (event.target === dialog) dialog.close(); });
-        dialog.addEventListener('keydown', function (event) {
-            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); show(selected + (event.key === 'ArrowLeft' ? -1 : 1)); }
-        });
-        dialog.addEventListener('close', function () { if (opener) opener.focus({ preventScroll: true }); });
-        var startX, startY;
-        picture.addEventListener('touchstart', function (event) { if (event.touches.length === 1) { startX = event.touches[0].clientX; startY = event.touches[0].clientY; } }, { passive: true });
-        picture.addEventListener('touchend', function (event) {
-            if (startX === undefined) return;
-            var dx = event.changedTouches[0].clientX - startX, dy = event.changedTouches[0].clientY - startY;
-            if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) show(selected + (dx < 0 ? 1 : -1));
-            startX = undefined;
-        }, { passive: true });
     }
-
-    // Contextual view cursor is confined to photographs; site navigation keeps its native pointer.
-    var fine = matchMedia('(hover: hover) and (pointer: fine)');
-    if (fine.matches && !reduced.matches) {
-        var cursor = document.createElement('div');
-        cursor.className = 'album-cursor'; cursor.setAttribute('aria-hidden', 'true');
-        document.body.appendChild(cursor); root.classList.add('has-cursor');
-        var x = 0, y = 0, tx = 0, ty = 0, cursorFrame = 0, visible = false;
-        function moveCursor() {
-            x += (tx - x) * 0.25; y += (ty - y) * 0.25;
-            cursor.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
-            cursorFrame = visible && Math.abs(tx - x) + Math.abs(ty - y) > 0.2 ? requestAnimationFrame(moveCursor) : 0;
+}
+    const menu = root.querySelector('.menu');
+    if (!menu.querySelector('.menu__item')) return;
+    root.classList.add('is-enhanced');
+    const controller = new MenuController(menu);
+    scope.listen(menu, 'keydown', event => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        const link = event.target.closest('.menu__item');
+        if (!link || controller.isAnimating || controller.isOpen) return;
+        event.preventDefault();
+        const index = controller.menuItems.findIndex(item => item.DOM.el === link);
+        if (index === controller.current) controller.showContent(controller.menuItems[index]);
+        else link.click();
+    });
+    scope.listen(root, 'keydown', event => {
+        if (event.key === 'Escape' && controller.isOpen && !controller.isAnimating) {
+            event.preventDefault(); controller.showMenu(controller.menuItems[controller.current]);
         }
-        function hideCursor() { visible = false; cursor.style.opacity = 0; }
-        root.addEventListener('pointermove', function (event) {
-            var target = event.target.closest('[data-album-cursor]');
-            if (!target || reduced.matches || !fine.matches) { hideCursor(); return; }
-            tx = event.clientX; ty = event.clientY;
-            if (!visible) { x = tx; y = ty; }
-            visible = true; cursor.style.opacity = 1; cursor.textContent = target.dataset.albumCursor;
-            if (!cursorFrame) cursorFrame = requestAnimationFrame(moveCursor);
-        });
-        root.addEventListener('pointerleave', hideCursor);
-        scope.listen(window, 'scroll', hideCursor, { passive: true });
-        scope.listen(window, 'pagehide', hideCursor);
-        scope.listen(reduced, 'change', function () { root.classList.toggle('has-cursor', !reduced.matches); hideCursor(); });
-        scope.cleanup(function () { cancelAnimationFrame(cursorFrame); cursor.remove(); });
-    }
+    });
+    scope.listen(reduced, 'change', () => {
+        if (reduced.matches) animations.forEach(animation => animation.progress(1));
+    });
 })();

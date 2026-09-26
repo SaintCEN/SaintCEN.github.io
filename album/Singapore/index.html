@@ -157,26 +157,53 @@
     </div>
     <div id="site-page">
     
-<main class="album-world album-detail">
-    <section class="album-hero is-empty">
+<main class="album-grid" data-selected="Singapore" aria-label="Album">
+    <header class="frame">
+        <h1 class="frame__title">Album</h1>
+        <p class="frame__description">把走过的地方，留在光影里。</p>
+        <span class="frame__count">01 collections</span>
+    </header>
+    <div class="bg-gallery-wrap" aria-hidden="true">
         
-        <a class="album-back album-label" href="/album/">← All albums</a>
-        <div class="album-hero-title"><p class="album-label">Travel</p><h1>Singapore</h1><a href="#photographs" class="album-label">Explore the album ↓</a></div>
+        <div class="bg-gallery bg-gallery--1">
+            
+        </div>
         
+    </div>
+    <nav class="menu" id="album-menu" aria-label="选择相册" data-no-pjax>
+        <div class="menu__headline">
+            <span class="menu__headline-deco"></span>
+            <span class="menu__headline-text"><span>Choose an album</span></span>
+        </div>
+        
+        <a class="menu__item" href="#album-content-1" data-folder="Singapore" aria-controls="album-content-1" aria-expanded="false">
+            <span class="menu__item-title">Singapore</span>
+            <span class="menu__item-deco" aria-hidden="true">|</span>
+            <span class="menu__item-cta"><span>explore</span></span>
+        </a>
+        
+        
+    </nav>
+    <section class="page page--preview" aria-label="相册内容">
+        
+        <section class="content" id="album-content-1" data-bgcolor="#f6f6f4" aria-labelledby="album-title-1">
+            <a class="content__back" href="#album-menu" aria-label="返回相册列表" data-no-pjax>
+                <svg viewBox="0 0 511.996 511.996" aria-hidden="true"><path d="M462.51 220.392H172.707l67.017-68.342a7.133 7.133 0 00.014-9.956l-39.544-40.612a7.13 7.13 0 00-10.204 0L44.383 251.028a7.128 7.128 0 000 9.941L189.99 410.514c1.338 1.375 3.176 2.15 5.099 2.15s3.76-.775 5.105-2.15l39.544-40.612a7.126 7.126 0 00-.014-9.956l-67.017-68.342H462.51c3.93 0 7.12-3.19 7.12-7.12v-56.97a7.124 7.124 0 00-7.12-7.122z"/></svg>
+            </a>
+            <h2 class="content__title" id="album-title-1"><span>Singapore</span></h2>
+            <p class="content__intro"><span>在狮城，记录街巷、光影与日常。</span></p>
+            <p class="content__date"><span>Singapore<small>00 photographs</small></span></p>
+            <div class="gallery">
+                
+                <p class="album-empty gallery__figure">照片，待续。</p>
+            </div>
+        </section>
         
     </section>
-    <section class="album-editorial" aria-label="相册简介">
-        <p class="album-description">在狮城，记录街巷、光影与日常。</p>
-        <span class="album-divider" aria-hidden="true"></span>
-        <dl><div><dt>Location</dt><dd>Singapore</dd></div><div><dt>Collection</dt><dd>Travel</dd></div><div><dt>Photographs</dt><dd>00</dd></div></dl>
-    </section>
-    <section class="album-photographs" id="photographs" aria-label="照片">
-        <div class="album-no-photos"><p>照片，待续。</p><span class="album-label">A story yet to unfold</span></div>
-    </section>
-    <nav class="album-bottom-nav" aria-label="相册导航"><a href="/album/">← All albums</a></nav>
 </main>
-
+<script src="/js/vendor/gsap.min.js"></script>
 <script defer src="/js/album.js"></script>
+
 
     
     <footer class="footer">
