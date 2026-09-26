@@ -21,8 +21,6 @@
     var menu = container.closest('.navbar-start');
     var burger = bar.querySelector('.navbar-burger');
     var tools = bar.querySelector('.navbar-end');
-    var category = nav.querySelector('.navbar-categories');
-    var categoryButton = category && category.querySelector('button');
 
     var animationTime = 500, particleCount = 15, particleDistances = [90, 0];
     var particleR = 100, timeVariance = 300, colors = [1, 2, 3, 1, 2, 3, 1, 4];
@@ -116,17 +114,11 @@
             }));
         }
     }
-    function closeCategories() {
-        if (!category) return;
-        category.classList.remove('is-open');
-        categoryButton.setAttribute('aria-expanded', 'false');
-    }
     function closeMenu() {
         burger.classList.remove('is-active');
         burger.setAttribute('aria-expanded', 'false');
         menu.classList.remove('is-active');
         tools.classList.remove('is-active');
-        closeCategories();
     }
     links.forEach(function (link, index) {
         // Original behavior: selection changes on click, never on hover.
@@ -144,22 +136,14 @@
         burger.classList.toggle('is-active', open);
         menu.classList.toggle('is-active', open);
         tools.classList.toggle('is-active', open);
-        if (!open) closeCategories();
         position();
-    });
-    if (category) categoryButton.addEventListener('click', function () {
-        var open = categoryButton.getAttribute('aria-expanded') !== 'true';
-        categoryButton.setAttribute('aria-expanded', String(open));
-        category.classList.toggle('is-open', open);
     });
     document.addEventListener('click', function (event) {
         if (!bar.contains(event.target)) closeMenu();
-        else if (category && !category.contains(event.target)) closeCategories();
     });
     bar.addEventListener('keydown', function (event) {
         if (event.key !== 'Escape') return;
-        if (category && category.classList.contains('is-open')) { closeCategories(); categoryButton.focus(); }
-        else if (burger.getAttribute('aria-expanded') === 'true') { closeMenu(); burger.focus(); }
+        if (burger.getAttribute('aria-expanded') === 'true') { closeMenu(); burger.focus(); }
     });
     if (typeof ResizeObserver !== 'undefined') new ResizeObserver(position).observe(container);
     window.addEventListener('resize', position);

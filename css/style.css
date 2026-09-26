@@ -587,41 +587,59 @@ figure.highlight .section {
   transform: scale(1.04);
 }
 
-.article-pin {
-  display: inline-flex;
-  align-items: center;
-  gap: 1em;
-  margin-bottom: 0.5rem;
-  padding: 0.2rem 0.6rem;
-  font-family: "Source Code Pro", monospace, "Microsoft YaHei";
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #9a9a9a;
-  border: 1px solid #dbdbdb;
-  border-radius: 2px;
+.archives-heading {
+  margin-bottom: 3rem;
+}
+.archives-heading h1 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
 }
 
-.navbar-categories .navbar-dropdown {
-  min-width: 12rem;
-  border-top: 2px solid #dbdbdb;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-}
-.navbar-categories .navbar-dropdown .navbar-item {
+.archives-categories {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
 }
-.navbar-categories .navbar-dropdown .navbar-item:hover {
-  background-color: #f6f6f4;
-  color: #1a1a1a;
+.archives-categories a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.6rem 0;
+  color: #363636;
+  border-bottom: 1px solid #dbdbdb;
 }
-.navbar-categories .navbar-category-count {
-  font-family: "Source Code Pro", monospace, "Microsoft YaHei";
-  font-size: 0.72rem;
-  color: #b0b0ac;
-  margin-left: 1.5rem;
+.archives-categories a:hover, .archives-categories a:focus-visible {
+  color: #3273dc;
+  border-color: #3273dc;
+}
+.archives-categories span {
+  font: 0.65rem "Source Code Pro", monospace, "Microsoft YaHei";
+  color: #8b8b85;
+}
+
+.archives-group {
+  scroll-margin-top: 5.5rem;
+}
+.archives-group + .archives-group {
+  margin-top: 4rem;
+}
+.archives-group .article {
+  margin-top: 1.75rem;
+}
+
+.archives-group-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #dbdbdb;
+  font-size: 1.4rem;
+}
+.archives-group-title span {
+  font: 0.7rem "Source Code Pro", monospace, "Microsoft YaHei";
+  color: #8b8b85;
 }
 
 .home-section {
@@ -1771,32 +1789,6 @@ body:has(.post-toc) {
 }
 .navbar-main.is-transparent .gooey-nav-container .gooey-link:focus-visible {
   outline: none;
-}
-.navbar-main.is-transparent .gooey-nav-container .navbar-categories .navbar-dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 7px);
-  left: 0;
-  padding: 0.4rem;
-  border: 1px solid #e6e6e0;
-  border-radius: 12px;
-  background: #fff;
-  color: #525650;
-  text-shadow: none;
-  min-width: 12rem;
-  max-width: calc(100vw - 3rem);
-  box-shadow: 0 12px 30px rgba(25, 29, 24, 0.09);
-}
-.navbar-main.is-transparent .gooey-nav-container .navbar-categories .navbar-dropdown a {
-  display: flex;
-  padding: 0.5rem 0.75rem;
-  border-radius: 7px;
-}
-.navbar-main.is-transparent .gooey-nav-container .navbar-categories.is-open .navbar-dropdown {
-  display: block;
-}
-.navbar-main.is-transparent .gooey-nav-container:not(.gooey-ready) .navbar-categories:focus-within .navbar-dropdown {
-  display: block;
 }
 
 @media screen and (max-width: 1023px) {
