@@ -1,5 +1,4 @@
-/* Native adaptations of React Bits Shape Waves and Specular Button interactions.
- * https://reactbits.dev/components/specular-button
+/* Ink button interactions and a native adaptation of React Bits Shape Waves.
  * https://reactbits.dev/c/backgrounds/shape-waves
  */
 (function () {
@@ -20,12 +19,8 @@
         if (motion.matches) return;
         buttons.forEach(function (button) {
             var rect = button.getBoundingClientRect();
-            var dx = event.clientX - rect.left - rect.width / 2;
-            var dy = event.clientY - rect.top - rect.height / 2;
-            var distance = Math.hypot(Math.max(Math.abs(dx) - rect.width / 2, 0), Math.max(Math.abs(dy) - rect.height / 2, 0));
-            button.style.setProperty('--shine-angle', (Math.atan2(dy, dx) * 180 / Math.PI + 90) + 'deg');
-            button.style.setProperty('--shine', Math.max(0.2, 1 - distance / 240).toFixed(3));
-            if (distance === 0) {
+            if (event.clientX >= rect.left && event.clientX <= rect.right
+                && event.clientY >= rect.top && event.clientY <= rect.bottom) {
                 button.style.setProperty('--ink-x', ((event.clientX - rect.left) / rect.width * 100).toFixed(1) + '%');
                 button.style.setProperty('--ink-y', ((event.clientY - rect.top) / rect.height * 100).toFixed(1) + '%');
             }
@@ -37,9 +32,6 @@
         if (ripples.length > 4) ripples.shift();
     }
     root.addEventListener('pointermove', point, { passive: true });
-    root.addEventListener('pointerleave', function () {
-        buttons.forEach(function (button) { button.style.removeProperty('--shine'); });
-    });
     // Links and their CSS borders remain fully usable without canvas support.
     if (!context) return;
 
