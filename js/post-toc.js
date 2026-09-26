@@ -30,7 +30,7 @@
     function revealActive() {
         var keyboardFocus = toc.contains(document.activeElement) && document.activeElement.matches(':focus-visible');
         if (active < 0 || pointerInside || keyboardFocus) return;
-        var row = entries[active].item.getBoundingClientRect();
+        var row = entries[active].link.getBoundingClientRect();
         var bounds = scroller.getBoundingClientRect();
         if (row.top < bounds.top || row.bottom > bounds.bottom) {
             // Only move the directory, never the document's reading position.
@@ -83,7 +83,7 @@
     function paintProximity() {
         pointerFrame = null;
         entries.forEach(function (entry) {
-            var rect = entry.item.getBoundingClientRect();
+            var rect = entry.link.getBoundingClientRect();
             var distance = pointerY === null ? 100 : Math.abs(pointerY - rect.top - rect.height / 2);
             var amount = Math.max(0, 1 - distance / 90);
             entry.item.style.setProperty('--proximity', (amount * amount * (3 - 2 * amount)).toFixed(3));
