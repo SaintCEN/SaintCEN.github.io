@@ -1734,6 +1734,7 @@ body:has(.post-toc) {
 }
 .navbar-main.is-transparent .gooey-nav-container nav ul li::after {
   background: #000;
+  inset: 4px;
 }
 .navbar-main.is-transparent .gooey-nav-container nav ul li:focus-within:has(:focus-visible) {
   box-shadow: 0 0 0.5px 1.5px #000;
@@ -1753,6 +1754,9 @@ body:has(.post-toc) {
 }
 .navbar-main.is-transparent .gooey-nav-container .effect.filter::after, .navbar-main.is-transparent .gooey-nav-container .point {
   background: #000;
+}
+.navbar-main.is-transparent .gooey-nav-container .effect.filter::after {
+  inset: 4px;
 }
 .navbar-main.is-transparent .gooey-nav-container .gooey-link {
   color: inherit;

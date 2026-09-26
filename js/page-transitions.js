@@ -1,6 +1,6 @@
 /* Hexo document navigation with Olivier Larose's Curve geometry and timing.
  * Reference: https://github.com/olivierlarose/nextjs-framer-page-transition/tree/main/src/components/Layout/Curve
- * Exit: SVG 750ms; text 500ms after 400ms. Enter: 750ms after 350ms.
+ * Play once on the destination document: 750ms after 350ms.
  * Use a real SVG quadratic path, matching anim.js; no rounded-box substitute.
  */
 (function () {
@@ -34,11 +34,11 @@
         return 'M0 300 Q' + width / 2 + ' 0 ' + width + ' 300 L' + width + ' ' + (height + 300 * amount)
             + ' Q' + width / 2 + ' ' + (height + 600 * amount) + ' 0 ' + (height + 300 * amount) + ' L0 0';
     }
-    function create(phase) {
+    function create() {
         clear();
         measure();
         layer = document.createElement('div');
-        layer.className = 'page-curve is-' + phase;
+        layer.className = 'page-curve is-entering';
         layer.setAttribute('aria-hidden', 'true');
         svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('focusable', 'false');
@@ -64,26 +64,23 @@
         }
         return cubic(t, y1, y2);
     }
-    function paint(phase, elapsed) {
-        var enter = phase === 'entering';
-        var curve = ease((elapsed - (enter ? 350 : 0)) / 750, 0.76, 0, 0.24, 1);
-        var text = enter ? curve : ease((elapsed - 400) / 500, 0.33, 1, 0.68, 1);
-        path.setAttribute('d', shape(enter ? 1 - curve : curve));
-        svg.style.top = (enter ? -300 + (300 - height) * curve : height + (-300 - height) * curve) + 'px';
-        label.style.top = (enter ? height * 0.4 + (-100 - height * 0.4) * text : height * (0.475 - 0.075 * text)) + 'px';
-        label.style.opacity = enter ? 1 - text : text;
+    function paint(elapsed) {
+        var curve = ease((elapsed - 350) / 750, 0.76, 0, 0.24, 1);
+        path.setAttribute('d', shape(1 - curve));
+        svg.style.top = (-300 + (300 - height) * curve) + 'px';
+        label.style.top = (height * 0.4 + (-100 - height * 0.4) * curve) + 'px';
+        label.style.opacity = 1 - curve;
     }
-    function play(phase, done) {
-        create(phase);
-        paint(phase, 0);
+    function play() {
+        create();
+        paint(0);
         var start = performance.now();
-        var duration = phase === 'entering' ? 1100 : 900;
         function tick(now) {
             if (!layer) return;
             var elapsed = now - start;
-            paint(phase, elapsed);
-            if (elapsed < duration) frame = requestAnimationFrame(tick);
-            else { frame = 0; done(); }
+            paint(elapsed);
+            if (elapsed < 1100) frame = requestAnimationFrame(tick);
+            else { frame = 0; clear(); }
         }
         frame = requestAnimationFrame(tick);
     }
@@ -91,7 +88,7 @@
         if (!pending) return;
         pending = false;
         if (reduced.matches) { clear(); return; }
-        play('entering', clear);
+        play();
         safety = setTimeout(clear, 2500);
     }
     function navigate() {
@@ -130,6 +127,6 @@
         event.preventDefault();
         if (leaving) return;
         leaving = url;
-        play('exiting', navigate);
+        navigate();
     });
 })();
