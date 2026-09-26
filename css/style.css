@@ -1089,16 +1089,16 @@ figure.highlight .section {
   min-width: clamp(128px, 13vw, 184px);
   min-height: 56px;
   padding: 1rem 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.72);
   border-radius: 16px;
   background: transparent;
-  color: #fff;
+  color: #000;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
   font-size: 1.1rem;
   line-height: 1;
   letter-spacing: 0.035em;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.75);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  text-shadow: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09), inset 0 0 0 1px rgba(0, 0, 0, 0.04);
   transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 .home-button::before {
@@ -1107,7 +1107,7 @@ figure.highlight .section {
   inset: -1px;
   border-radius: inherit;
   padding: 2px;
-  background: conic-gradient(from var(--shine-angle), transparent 0deg, #fff 35deg, transparent 80deg, transparent 180deg, #fff 215deg, transparent 260deg);
+  background: conic-gradient(from var(--shine-angle), transparent 0deg, #000 35deg, transparent 80deg, transparent 180deg, #000 215deg, transparent 260deg);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -1117,12 +1117,12 @@ figure.highlight .section {
   transition: opacity 180ms ease;
 }
 .home-button:hover, .home-button:focus-visible {
-  color: #fff;
+  color: #000;
   background-color: transparent;
-  box-shadow: 0 5px 24px rgba(0, 0, 0, 0.14), 0 0 12px rgba(255, 255, 255, 0.13);
+  box-shadow: 0 5px 24px rgba(0, 0, 0, 0.14), 0 0 12px rgba(0, 0, 0, 0.13);
 }
 .home-button:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid #000;
   outline-offset: 5px;
 }
 .home-button:active {
