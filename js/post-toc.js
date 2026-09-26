@@ -4,7 +4,6 @@
     var toc = document.querySelector('.post-toc');
     if (!toc) return;
 
-    var summary = toc.querySelector('summary');
     var scroller = toc.querySelector('.post-toc-scroll');
     var list = toc.querySelector('.post-toc-list');
     var entries = Array.from(list.querySelectorAll('a')).map(function (link) {
@@ -16,7 +15,6 @@
     }).filter(function (entry) { return entry.heading; });
     if (!entries.length) return;
 
-    var desktop = window.matchMedia('(min-width: 1280px)');
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var article = document.querySelector('.article-entry');
     var navbar = document.querySelector('.navbar-main');
@@ -31,7 +29,7 @@
 
     function revealActive() {
         var keyboardFocus = toc.contains(document.activeElement) && document.activeElement.matches(':focus-visible');
-        if (active < 0 || !toc.open || pointerInside || keyboardFocus) return;
+        if (active < 0 || pointerInside || keyboardFocus) return;
         var row = entries[active].item.getBoundingClientRect();
         var bounds = scroller.getBoundingClientRect();
         if (row.top < bounds.top || row.bottom > bounds.bottom) {
@@ -61,7 +59,10 @@
         if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
             next = entries.length - 1;
         }
-        if (next === active) return;
+        if (next === active) {
+            revealActive();
+            return;
+        }
         if (active >= 0) {
             entries[active].item.classList.remove('is-active');
             entries[active].link.removeAttribute('aria-current');
@@ -76,33 +77,6 @@
         if (measure === true) measureNeeded = true;
         if (readingFrame === null) readingFrame = requestAnimationFrame(updateReadingPosition);
     }
-
-    function syncViewport() {
-        toc.open = desktop.matches;
-        scheduleReading(true);
-    }
-
-    // Native anchors preserve deep links and browser history. Native details
-    // keep the directory usable even if this script is unavailable.
-    summary.addEventListener('click', function (event) {
-        if (desktop.matches) event.preventDefault();
-    });
-    list.addEventListener('click', function (event) {
-        if (event.target.closest('a') && !desktop.matches && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
-            toc.open = false;
-            summary.focus({ preventScroll: true });
-        }
-    });
-    toc.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape' && !desktop.matches && toc.open) {
-            toc.open = false;
-            summary.focus({ preventScroll: true });
-        }
-    });
-    document.addEventListener('click', function (event) {
-        if (!desktop.matches && toc.open && !toc.contains(event.target)) toc.open = false;
-    });
-    toc.addEventListener('toggle', revealActive);
 
     // A small wave of extending ticks follows the pointer, in the same blue
     // used by the theme's links. Scroll tracking remains independent of hover.
@@ -133,12 +107,11 @@
     window.addEventListener('hashchange', function () { scheduleReading(true); });
     window.addEventListener('pageshow', function () { scheduleReading(true); });
     window.addEventListener('load', function () { scheduleReading(true); });
-    desktop.addEventListener('change', syncViewport);
     if (typeof ResizeObserver !== 'undefined' && article) {
         new ResizeObserver(function () { scheduleReading(true); }).observe(article);
     }
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(function () { scheduleReading(true); });
     }
-    syncViewport();
+    scheduleReading(true);
 })();
