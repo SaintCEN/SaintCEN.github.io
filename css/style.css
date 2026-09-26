@@ -1904,31 +1904,6 @@ html.curve-home .navbar-main {
   outline: 2px solid #3273dc;
   outline-offset: 4px;
 }
-.album-grid .frame {
-  position: fixed;
-  left: 0.5rem;
-  top: calc(52px + 2rem);
-  bottom: 2rem;
-  display: flex;
-  gap: 3rem;
-  align-items: center;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font: 0.75rem "Source Code Pro", monospace, "Microsoft YaHei";
-  color: #707070;
-  z-index: 2;
-}
-.album-grid .frame__title {
-  font: inherit;
-  color: #171717;
-  margin: 0;
-}
-.album-grid .frame__description {
-  margin: 0;
-}
-.album-grid .frame__count {
-  margin-top: auto;
-}
 .album-grid .bg-gallery-wrap {
   grid-area: content;
   position: relative;
@@ -2354,31 +2329,11 @@ html.curve-home .navbar-main {
   .album-grid {
     --title-size: clamp(2rem, 8vw, 4rem);
   }
-  .album-grid .frame {
-    position: absolute;
-    left: 6vw;
-    right: 6vw;
-    top: 1.5rem;
-    bottom: auto;
-    margin: 0;
-    writing-mode: horizontal-tb;
-    transform: none;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .album-grid .frame__description {
-    flex-basis: 100%;
-    order: 3;
-    font-size: 0.65rem;
-  }
-  .album-grid .frame__count {
-    margin: 0 0 0 auto;
-  }
   .album-grid .menu, .album-grid .content {
     width: 88vw;
   }
   .album-grid .menu {
-    padding: 8rem 0 4rem;
+    padding: 4rem 0;
   }
   .album-grid .menu__item {
     margin: 0;
@@ -2394,8 +2349,8 @@ html.curve-home .navbar-main {
     padding-top: 0.5rem;
   }
   .album-grid .bg-gallery {
-    top: 8rem;
-    height: calc(var(--album-height) - 10rem);
+    top: 2rem;
+    height: calc(var(--album-height) - 4rem);
   }
   .album-grid .bg-gallery__item {
     max-width: 22vw;
@@ -2424,7 +2379,7 @@ html.curve-home .navbar-main {
     grid-area: 25/19/auto/auto;
   }
   .album-grid .content {
-    padding-top: 8rem;
+    padding-top: 2rem;
     gap: 1.5rem;
   }
   .album-grid .content__intro {

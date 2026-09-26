@@ -5,7 +5,7 @@
     'use strict';
     if (!window.fetch || !window.MinosPage || !window.DOMParser) return;
     var reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    var pages = new Map(), scripts = new Map(), scriptText = new Map(), once = new Set(), navAnimations = new WeakMap();
+    var pages = new Map(), scripts = new Map(), scriptText = new Map(), once = new Set();
     var revealed = Promise.resolve(), finishReveal;
     var current = new URL(location.href), request = 0, frame = 0, layer, safety, scrollTimer;
     var svg, path, label, width, height, initialized = false, restoring = false;
@@ -251,11 +251,11 @@
         var oldPage = document.getElementById('site-page');
         oldPage.setAttribute('aria-busy', 'true');
         try {
-            var results = await Promise.all([fetchPage(url), options.animation || Promise.resolve()]);
-            // A later click can settle an earlier Gooey animation mid-bubble.
+            var result = await fetchPage(url);
+            // Commit after click bubbling; Gooey and Curve run concurrently.
             await new Promise(function (resolve) { setTimeout(resolve, 0); });
             if (ticket !== request) return;
-            var result = results[0], doc = result.doc;
+            var doc = result.doc;
             var target = new URL(result.url); target.hash = url.hash;
             var incoming = document.importNode(doc.getElementById('site-page'), true);
             incoming.dataset.route = target.pathname;
@@ -298,7 +298,6 @@
         var url = new URL(link.href);
         return localPage(url) && key(url) !== key(current) ? { link: link, url: url } : null;
     }
-    document.addEventListener('minos:nav-animation', function (event) { navAnimations.set(event.detail.link, event.detail.finished); });
     document.addEventListener('click', function (event) {
         if (!initialized || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         var target = eligible(event);
@@ -314,7 +313,7 @@
             return;
         }
         event.preventDefault();
-        navigate(target.url.href, { animation: reduced.matches ? null : navAnimations.get(target.link) });
+        navigate(target.url.href);
     });
     window.addEventListener('popstate', function (event) { navigate(location.href, { pop: true, scroll: event.state && event.state.scroll }); });
     window.addEventListener('hashchange', function () {

@@ -23,7 +23,7 @@
     var activeIndex = Math.max(0, items.findIndex(function (item) { return item.classList.contains('active'); }));
     var routeIndex = activeIndex;
     var reduced = matchMedia('(prefers-reduced-motion: reduce)');
-    var timers = [], frames = [], finishParticles = null;
+    var timers = [], frames = [], finishParticles = null, particleCompletion = null;
     var bar = container.closest('.navbar-main');
     var menu = container.closest('.navbar-start');
     var burger = bar.querySelector('.navbar-burger');
@@ -116,6 +116,8 @@
         text.classList.add('active');
         if (animate && !reduced.matches) {
             var finished = makeParticles();
+            particleCompletion = finished;
+            finished.then(function () { if (particleCompletion === finished) particleCompletion = null; });
             container.dispatchEvent(new CustomEvent('minos:nav-animation', {
                 bubbles: true, detail: { link: links[index], finished: finished }
             }));
@@ -167,7 +169,13 @@
     if (document.fonts) document.fonts.ready.then(function () { if (scope.active) position(); });
     container.addEventListener('minos:nav-sync', function () {
         routeIndex = Math.max(0, items.findIndex(function (item) { return item.classList.contains('active'); }));
-        closeMenu();
+        // Keep the expanded mobile navbar visible while its particles finish.
+        var pending = particleCompletion;
+        if (pending && burger.getAttribute('aria-expanded') === 'true') {
+            pending.then(function () {
+                if (scope.active && (!particleCompletion || particleCompletion === pending)) closeMenu();
+            });
+        } else closeMenu();
         if (routeIndex !== activeIndex) select(routeIndex, false);
         else position();
     });
