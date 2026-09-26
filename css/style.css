@@ -229,19 +229,6 @@ a.tag.article-tag {
   all: initial;
 }
 
-.sharebox {
-  margin-top: 3rem;
-}
-
-.comments {
-  margin-top: 3rem;
-  padding-top: 3rem;
-  border-top: 1px solid #dbdbdb;
-}
-.comments > .title {
-  font-weight: 300;
-}
-
 .archive:not(:last-child) {
   margin-bottom: 3rem;
 }
@@ -2467,4 +2454,43 @@ html.curve-home .navbar-main {
 .ins-section .ins-search-item:hover .ins-search-preview,
 .ins-section .ins-search-item.active .ins-search-preview {
   color: #fff;
+}
+
+.hljs {
+  position: relative;
+}
+
+.hljs .clipboard-btn, .article-entry pre .clipboard-btn {
+  float: right;
+  color: #9a9a9a;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hljs .clipboard-btn:hover {
+  color: #8a8a8a;
+}
+
+.hljs > .clipboard-btn {
+  display: none;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+
+.hljs:hover > .clipboard-btn {
+  display: inline;
+}
+
+.hljs > figcaption > .clipboard-btn {
+  margin-right: 4px;
+}
+
+.language-switcher {
+  margin-top: -0.2em;
+}
+
+.nav-ink-defs {
+  position: absolute;
 }
