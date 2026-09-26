@@ -52,6 +52,8 @@
 
 <link rel="stylesheet" href="/css/style.css">
 
+<script src="/js/page-transitions.js"></script>
+<script defer src="/js/gooey-nav.js"></script>
 
 <script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
@@ -81,32 +83,32 @@
                 <img src="/images/logo.jpg" alt="" height="28">
                 
             </a>
-            <div class="navbar-burger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <button class="navbar-burger" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation site-tools">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </button>
         </div>
-        <div class="navbar-menu navbar-start">
+        <div class="navbar-menu navbar-start gooey-nav" id="site-navigation">
             
             
-            <a class="navbar-item "
+            <a class="navbar-item gooey-link is-active"
+               aria-current="location"
                style="order: 0" href="/archives">Archives</a>
             
-            <a class="navbar-item "
+            <a class="navbar-item gooey-link"
+               
                style="order: 2" href="/album">Album</a>
             
-            <a class="navbar-item "
-               style="order: 4" href="/link">Link</a>
-            
-            <a class="navbar-item "
-               style="order: 6" href="/about">About</a>
+            <a class="navbar-item gooey-link"
+               
+               style="order: 4" href="/about">About</a>
             
             
             
-            <div class="navbar-item is-hoverable has-dropdown navbar-categories" style="order: 1">
-                <a class="navbar-item">Categories&nbsp;<i class="fas fa-angle-down is-size-7"></i></a>
-                <div class="navbar-dropdown">
+            <div class="navbar-item has-dropdown navbar-categories" style="order: 1">
+                <button type="button" class="navbar-item gooey-link" aria-expanded="false" aria-controls="nav-categories">Categories&nbsp;<i class="fas fa-angle-down is-size-7" aria-hidden="true"></i></button>
+                <div class="navbar-dropdown" id="nav-categories">
                     
                     <a class="navbar-item" href="/categories/AI/">
                         <span>AI</span>
@@ -126,8 +128,9 @@
                 </div>
             </div>
             
+            <span class="gooey-effect" aria-hidden="true"><span class="gooey-pill"></span></span>
         </div>
-        <div class="navbar-menu navbar-end">
+        <div class="navbar-menu navbar-end" id="site-tools">
             
             <a class="navbar-item search" title="Search" href="javascript:;">
                 <i class="fas fa-search"></i>
@@ -145,6 +148,18 @@
         </div>
     </div>
 </nav>
+<svg class="gooey-filter" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+        <filter id="nav-ink-merge" x="-60%" y="-120%" width="220%" height="340%" color-interpolation-filters="sRGB">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+            <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" />
+        </filter>
+    </defs>
+</svg>
+<noscript><style>
+    .navbar-main .navbar-burger { display: none; }
+    .navbar-main .navbar-menu { display: flex; flex-wrap: wrap; }
+</style></noscript>
 
     
 <section class="section post-section has-toc">
