@@ -81,12 +81,17 @@
     <div id="site-page">
     
 
-<main class="home-hero" aria-labelledby="home-title">
+<main class="home-hero" aria-labelledby="home-title" style="--home-background-blur:8px">
     <img class="home-landscape" src="/images/japan-autumn.jpg" alt="" fetchpriority="high" decoding="async">
     <div class="home-paper" aria-hidden="true"></div>
-    <canvas class="home-waves" aria-hidden="true"></canvas>
+    <div class="home-blob home-blob--one" aria-hidden="true"></div>
+    <div class="home-blob home-blob--two" aria-hidden="true"></div>
+    <div class="home-blob home-blob--three" aria-hidden="true"></div>
+    <canvas class="home-suminagashi" id="home-suminagashi" aria-hidden="true"></canvas>
+
     <div class="home-welcome">
-        <h1 id="home-title">Sa1ntCHENのHome</h1>
+        <p class="home-kicker">SA1NTCHEN · PERSONAL ATELIER</p>
+        <h1 class="home-brand" id="home-title">Sa1ntCHENのHome</h1>
         <nav class="home-actions" aria-label="Main navigation">
             
             <a class="home-button" href="/archives/"><span>Archives</span></a>
@@ -125,8 +130,21 @@
 
 
         </div>
+        <p class="home-ink-hint">画 面 を な ぞ っ て 墨 を 流 す</p>
+    </div>
+
+    <div class="home-ink-dock" aria-label="Ink controls">
+        <button type="button" class="home-ink-swatch home-ink-swatch--cycle" data-ink="cycle" title="巡" aria-label="Cycle ink colours"><span>巡</span></button>
+        <button type="button" class="home-ink-swatch is-active" data-ink="sumi" style="--swatch:#1a1a1f" title="墨" aria-label="Black ink"><span>墨</span></button>
+        <button type="button" class="home-ink-swatch" data-ink="ai" style="--swatch:#16407a" title="藍" aria-label="Blue ink"><span>藍</span></button>
+        <button type="button" class="home-ink-swatch" data-ink="shu" style="--swatch:#c8372d" title="朱" aria-label="Red ink"><span>朱</span></button>
+        <button type="button" class="home-ink-swatch" data-ink="matsuba" style="--swatch:#2e6e52" title="松葉" aria-label="Green ink"><span>松葉</span></button>
+        <i aria-hidden="true"></i>
+        <button type="button" class="home-dock-button" data-action="autoplay"><b class="is-on" aria-hidden="true"></b>自動演出</button>
+        <button type="button" class="home-dock-button" data-action="wash">洗い流す</button>
     </div>
 </main>
+<script defer src="/js/vendor/three-r128.min.js"></script>
 <script defer src="/js/home-hero.js"></script>
 
 
