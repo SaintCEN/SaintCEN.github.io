@@ -42,6 +42,7 @@
     function MenuItem(element, sharedProperties) {
         this.DOM = {
             el: element,
+            host: element.parentElement,
             inner: element.querySelector('.inline-archive__menu-label'),
             number: element.querySelector('.inline-archive__menu-number')
         };
@@ -55,15 +56,18 @@
     MenuItem.prototype.layout = function () {
         var reveal = document.createElement('span');
         var inner = document.createElement('span');
-        var image = document.createElement('span');
+        var image = document.createElement('img');
         reveal.className = 'inline-archive__hover-reveal';
         inner.className = 'inline-archive__hover-reveal-inner';
         image.className = 'inline-archive__hover-reveal-image';
         reveal.style.transformOrigin = '0% 0%';
-        image.style.backgroundImage = 'url("' + this.DOM.el.dataset.img.replace(/"/g, '%22') + '")';
+        image.src = this.DOM.el.dataset.img;
+        image.alt = '';
+        image.decoding = 'async';
+        image.draggable = false;
         inner.appendChild(image);
         reveal.appendChild(inner);
-        this.DOM.el.appendChild(reveal);
+        this.DOM.host.appendChild(reveal);
         this.DOM.reveal = reveal;
         this.DOM.revealInner = inner;
         this.DOM.revealImage = image;
@@ -83,14 +87,20 @@
         });
         scope.listen(this.DOM.el, 'focus', function () {
             if (!matchMedia('(any-hover: hover)').matches) return;
+            var rect = self.DOM.el.getBoundingClientRect();
+            mouse = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+            previousMouse = { x: mouse.x, y: mouse.y };
             self.showImage();
+            self.firstFrame = true;
+            self.loop();
         });
-        scope.listen(this.DOM.el, 'blur', function () { self.hideImage(); });
+        scope.listen(this.DOM.el, 'blur', function () { self.stop(); self.hideImage(); });
     };
 
     MenuItem.prototype.bounds = function () {
         this.box = {
             el: this.DOM.el.getBoundingClientRect(),
+            host: this.DOM.host.getBoundingClientRect(),
             reveal: this.DOM.reveal.getBoundingClientRect()
         };
     };
@@ -154,8 +164,8 @@
         var distanceX = clamp(Math.abs(previousMouse.x - mouse.x), 0, 100);
         var directionX = previousMouse.x - mouse.x;
         previousMouse = { x: mouse.x, y: mouse.y };
-        this.properties.tx.current = mouse.x - this.box.el.left - this.box.reveal.width / 2;
-        this.properties.ty.current = mouse.y - this.box.el.top - this.box.reveal.height / 2;
+        this.properties.tx.current = mouse.x - this.box.host.left - this.box.reveal.width / 2;
+        this.properties.ty.current = mouse.y - this.box.host.top - this.box.reveal.height / 2;
         this.properties.rotation.current = this.firstFrame ? 0 : map(distanceX, 0, 200, 0, directionX < 0 ? -100 : 100);
         this.properties.tx.previous = this.firstFrame ? this.properties.tx.current : lerp(this.properties.tx.previous, this.properties.tx.current, this.properties.tx.amount);
         this.properties.ty.previous = this.firstFrame ? this.properties.ty.current : lerp(this.properties.ty.previous, this.properties.ty.current, this.properties.ty.amount);

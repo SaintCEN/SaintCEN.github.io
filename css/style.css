@@ -574,12 +574,27 @@ figure.highlight .section {
   transform: scale(1.04);
 }
 
+.archive-inline-section {
+  box-sizing: border-box;
+  height: calc(100svh - 52px);
+  min-height: 0;
+  padding-top: clamp(0.75rem, 2.5svh, 1.5rem);
+  padding-bottom: clamp(0.75rem, 2.5svh, 1.5rem);
+  overflow: hidden;
+}
+.archive-inline-section .home-layout,
+.archive-inline-section .home-main {
+  height: 100%;
+  min-height: 0;
+}
+
 .inline-archive {
   --inline-accent: #3273dc;
   position: relative;
   isolation: isolate;
   width: 100%;
-  min-height: calc(100vh - 9.5rem);
+  height: 100%;
+  min-height: 0;
   display: grid;
   align-items: center;
   overflow: hidden;
@@ -627,6 +642,7 @@ figure.highlight .section {
 .inline-archive__content-title-wrap {
   overflow: hidden;
   position: relative;
+  z-index: 3;
 }
 
 .inline-archive__menu-label {
@@ -636,6 +652,8 @@ figure.highlight .section {
 }
 
 .inline-archive__menu-number {
+  position: relative;
+  z-index: 3;
   margin-top: 0.12em;
   font: 0.67rem/1 "Source Code Pro", monospace, "Microsoft YaHei";
   color: #777;
@@ -644,7 +662,7 @@ figure.highlight .section {
 
 .inline-archive__hover-reveal {
   position: absolute;
-  z-index: -1;
+  z-index: 2;
   width: 230px;
   height: 310px;
   top: 0;
@@ -655,11 +673,13 @@ figure.highlight .section {
 }
 
 .inline-archive__hover-reveal-inner {
+  display: block;
   overflow: hidden;
 }
 
 .inline-archive__hover-reveal-inner,
 .inline-archive__hover-reveal-image {
+  display: block;
   width: 100%;
   height: 100%;
   position: relative;
@@ -667,13 +687,15 @@ figure.highlight .section {
 }
 
 .inline-archive__hover-reveal-image {
-  background-size: cover;
-  background-position: 50% 50%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  max-width: none;
   transform-origin: 50% 100%;
 }
 
 .inline-archive__content-wrap {
   position: relative;
+  height: 100%;
   min-width: 0;
   grid-area: 1/1;
 }
@@ -690,8 +712,10 @@ figure.highlight .section {
 }
 
 .inline-archive__content.is-current {
-  height: auto;
-  overflow: visible;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  overflow: hidden;
   position: relative;
   opacity: 1;
   pointer-events: auto;
@@ -702,14 +726,14 @@ figure.highlight .section {
   align-items: flex-start;
   font-weight: normal;
   line-height: 1;
-  margin: 1.8rem 0 clamp(1.8rem, 5vh, 3.2rem);
+  margin: clamp(1.75rem, 4svh, 2.25rem) 0 clamp(0.8rem, 2svh, 1.25rem);
 }
 
 .inline-archive__content-title-inner {
   display: block;
   line-height: 1.12;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(3rem, 7vw, 5.25rem);
+  font-size: clamp(2.25rem, min(7vw, 10svh), 5.25rem);
   text-transform: lowercase;
   will-change: transform, opacity;
 }
@@ -724,6 +748,8 @@ figure.highlight .section {
 .inline-archive__gallery-wrapper {
   position: relative;
   width: 100%;
+  height: 100%;
+  min-height: 0;
   overflow: hidden;
   user-select: none;
 }
@@ -737,7 +763,7 @@ figure.highlight .section {
 }
 
 .inline-archive__gallery-item {
-  flex: 0 0 clamp(20rem, 34vw, 34rem);
+  flex: 0 0 clamp(17rem, min(34vw, 133.333svh - 26rem), 34rem);
   min-width: 0;
   margin: 0;
   will-change: transform;
@@ -766,6 +792,8 @@ figure.highlight .section {
   left: -12.5%;
   display: block;
   width: 125%;
+  min-width: 125%;
+  max-width: none;
   height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
@@ -838,8 +866,8 @@ figure.highlight .section {
   }
 }
 @media screen and (max-width: 1023px) {
-  .inline-archive {
-    min-height: min(680px, 100vh - 5.5rem);
+  .archive-inline-section .home-aside {
+    display: none;
   }
   .inline-archive__menu {
     justify-content: center;
@@ -847,8 +875,7 @@ figure.highlight .section {
 }
 @media screen and (max-width: 52.99em) {
   .inline-archive {
-    min-height: 560px;
-    overflow: visible;
+    overflow: hidden;
   }
   .inline-archive__menu-item {
     font-size: clamp(2.25rem, 12vw, 4rem);
@@ -859,7 +886,7 @@ figure.highlight .section {
     height: 200px;
   }
   .inline-archive__gallery-item {
-    flex-basis: min(78vw, 28rem);
+    flex-basis: clamp(15rem, min(78vw, 133.333svh - 23rem), 28rem);
   }
   .inline-archive__gallery {
     gap: 1rem;
@@ -868,6 +895,10 @@ figure.highlight .section {
     font-size: clamp(1.2rem, 6vw, 1.7rem);
   }
 }
+#site-page:has(.inline-archive) > .footer {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .inline-archive *,
   .inline-archive *::before,
