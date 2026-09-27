@@ -789,7 +789,8 @@ figure.highlight .section {
 .inline-archive__gallery-image-inner {
   display: block;
   width: 100%;
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/10;
+  max-height: 38svh;
   position: relative;
   overflow: hidden;
   background: #efefec;
