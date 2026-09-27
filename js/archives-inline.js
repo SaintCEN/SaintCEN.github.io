@@ -246,15 +246,17 @@
             self.drag.moved = false;
             self.suppressClick = false;
             self.DOM.wrapper.classList.add('is-dragging');
-            if (self.DOM.wrapper.setPointerCapture) {
-                try { self.DOM.wrapper.setPointerCapture(event.pointerId); } catch (error) {}
-            }
         });
         scope.listen(this.DOM.wrapper, 'pointermove', function (event) {
             if (!self.drag.active || event.pointerId !== self.drag.pointerId) return;
             var delta = event.clientX - self.drag.lastX;
             self.drag.lastX = event.clientX;
-            if (Math.abs(event.clientX - self.drag.startX) > 5) self.drag.moved = true;
+            if (!self.drag.moved && Math.abs(event.clientX - self.drag.startX) > 5) {
+                self.drag.moved = true;
+                if (self.DOM.wrapper.setPointerCapture) {
+                    try { self.DOM.wrapper.setPointerCapture(event.pointerId); } catch (error) {}
+                }
+            }
             if (!self.drag.moved) return;
             self.scroll.target = clamp(self.scroll.target - delta, 0, self.scroll.limit);
             if (event.cancelable) event.preventDefault();
