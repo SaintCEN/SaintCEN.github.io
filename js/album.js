@@ -219,7 +219,11 @@ class MenuController {
         scope.listen(root, 'wheel', ev => {
             if (this.isOpen) return;
             ev.preventDefault();
-            if (this.isAnimating || Math.abs(ev.deltaY) < 8) return;
+            if (Math.abs(ev.deltaY) < 4) return;
+            const now = performance.now();
+            if (now - (this.lastWheelAt || 0) < 160) return;
+            if (this.isAnimating && activeTimeline) activeTimeline.progress(1);
+            this.lastWheelAt = now;
             this.select(this.current + (ev.deltaY > 0 ? 1 : -1));
         }, {passive: false});
 
@@ -248,7 +252,7 @@ class MenuController {
         
         timeline({
             defaults: {
-                duration: 1, 
+                duration: 0.72,
                 ease: 'expo.inOut'
             },
             onStart: () => this.isAnimating = true,
@@ -256,7 +260,7 @@ class MenuController {
         })
         .to(this.DOM.track, {
             y: -upcomingIndex * this.wheelStep(),
-            duration: 0.85
+            duration: 0.58
         }, 0)
         .to(currentItem.DOM.deco, {
             scaleY: 0,
@@ -268,7 +272,7 @@ class MenuController {
         }, 0)
         .to(currentItem.DOM.galleryItems, {
             y: dir*-winsize.height*1.2,
-            stagger: dir*0.05,
+            stagger: dir*0.035,
             rotation: gsap.utils.random(-30,30)
         }, 0)
         .addLabel('upcomingImages', 0.1)
@@ -287,7 +291,7 @@ class MenuController {
             y: 0,
             opacity: 1,
             rotation: 0,
-            stagger: dir*0.05
+            stagger: dir*0.035
         }, 'upcomingImages');
     }
     // Hide the menu items and all other initial elements, and show the content for this menu item

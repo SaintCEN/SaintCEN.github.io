@@ -2039,11 +2039,11 @@ html.curve-home .navbar-main {
   height: calc(var(--album-wheel-step) * 3);
   overflow: hidden;
   touch-action: none;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
 }
 .album-grid.is-enhanced .menu__track {
-  padding: var(--album-wheel-step) 0;
+  padding: 0 0 calc(var(--album-wheel-step) * 2);
   will-change: transform;
 }
 .album-grid.is-enhanced .menu__item {
