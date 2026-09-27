@@ -587,6 +587,14 @@ figure.highlight .section {
   height: 100%;
   min-height: 0;
 }
+.archive-inline-section .home-layout {
+  position: relative;
+}
+.archive-inline-section .home-main {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+}
 
 .inline-archive {
   --inline-accent: #3273dc;
@@ -597,7 +605,7 @@ figure.highlight .section {
   min-height: 0;
   display: grid;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   color: #171717;
 }
 
@@ -605,11 +613,12 @@ figure.highlight .section {
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  z-index: 1;
-  justify-content: flex-start;
+  z-index: 10;
+  justify-content: center;
   align-content: center;
-  width: 100%;
-  padding: 2rem 0;
+  width: min(100%, 42rem);
+  margin-inline: auto;
+  padding: 2rem clamp(1rem, 3vw, 2rem);
   grid-area: 1/1;
 }
 

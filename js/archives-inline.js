@@ -39,7 +39,7 @@
         mouse = { x: event.clientX, y: event.clientY };
     }, { passive: true });
 
-    function MenuItem(element, sharedProperties) {
+    function MenuItem(element, sharedProperties, requestPreview) {
         this.DOM = {
             el: element,
             host: element.parentElement,
@@ -47,8 +47,12 @@
             number: element.querySelector('.inline-archive__menu-number')
         };
         this.properties = sharedProperties;
+        this.requestPreview = requestPreview;
         this.requestId = 0;
         this.firstFrame = true;
+        this.pointerInside = false;
+        this.focusVisible = false;
+        this.previewTimeline = null;
         this.layout();
         this.bind();
     }
@@ -77,24 +81,40 @@
         var self = this;
         scope.listen(this.DOM.el, 'mouseenter', function () {
             if (self.DOM.el.disabled) return;
+            self.pointerInside = true;
+            self.requestPreview(self);
             self.showImage();
             self.firstFrame = true;
             self.loop();
         });
         scope.listen(this.DOM.el, 'mouseleave', function () {
-            self.stop();
-            self.hideImage();
+            self.pointerInside = false;
+            if (!self.focusVisible) {
+                self.stop();
+                self.hideImage();
+            }
         });
         scope.listen(this.DOM.el, 'focus', function () {
             if (!matchMedia('(any-hover: hover)').matches) return;
-            var rect = self.DOM.el.getBoundingClientRect();
-            mouse = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-            previousMouse = { x: mouse.x, y: mouse.y };
-            self.showImage();
-            self.firstFrame = true;
-            self.loop();
+            requestAnimationFrame(function () {
+                if (!scope.active || !self.DOM.el.matches(':focus-visible')) return;
+                self.focusVisible = true;
+                self.requestPreview(self);
+                var rect = self.DOM.el.getBoundingClientRect();
+                mouse = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+                previousMouse = { x: mouse.x, y: mouse.y };
+                self.showImage();
+                self.firstFrame = true;
+                self.loop();
+            });
         });
-        scope.listen(this.DOM.el, 'blur', function () { self.stop(); self.hideImage(); });
+        scope.listen(this.DOM.el, 'blur', function () {
+            self.focusVisible = false;
+            if (!self.pointerInside) {
+                self.stop();
+                self.hideImage();
+            }
+        });
     };
 
     MenuItem.prototype.bounds = function () {
@@ -106,16 +126,18 @@
     };
 
     MenuItem.prototype.showImage = function () {
-        gsap.killTweensOf([this.DOM.revealInner, this.DOM.revealImage]);
+        if (this.previewTimeline) this.previewTimeline.kill();
+        gsap.killTweensOf([this.DOM.reveal, this.DOM.revealInner, this.DOM.revealImage]);
         var self = this;
-        return trackedTimeline({
+        this.previewTimeline = trackedTimeline({
             defaults: { duration: 0.8, ease: 'quint' },
             onStart: function () {
                 self.DOM.reveal.style.opacity = 1;
                 self.DOM.revealInner.style.opacity = 1;
                 gsap.set(self.DOM.el, { zIndex: 10 });
             }
-        })
+        });
+        return this.previewTimeline
             .to(this.DOM.revealInner, {
                 startAt: { x: '-50%', y: '150%', rotation: 10 },
                 x: '0%', y: '0%'
@@ -130,21 +152,36 @@
 
     MenuItem.prototype.hideImage = function () {
         var self = this;
-        gsap.killTweensOf([this.DOM.revealInner, this.DOM.revealImage]);
+        if (this.previewTimeline) this.previewTimeline.kill();
+        gsap.killTweensOf([this.DOM.reveal, this.DOM.revealInner, this.DOM.revealImage]);
         return new Promise(function (resolve) {
-            trackedTimeline({
+            self.previewTimeline = trackedTimeline({
                 defaults: { duration: 0.8, ease: 'quint' },
                 onStart: function () { gsap.set(self.DOM.el, { zIndex: 1 }); },
                 onComplete: function () {
                     gsap.set(self.DOM.reveal, { opacity: 0 });
+                    self.previewTimeline = null;
                     resolve();
                 }
-            })
+            });
+            self.previewTimeline
                 .to(self.DOM.revealInner, {
                     scale: 0.8, x: '50%', y: '-150%', opacity: 0
                 })
                 .to(self.DOM.revealImage, { scale: 1.8 }, 0);
         });
+    };
+
+    MenuItem.prototype.resetImage = function () {
+        this.pointerInside = false;
+        this.focusVisible = false;
+        this.stop();
+        if (this.previewTimeline) this.previewTimeline.kill();
+        this.previewTimeline = null;
+        gsap.killTweensOf([this.DOM.reveal, this.DOM.revealInner, this.DOM.revealImage]);
+        gsap.set(this.DOM.reveal, { opacity: 0 });
+        gsap.set(this.DOM.revealInner, { opacity: 0 });
+        gsap.set(this.DOM.el, { zIndex: 1 });
     };
 
     MenuItem.prototype.loop = function () {
@@ -274,7 +311,14 @@
             ty: { previous: 0, current: 0, amount: 0.08 },
             rotation: { previous: 0, current: 0, amount: 0.05 }
         };
-        this.items = this.DOM.menuItems.map(function (item) { return new MenuItem(item, this.sharedProperties); }, this);
+        var self = this;
+        this.items = this.DOM.menuItems.map(function (item) {
+            return new MenuItem(item, self.sharedProperties, function (activeItem) {
+                self.items.forEach(function (menuItem) {
+                    if (menuItem !== activeItem) menuItem.resetImage();
+                });
+            });
+        });
         this.contents = this.DOM.contents.map(function (content) { return new ContentItem(content); });
         this.currentIndex = -1;
         this.animating = false;
@@ -287,6 +331,17 @@
             scope.listen(item, 'click', function () { self.open(index); });
         });
         scope.listen(this.DOM.back, 'click', function () { self.close(); });
+        scope.listen(this.DOM.menu, 'mouseleave', function () {
+            self.items.forEach(function (item) {
+                if (!item.focusVisible) item.resetImage();
+            });
+        });
+        scope.listen(window, 'blur', function () {
+            self.items.forEach(function (item) { item.resetImage(); });
+        });
+        scope.listen(document, 'visibilitychange', function () {
+            if (document.hidden) self.items.forEach(function (item) { item.resetImage(); });
+        });
         scope.listen(root, 'wheel', function (event) {
             if (self.currentIndex < 0) return;
             var gallery = self.contents[self.currentIndex].gallery;
@@ -321,11 +376,10 @@
         var data = this.data(position);
         var item = data.item;
         var content = data.content;
+        this.items.forEach(function (menuItem) { menuItem.resetImage(); });
         item.DOM.el.setAttribute('aria-expanded', 'true');
         this.DOM.menu.style.pointerEvents = 'none';
-        item.stop();
-        item.DOM.el.style.pointerEvents = 'auto';
-        item.hideImage().then(function () { item.DOM.el.style.pointerEvents = 'none'; });
+        item.DOM.el.style.pointerEvents = 'none';
         content.DOM.el.removeAttribute('inert');
         content.DOM.el.setAttribute('aria-hidden', 'false');
 
@@ -380,6 +434,7 @@
                 self.animating = false;
                 self.currentIndex = -1;
                 item.DOM.el.setAttribute('aria-expanded', 'false');
+                self.items.forEach(function (menuItem) { menuItem.resetImage(); });
                 item.DOM.el.focus({ preventScroll: true });
             }
         })
@@ -428,7 +483,7 @@
         if (reduced.matches) animations.forEach(function (animation) { animation.progress(1); });
     });
     scope.cleanup(function () {
-        controller.items.forEach(function (item) { item.stop(); });
+        controller.items.forEach(function (item) { item.resetImage(); });
         controller.contents.forEach(function (content) { content.gallery.stop(); });
         animations.forEach(function (animation) { animation.kill(); });
         gsap.killTweensOf([root].concat(Array.from(root.querySelectorAll('*'))));
