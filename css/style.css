@@ -620,7 +620,7 @@ figure.highlight .section {
   row-gap: clamp(0.7rem, 1.8svh, 1.1rem);
   width: 100%;
   margin: 0;
-  padding: clamp(1.25rem, 4svh, 2.5rem) 0 0;
+  padding: clamp(10rem, 33svh, 22rem) 0 0;
   grid-area: 1/1;
 }
 
