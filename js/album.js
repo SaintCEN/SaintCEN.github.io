@@ -91,8 +91,11 @@ class MenuItem {
         });
     }
     toggleCurrent() {
-        this.DOM.el.classList[this.isCurrent ? 'remove' : 'add']('menu__item--selected');
-        this.isCurrent = !this.isCurrent;
+        this.setCurrent(!this.isCurrent);
+    }
+    setCurrent(value) {
+        this.DOM.el.classList.toggle('menu__item--selected', value);
+        this.isCurrent = value;
     }
 }
 
@@ -125,13 +128,32 @@ class MenuController {
     init() {
         this.randomizePreviewLayout();
         this.fitTitles();
-        this.selectionQueue = [];
-        this.wheelAccumulator = 0;
         // Current menu item index (starting with the first one).
         this.current = Math.max(0, this.menuItems.findIndex(item => item.DOM.el.dataset.folder === root.dataset.selected));
+        this.playhead = {position: this.current};
+        this.targetPosition = this.current;
+        this.snapTimer = 0;
+        this.suppressClickUntil = 0;
+        // As in the referenced carousel, all wheel, click and drag input updates
+        // one reusable playhead tween. Input never creates an animation queue.
+        this.scrub = gsap.to(this.playhead, {
+            position: this.current,
+            duration: 0.42,
+            ease: 'power3.out',
+            paused: true,
+            onUpdate: () => this.renderWheel()
+        });
+        scope.cleanup(() => {
+            clearTimeout(this.snapTimer);
+            this.scrub.kill();
+            if (this.selectionTimeline) {
+                animations.delete(this.selectionTimeline);
+                this.selectionTimeline.kill();
+            }
+        });
         // Highlight the current menu item
         this.menuItems[this.current].highlight();
-        this.syncWheel(true);
+        this.renderWheel();
         // Init/Bind events
         this.DOM.content.forEach(content => content.inert = true);
         this.initEvents();
@@ -181,38 +203,49 @@ class MenuController {
         return this.menuItems[0] ? this.menuItems[0].DOM.el.getBoundingClientRect().height : 0;
     }
     syncWheel(immediate = false) {
-        const y = -this.current * this.wheelStep();
-        if (immediate || reduced.matches) gsap.set(this.DOM.track, {y});
-        else gsap.to(this.DOM.track, {y, duration: 0.28, ease: 'expo.inOut'});
-    }
-    select(pos, queued = false) {
-        if (pos < 0 || pos >= this.menuItems.length || pos === this.current || this.isAnimating || this.isOpen) return false;
-        if (!queued) this.selectionQueue.length = 0;
-        const item = this.menuItems[pos];
-        this.toggleMenuItems(item, this.current < pos ? 'up' : 'down');
-        this.current = pos;
-        return true;
-    }
-    queuedPosition() {
-        return this.selectionQueue.reduce((position, direction) => position + direction, this.current);
-    }
-    queueStep(direction) {
-        if (this.isOpen) return false;
-        const next = this.queuedPosition() + direction;
-        if (next < 0 || next >= this.menuItems.length) return false;
-        this.selectionQueue.push(direction);
-        this.drainSelectionQueue();
-        return true;
-    }
-    queueSteps(direction, count) {
-        for (let step = 0; step < count; step++) {
-            if (!this.queueStep(direction)) break;
+        if (immediate) {
+            this.targetPosition = this.current;
+            this.playhead.position = this.current;
+            this.scrub.pause();
         }
+        this.renderWheel();
     }
-    drainSelectionQueue() {
-        if (this.isAnimating || this.isOpen || !this.selectionQueue.length) return;
-        const direction = this.selectionQueue.shift();
-        if (!this.select(this.current + direction, true)) this.drainSelectionQueue();
+    clampPosition(position) {
+        return Math.max(0, Math.min(this.menuItems.length - 1, position));
+    }
+    renderWheel() {
+        const position = this.clampPosition(this.playhead.position);
+        gsap.set(this.DOM.track, {y: -position * this.wheelStep()});
+        const nearest = Math.round(position);
+        if (nearest !== this.current) this.activateItem(nearest, nearest > this.current ? 'up' : 'down');
+    }
+    scrubTo(position, duration = 0.42) {
+        if (this.isOpen) return false;
+        const next = this.clampPosition(position);
+        this.targetPosition = next;
+        if (reduced.matches) {
+            this.playhead.position = next;
+            this.renderWheel();
+            return true;
+        }
+        this.scrub.vars.position = next;
+        this.scrub.duration(duration).invalidate().restart();
+        return true;
+    }
+    scheduleSnap(delay = 120) {
+        clearTimeout(this.snapTimer);
+        this.snapTimer = setTimeout(() => this.snapToNearest(), delay);
+    }
+    snapToNearest() {
+        clearTimeout(this.snapTimer);
+        this.snapTimer = 0;
+        this.scrubTo(Math.round(this.targetPosition), 0.28);
+    }
+    select(pos) {
+        if (pos < 0 || pos >= this.menuItems.length || this.isAnimating || this.isOpen) return false;
+        clearTimeout(this.snapTimer);
+        const distance = Math.abs(pos - this.playhead.position);
+        return this.scrubTo(pos, Math.min(0.72, 0.3 + distance * 0.09));
     }
     initEvents() {
         for (const [pos, item] of this.menuItems.entries()) {
@@ -220,6 +253,7 @@ class MenuController {
             // Click/Select a menu item
             scope.listen(item.DOM.el, 'click', ev => {
                 ev.preventDefault();
+                if (performance.now() < this.suppressClickUntil) return;
                 this.select(pos);
             });
 
@@ -243,64 +277,68 @@ class MenuController {
         scope.listen(root, 'wheel', ev => {
             if (this.isOpen) return;
             ev.preventDefault();
-            if (performance.now() < (this.suppressWheelUntil || 0)) return;
             const delta = ev.deltaMode === 1 ? ev.deltaY * 16 : ev.deltaMode === 2 ? ev.deltaY * winsize.height : ev.deltaY;
-            if (Math.abs(delta) < 1) return;
-            const direction = delta > 0 ? 1 : -1;
-            if (this.wheelAccumulator && Math.sign(this.wheelAccumulator) !== direction) this.wheelAccumulator = 0;
-            // A mouse-wheel notch usually reports roughly 100px. Smaller
-            // touchpad deltas accumulate before becoming one adjacent step.
-            if (Math.abs(delta) >= 60) {
-                this.wheelAccumulator = 0;
-                this.queueSteps(direction, Math.max(1, Math.round(Math.abs(delta) / 100)));
-                return;
-            }
-            this.wheelAccumulator += delta;
-            const steps = Math.floor(Math.abs(this.wheelAccumulator) / 60);
-            if (!steps) return;
-            this.wheelAccumulator -= direction * steps * 60;
-            this.queueSteps(direction, steps);
+            if (Math.abs(delta) < 0.25) return;
+            // Roughly one conventional wheel notch advances one title. Trackpad
+            // deltas remain continuous and accumulate naturally in the playhead.
+            this.scrubTo(this.targetPosition + delta / 110, 0.38);
+            this.scheduleSnap();
         }, {passive: false});
 
-        let touchStartY = null;
-        scope.listen(this.DOM.wheel, 'touchstart', ev => {
-            if (!this.isOpen && ev.touches.length === 1) touchStartY = ev.touches[0].clientY;
-        }, {passive: true});
-        scope.listen(this.DOM.wheel, 'touchend', ev => {
-            if (touchStartY === null || this.isOpen) return;
-            const distance = touchStartY - ev.changedTouches[0].clientY;
-            touchStartY = null;
-            if (Math.abs(distance) < 28) return;
-            this.suppressWheelUntil = performance.now() + 800;
-            this.queueSteps(distance > 0 ? 1 : -1, Math.max(1, Math.round(Math.abs(distance) / 70)));
-        }, {passive: true});
+        let drag = null;
+        scope.listen(this.DOM.wheel, 'pointerdown', ev => {
+            if (this.isOpen || ev.button !== 0) return;
+            drag = {id: ev.pointerId, y: ev.clientY, position: this.targetPosition, moved: false};
+        });
+        scope.listen(this.DOM.wheel, 'pointermove', ev => {
+            if (!drag || drag.id !== ev.pointerId || this.isOpen) return;
+            const distance = drag.y - ev.clientY;
+            if (!drag.moved && Math.abs(distance) > 5) {
+                drag.moved = true;
+                this.DOM.wheel.setPointerCapture(ev.pointerId);
+            }
+            if (!drag.moved) return;
+            ev.preventDefault();
+            this.scrubTo(drag.position + distance / this.wheelStep(), 0.16);
+        });
+        const finishDrag = ev => {
+            if (!drag || drag.id !== ev.pointerId) return;
+            if (drag.moved) {
+                this.suppressClickUntil = performance.now() + 250;
+                this.snapToNearest();
+            }
+            drag = null;
+        };
+        scope.listen(this.DOM.wheel, 'pointerup', finishDrag);
+        scope.listen(this.DOM.wheel, 'pointercancel', finishDrag);
     }
     // Click/Select a menu item
     // Animate all the bg images out and animate the new menu item's in
     toggleMenuItems(upcomingItem, direction = 'up') {
-        this.isAnimating = true;
         const currentItem = this.menuItems[this.current];
-        const upcomingIndex = this.menuItems.indexOf(upcomingItem);
         const dir = direction === 'up' ? 1 : -1;
-        
-        currentItem.toggleCurrent();
-        upcomingItem.toggleCurrent();
-        
-        const selectionTimeline = timeline({
+        currentItem.setCurrent(false);
+        upcomingItem.setCurrent(true);
+
+        if (this.selectionTimeline) {
+            animations.delete(this.selectionTimeline);
+            this.selectionTimeline.kill();
+        }
+        const animated = [
+            currentItem.DOM.deco, currentItem.DOM.cta, ...currentItem.DOM.galleryItems,
+            upcomingItem.DOM.deco, upcomingItem.DOM.cta, ...upcomingItem.DOM.galleryItems
+        ];
+        gsap.killTweensOf(animated);
+        let selectionTimeline;
+        selectionTimeline = timeline({
             defaults: {
-                duration: 0.24,
+                duration: 0.3,
                 ease: 'expo.inOut'
             },
-            onStart: () => this.isAnimating = true,
             onComplete: () => {
-                this.isAnimating = false;
-                this.drainSelectionQueue();
+                if (this.selectionTimeline === selectionTimeline) this.selectionTimeline = null;
             }
         })
-        .to(this.DOM.track, {
-            y: -upcomingIndex * this.wheelStep(),
-            duration: 0.19
-        }, 0)
         .to(currentItem.DOM.deco, {
             scaleY: 0,
             opacity: 0
@@ -332,6 +370,12 @@ class MenuController {
             rotation: 0,
             stagger: dir*0.012
         }, 'upcomingImages');
+        this.selectionTimeline = selectionTimeline;
+    }
+    activateItem(pos, direction) {
+        if (pos < 0 || pos >= this.menuItems.length || pos === this.current) return;
+        this.toggleMenuItems(this.menuItems[pos], direction);
+        this.current = pos;
     }
     // Hide the menu items and all other initial elements, and show the content for this menu item
     showContent(menuItem) {
