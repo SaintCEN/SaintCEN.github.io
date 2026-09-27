@@ -80,7 +80,7 @@ class MenuItem {
         this.toggleCurrent();
 
         gsap.set([this.DOM.deco, this.DOM.cta], {opacity: 1});
-        gsap.to(this.DOM.galleryItems, {
+        if (this.DOM.galleryItems.length) gsap.to(this.DOM.galleryItems, {
             duration: reduced.matches ? 0 : 1, 
             ease: 'expo',
             startAt: {scale: 0.01, rotation: gsap.utils.random(-20,20)},
@@ -125,6 +125,8 @@ class MenuController {
     init() {
         this.randomizePreviewLayout();
         this.fitTitles();
+        this.selectionQueue = [];
+        this.wheelAccumulator = 0;
         // Current menu item index (starting with the first one).
         this.current = Math.max(0, this.menuItems.findIndex(item => item.DOM.el.dataset.folder === root.dataset.selected));
         // Highlight the current menu item
@@ -181,14 +183,36 @@ class MenuController {
     syncWheel(immediate = false) {
         const y = -this.current * this.wheelStep();
         if (immediate || reduced.matches) gsap.set(this.DOM.track, {y});
-        else gsap.to(this.DOM.track, {y, duration: 0.85, ease: 'expo.inOut'});
+        else gsap.to(this.DOM.track, {y, duration: 0.28, ease: 'expo.inOut'});
     }
-    select(pos) {
+    select(pos, queued = false) {
         if (pos < 0 || pos >= this.menuItems.length || pos === this.current || this.isAnimating || this.isOpen) return false;
+        if (!queued) this.selectionQueue.length = 0;
         const item = this.menuItems[pos];
         this.toggleMenuItems(item, this.current < pos ? 'up' : 'down');
         this.current = pos;
         return true;
+    }
+    queuedPosition() {
+        return this.selectionQueue.reduce((position, direction) => position + direction, this.current);
+    }
+    queueStep(direction) {
+        if (this.isOpen) return false;
+        const next = this.queuedPosition() + direction;
+        if (next < 0 || next >= this.menuItems.length) return false;
+        this.selectionQueue.push(direction);
+        this.drainSelectionQueue();
+        return true;
+    }
+    queueSteps(direction, count) {
+        for (let step = 0; step < count; step++) {
+            if (!this.queueStep(direction)) break;
+        }
+    }
+    drainSelectionQueue() {
+        if (this.isAnimating || this.isOpen || !this.selectionQueue.length) return;
+        const direction = this.selectionQueue.shift();
+        if (!this.select(this.current + direction, true)) this.drainSelectionQueue();
     }
     initEvents() {
         for (const [pos, item] of this.menuItems.entries()) {
@@ -219,12 +243,23 @@ class MenuController {
         scope.listen(root, 'wheel', ev => {
             if (this.isOpen) return;
             ev.preventDefault();
-            if (Math.abs(ev.deltaY) < 4) return;
-            const now = performance.now();
-            const sameGesture = now - (this.lastWheelEventAt || 0) < 220;
-            this.lastWheelEventAt = now;
-            if (sameGesture || now < (this.suppressWheelUntil || 0) || this.isAnimating) return;
-            this.select(this.current + (ev.deltaY > 0 ? 1 : -1));
+            if (performance.now() < (this.suppressWheelUntil || 0)) return;
+            const delta = ev.deltaMode === 1 ? ev.deltaY * 16 : ev.deltaMode === 2 ? ev.deltaY * winsize.height : ev.deltaY;
+            if (Math.abs(delta) < 1) return;
+            const direction = delta > 0 ? 1 : -1;
+            if (this.wheelAccumulator && Math.sign(this.wheelAccumulator) !== direction) this.wheelAccumulator = 0;
+            // A mouse-wheel notch usually reports roughly 100px. Smaller
+            // touchpad deltas accumulate before becoming one adjacent step.
+            if (Math.abs(delta) >= 60) {
+                this.wheelAccumulator = 0;
+                this.queueSteps(direction, Math.max(1, Math.round(Math.abs(delta) / 100)));
+                return;
+            }
+            this.wheelAccumulator += delta;
+            const steps = Math.floor(Math.abs(this.wheelAccumulator) / 60);
+            if (!steps) return;
+            this.wheelAccumulator -= direction * steps * 60;
+            this.queueSteps(direction, steps);
         }, {passive: false});
 
         let touchStartY = null;
@@ -235,9 +270,9 @@ class MenuController {
             if (touchStartY === null || this.isOpen) return;
             const distance = touchStartY - ev.changedTouches[0].clientY;
             touchStartY = null;
-            if (Math.abs(distance) < 28 || this.isAnimating) return;
+            if (Math.abs(distance) < 28) return;
             this.suppressWheelUntil = performance.now() + 800;
-            this.select(this.current + (distance > 0 ? 1 : -1));
+            this.queueSteps(distance > 0 ? 1 : -1, Math.max(1, Math.round(Math.abs(distance) / 70)));
         }, {passive: true});
     }
     // Click/Select a menu item
@@ -251,17 +286,20 @@ class MenuController {
         currentItem.toggleCurrent();
         upcomingItem.toggleCurrent();
         
-        timeline({
+        const selectionTimeline = timeline({
             defaults: {
-                duration: 0.72,
+                duration: 0.24,
                 ease: 'expo.inOut'
             },
             onStart: () => this.isAnimating = true,
-            onComplete: () => this.isAnimating = false
+            onComplete: () => {
+                this.isAnimating = false;
+                this.drainSelectionQueue();
+            }
         })
         .to(this.DOM.track, {
             y: -upcomingIndex * this.wheelStep(),
-            duration: 0.58
+            duration: 0.19
         }, 0)
         .to(currentItem.DOM.deco, {
             scaleY: 0,
@@ -270,13 +308,13 @@ class MenuController {
         .to(currentItem.DOM.cta, {
             y: '100%',
             opacity: 0
-        }, 0)
-        .to(currentItem.DOM.galleryItems, {
+        }, 0);
+        if (currentItem.DOM.galleryItems.length) selectionTimeline.to(currentItem.DOM.galleryItems, {
             y: dir*-winsize.height*1.2,
-            stagger: dir*0.035,
+            stagger: dir*0.012,
             rotation: gsap.utils.random(-30,30)
-        }, 0)
-        .addLabel('upcomingImages', 0.1)
+        }, 0);
+        selectionTimeline.addLabel('upcomingImages', 0.033)
         .to(upcomingItem.DOM.deco, {
             startAt: {scaleY: 0},
             scaleY: 1,
@@ -286,13 +324,13 @@ class MenuController {
             startAt: {y: dir*100+'%'},
             y: '0%',
             opacity: 1
-        }, 'upcomingImages')
-        .to(upcomingItem.DOM.galleryItems, {
+        }, 'upcomingImages');
+        if (upcomingItem.DOM.galleryItems.length) selectionTimeline.to(upcomingItem.DOM.galleryItems, {
             startAt: {y: dir*winsize.height*1.2, rotation: gsap.utils.random(-30,30)},
             y: 0,
             opacity: 1,
             rotation: 0,
-            stagger: dir*0.035
+            stagger: dir*0.012
         }, 'upcomingImages');
     }
     // Hide the menu items and all other initial elements, and show the content for this menu item
@@ -315,7 +353,7 @@ class MenuController {
             ease: 'expo.inOut'
         };
 
-        timeline({
+        const contentTimeline = timeline({
             defaults: timelineDefaults,
             onStart: () => this.isAnimating = true,
             onComplete: () => {
@@ -329,14 +367,14 @@ class MenuController {
             ease: 'none'
         }, 0)
         .to(menuItem.DOM.deco, {scaleY: 0})
-        .to(menuItem.DOM.ctaInner, {y: '100%'}, 0)
-        .to(menuItem.DOM.galleryItems, {
+        .to(menuItem.DOM.ctaInner, {y: '100%'}, 0);
+        if (menuItem.DOM.galleryItems.length) contentTimeline.to(menuItem.DOM.galleryItems, {
             y: -winsize.height*1.2,
             opacity: 0,
             stagger: 0.05,
             rotation: gsap.utils.random(-30,30)
-        }, 0)
-        .to(this.DOM.headline.deco, {scaleX: 0}, 0)
+        }, 0);
+        contentTimeline.to(this.DOM.headline.deco, {scaleX: 0}, 0)
         .addLabel('showPageContent', timelineDefaults.duration*.1)
         .to(menuItem.contentPage.DOM.backCtrl, {
             startAt: {x: '50%'},
@@ -347,15 +385,15 @@ class MenuController {
             opacity: 1,
             duration: 0.18,
             ease: 'none'
-        }, 'showPageContent')
-        .to(menuItem.contentPage.DOM.galleryItems, {
+        }, 'showPageContent');
+        if (menuItem.contentPage.DOM.galleryItems.length) contentTimeline.to(menuItem.contentPage.DOM.galleryItems, {
             startAt: {y: '100%', rotation: () => gsap.utils.random(-20,20)},
             y: '0%',
             rotation: 0,
             opacity: 1,
             stagger: 0.08
-        }, 'showPageContent')
-        .to(root, {backgroundColor: menuItem.contentPage.bgcolor}, 0);
+        }, 'showPageContent');
+        contentTimeline.to(root, {backgroundColor: menuItem.contentPage.bgcolor}, 0);
 
         this.DOM.pagePreview.classList.remove('page--preview');
         menuItem.DOM.content.classList.add('content--current');
@@ -385,7 +423,7 @@ class MenuController {
             gsap.set(this.DOM.el, {opacity: 0});
             root.classList.remove('is-open');
 
-            timeline({
+            const menuTimeline = timeline({
                 defaults: timelineDefaults,
                 onStart: () => this.isAnimating = true,
                 onComplete: () => {
@@ -400,14 +438,14 @@ class MenuController {
                     menuItem.DOM.el.focus({preventScroll: true});
                 }
             })
-            .to(root, {backgroundColor: '#fff'}, 0)
-            .to(menuItem.contentPage.DOM.galleryItems, {
+            .to(root, {backgroundColor: '#fff'}, 0);
+            if (menuItem.contentPage.DOM.galleryItems.length) menuTimeline.to(menuItem.contentPage.DOM.galleryItems, {
                 y: '100%',
                 rotation: () => gsap.utils.random(-20,20),
                 opacity: 0,
                 stagger: 0.08
-            }, 0)
-            .to([menuItem.contentPage.DOM.title, menuItem.contentPage.DOM.intro, menuItem.contentPage.DOM.date], {
+            }, 0);
+            menuTimeline.to([menuItem.contentPage.DOM.title, menuItem.contentPage.DOM.intro, menuItem.contentPage.DOM.date], {
                 opacity: 0,
                 duration: 0.18,
                 ease: 'none'
@@ -421,15 +459,15 @@ class MenuController {
                 opacity: 1,
                 duration: 0.18,
                 ease: 'none'
-            }, 'showMenuItems')
-            .to(menuItem.DOM.galleryItems, {
+            }, 'showMenuItems');
+            if (menuItem.DOM.galleryItems.length) menuTimeline.to(menuItem.DOM.galleryItems, {
                 startAt: {rotation: gsap.utils.random(-30,30)},
                 y: 0,
                 stagger: -0.05,
                 rotation: 0,
                 opacity: 1
-            }, 'showMenuItems')
-            .to(menuItem.DOM.ctaInner, {y: '0%'}, 'showMenuItems')
+            }, 'showMenuItems');
+            menuTimeline.to(menuItem.DOM.ctaInner, {y: '0%'}, 'showMenuItems')
             .to(menuItem.DOM.deco, {scaleY: 1}, 'showMenuItems')
         });
     }

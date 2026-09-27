@@ -2311,7 +2311,7 @@ html.curve-home .navbar-main {
   height: var(--album-wheel-step);
   min-height: var(--album-wheel-step);
   opacity: 0.28;
-  transition: opacity 0.45s ease;
+  transition: opacity 0.15s ease;
 }
 .album-grid.is-enhanced .menu__item--selected {
   opacity: 1;
