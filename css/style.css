@@ -1864,6 +1864,7 @@ html.curve-home .navbar-main {
   --title-size: clamp(4rem, 7vw, 10rem);
   --album-height: calc(100svh - 52px);
   --album-gallery-inset: clamp(1.5rem, 4svh, 3rem);
+  --album-wheel-step: clamp(6rem, 15svh, 8.5rem);
   position: relative;
   isolation: isolate;
   display: grid;
@@ -2024,20 +2025,36 @@ html.curve-home .navbar-main {
   padding-top: 10vh;
 }
 .album-grid.is-enhanced .menu {
-  align-self: start;
-  padding-top: clamp(4rem, 8svh, 7rem);
-  padding-bottom: clamp(4rem, 8svh, 7rem);
+  align-self: center;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.album-grid.is-enhanced:not(.is-open) {
+  height: var(--album-height);
+  grid-template-rows: var(--album-height);
+  overflow: hidden;
+}
+.album-grid.is-enhanced .menu__wheel {
+  width: 100%;
+  height: calc(var(--album-wheel-step) * 3);
+  overflow: hidden;
+  touch-action: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+.album-grid.is-enhanced .menu__track {
+  padding: var(--album-wheel-step) 0;
+  will-change: transform;
 }
 .album-grid.is-enhanced .menu__item {
   margin-top: 0;
-  min-height: clamp(6rem, 16svh, 9rem);
-  opacity: 0;
-  transform: translateY(2.5rem);
-  transition: opacity 0.55s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  height: var(--album-wheel-step);
+  min-height: var(--album-wheel-step);
+  opacity: 0.28;
+  transition: opacity 0.45s ease;
 }
-.album-grid.is-enhanced .menu__item--visible {
+.album-grid.is-enhanced .menu__item--selected {
   opacity: 1;
-  transform: translateY(0);
 }
 .album-grid .menu__headline {
   margin-bottom: 3rem;
@@ -2323,15 +2340,13 @@ html.curve-home .navbar-main {
 @media (max-width: 847px) {
   .album-grid {
     --title-size: clamp(2rem, 8vw, 4rem);
+    --album-wheel-step: clamp(4.75rem, 13svh, 6.25rem);
   }
   .album-grid .menu, .album-grid .content {
     width: 88vw;
   }
   .album-grid .menu {
     padding: 4rem 0;
-  }
-  .album-grid.is-enhanced .menu__item {
-    min-height: clamp(6rem, 16svh, 8rem);
   }
   .album-grid .menu__item-deco {
     margin-left: 0.75rem;

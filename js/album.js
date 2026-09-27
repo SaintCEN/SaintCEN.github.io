@@ -102,6 +102,8 @@ let winsize = calcWinsize();
 class MenuController {
     constructor(el) {
         this.DOM = {el: el};
+        this.DOM.wheel = this.DOM.el.querySelector('.menu__wheel');
+        this.DOM.track = this.DOM.el.querySelector('.menu__track');
         // Set of small images each selected menu item has on the background
         this.DOM.galleries = [...root.querySelectorAll('.bg-gallery-wrap > .bg-gallery')];
         // Content DOM
@@ -127,6 +129,7 @@ class MenuController {
         this.current = Math.max(0, this.menuItems.findIndex(item => item.DOM.el.dataset.folder === root.dataset.selected));
         // Highlight the current menu item
         this.menuItems[this.current].highlight();
+        this.syncWheel(true);
         // Init/Bind events
         this.DOM.content.forEach(content => content.inert = true);
         this.initEvents();
@@ -171,20 +174,28 @@ class MenuController {
             el.style.setProperty('--album-item-title-size', low + 'px');
         });
     }
+    wheelStep() {
+        return this.menuItems[0] ? this.menuItems[0].DOM.el.getBoundingClientRect().height : 0;
+    }
+    syncWheel(immediate = false) {
+        const y = -this.current * this.wheelStep();
+        if (immediate || reduced.matches) gsap.set(this.DOM.track, {y});
+        else gsap.to(this.DOM.track, {y, duration: 0.85, ease: 'expo.inOut'});
+    }
+    select(pos) {
+        if (pos < 0 || pos >= this.menuItems.length || pos === this.current || this.isAnimating || this.isOpen) return false;
+        const item = this.menuItems[pos];
+        this.toggleMenuItems(item, this.current < pos ? 'up' : 'down');
+        this.current = pos;
+        return true;
+    }
     initEvents() {
         for (const [pos, item] of this.menuItems.entries()) {
             
             // Click/Select a menu item
             scope.listen(item.DOM.el, 'click', ev => {
                 ev.preventDefault();
-                if ( pos === this.current || this.isAnimating || this.isOpen ) return;
-                
-                const direction = this.current < pos ? 'up' : 'down';
-
-                this.toggleMenuItems(item, direction);
-
-                // Update current value
-                this.current = pos;
+                this.select(pos);
             });
 
             // click on the menu item's explore 
@@ -203,12 +214,32 @@ class MenuController {
             });
 
         }
+
+        scope.listen(root, 'wheel', ev => {
+            if (this.isOpen) return;
+            ev.preventDefault();
+            if (this.isAnimating || Math.abs(ev.deltaY) < 8) return;
+            this.select(this.current + (ev.deltaY > 0 ? 1 : -1));
+        }, {passive: false});
+
+        let touchStartY = null;
+        scope.listen(this.DOM.wheel, 'touchstart', ev => {
+            if (!this.isOpen && ev.touches.length === 1) touchStartY = ev.touches[0].clientY;
+        }, {passive: true});
+        scope.listen(this.DOM.wheel, 'touchend', ev => {
+            if (touchStartY === null || this.isAnimating || this.isOpen) return;
+            const distance = touchStartY - ev.changedTouches[0].clientY;
+            touchStartY = null;
+            if (Math.abs(distance) < 28) return;
+            this.select(this.current + (distance > 0 ? 1 : -1));
+        }, {passive: true});
     }
     // Click/Select a menu item
     // Animate all the bg images out and animate the new menu item's in
     toggleMenuItems(upcomingItem, direction = 'up') {
         this.isAnimating = true;
         const currentItem = this.menuItems[this.current];
+        const upcomingIndex = this.menuItems.indexOf(upcomingItem);
         const dir = direction === 'up' ? 1 : -1;
         
         currentItem.toggleCurrent();
@@ -222,17 +253,10 @@ class MenuController {
             onStart: () => this.isAnimating = true,
             onComplete: () => this.isAnimating = false
         })
-        .to(upcomingItem.DOM.title, {
-            ease: 'expo.in',
-            duration: 0.5,
-            y: dir*-100+'%',
+        .to(this.DOM.track, {
+            y: -upcomingIndex * this.wheelStep(),
+            duration: 0.85
         }, 0)
-        .to(upcomingItem.DOM.title, {
-            ease: 'expo',
-            duration: 0.8,
-            startAt: {y: dir*100+'%'},
-            y: '0%'
-        }, 0.5)
         .to(currentItem.DOM.deco, {
             scaleY: 0,
             opacity: 0
@@ -399,34 +423,33 @@ class MenuController {
     if (!menu.querySelector('.menu__item')) return;
     root.classList.add('is-enhanced');
     const controller = new MenuController(menu);
-    const revealItems = () => controller.menuItems.forEach(item => item.DOM.el.classList.add('menu__item--visible'));
-    if ('IntersectionObserver' in window && !reduced.matches && !root.dataset.selected) {
-        const titleObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('menu__item--visible');
-                titleObserver.unobserve(entry.target);
-            });
-        }, {rootMargin: '0px 0px -8% 0px', threshold: 0.08});
-        controller.menuItems.forEach(item => titleObserver.observe(item.DOM.el));
-        scope.cleanup(() => titleObserver.disconnect());
-    }
-    else revealItems();
     scope.listen(window, 'resize', () => {
         winsize = calcWinsize();
         controller.fitTitles();
+        controller.syncWheel(true);
     });
     if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(() => { if (scope.active) controller.fitTitles(); });
+        document.fonts.ready.then(() => {
+            if (!scope.active) return;
+            controller.fitTitles();
+            controller.syncWheel(true);
+        });
     }
     scope.listen(menu, 'keydown', event => {
-        if (event.key !== 'Enter' && event.key !== ' ') return;
         const link = event.target.closest('.menu__item');
-        if (!link || controller.isAnimating || controller.isOpen) return;
-        event.preventDefault();
+        if (!link || controller.isOpen) return;
         const index = controller.menuItems.findIndex(item => item.DOM.el === link);
-        if (index === controller.current) controller.showContent(controller.menuItems[index]);
-        else link.click();
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            const next = controller.current + (event.key === 'ArrowDown' ? 1 : -1);
+            if (controller.select(next)) controller.menuItems[next].DOM.el.focus({preventScroll: true});
+            return;
+        }
+        if ((event.key === 'Enter' || event.key === ' ') && !controller.isAnimating) {
+            event.preventDefault();
+            if (index === controller.current) controller.showContent(controller.menuItems[index]);
+            else controller.select(index);
+        }
     });
     scope.listen(root, 'keydown', event => {
         if (event.key === 'Escape' && controller.isOpen && !controller.isAnimating) {
