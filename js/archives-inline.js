@@ -406,7 +406,11 @@
         var previousIndex = this.currentIndex;
         var previous = this.contents[previousIndex];
         var incoming = this.contents[position];
-        this.items.forEach(function (menuItem) { menuItem.resetImage(); });
+        var keepTagPreview = root.classList.contains('inline-archive--tags');
+        this.items.forEach(function (menuItem, index) {
+            if (keepTagPreview && index === position && menuItem.pointerInside) return;
+            menuItem.resetImage();
+        });
         this.updateSelection(position);
         trackedTimeline({
             defaults: { ease: 'expo' },

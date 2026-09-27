@@ -84,14 +84,6 @@ a.tag.article-tag {
 .article .article-entry a {
   word-break: break-word;
 }
-.article .article-more-link a {
-  font-size: 0.9rem;
-  color: darkgray;
-  border-bottom: 1px dotted transparent;
-}
-.article .article-more-link a:hover {
-  border-bottom-color: darkgray;
-}
 .article .article-nav a {
   color: darkgray;
   position: relative;
@@ -227,36 +219,6 @@ a.tag.article-tag {
 }
 .article .gist .file {
   all: initial;
-}
-
-.archive:not(:last-child) {
-  margin-bottom: 3rem;
-}
-.archive .articles {
-  border-left: 1px solid #dbdbdb;
-}
-.archive .article {
-  border-top: none;
-  margin-left: -1px;
-  padding: 1rem 1.5rem;
-  border-left: 3px solid transparent;
-}
-.archive .article:hover {
-  border-left-color: black;
-}
-.archive .article time {
-  font-size: 0.9rem;
-  color: darkgray;
-}
-.archive .article h6 {
-  margin: 0;
-}
-.archive .article h6 a {
-  color: inherit;
-  border-bottom: 1px dotted transparent;
-}
-.archive .article h6 a:hover {
-  border-bottom-color: darkgray;
 }
 
 .footer {
@@ -424,63 +386,6 @@ figure.highlight .section {
   border-radius: inherit;
 }
 
-.pagination {
-  margin: 0 -1em;
-}
-.pagination .pagination-previous,
-.pagination .pagination-next,
-.pagination .pagination-link {
-  border: 1px solid transparent;
-}
-.pagination .pagination-previous:active,
-.pagination .pagination-next:active,
-.pagination .pagination-link:active {
-  box-shadow: none;
-}
-.pagination .pagination-link:hover {
-  border-color: black;
-}
-.pagination .pagination-link.is-current {
-  background-color: black;
-}
-.pagination .pagination-previous a,
-.pagination .pagination-next a {
-  position: relative;
-  color: inherit;
-}
-.pagination .pagination-previous a {
-  padding-left: 1rem;
-}
-.pagination .pagination-previous a:before {
-  top: 0;
-  left: 0;
-  content: "<";
-  position: absolute;
-}
-.pagination .pagination-next a {
-  padding-right: 1rem;
-}
-.pagination .pagination-next a:after {
-  top: 0;
-  right: 0;
-  content: ">";
-  position: absolute;
-}
-
-.section-heading {
-  padding-bottom: 0;
-}
-.section-heading h5 {
-  margin-bottom: 0;
-  text-transform: uppercase;
-}
-.section-heading h5 > svg {
-  margin-right: 0.5rem;
-}
-.section-heading + .section {
-  padding-top: 2rem;
-}
-
 .gallery-item {
   position: relative;
   display: inline-block;
@@ -522,56 +427,6 @@ figure.highlight .section {
   width: 100%;
   height: 100%;
   position: absolute;
-}
-
-@media screen and (min-width: 768px) {
-  .article.has-cover .article-flex {
-    display: flex;
-    align-items: flex-start;
-    gap: 2rem;
-  }
-}
-@media screen and (min-width: 768px) {
-  .article.has-cover .article-main {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-}
-.article.has-cover .article-title {
-  margin-top: 0;
-}
-
-.article-cover {
-  display: block;
-  flex: 0 0 auto;
-  width: 100%;
-  margin-top: 1.5rem;
-  overflow: hidden;
-  border-radius: 3px;
-  line-height: 0;
-}
-@media screen and (min-width: 768px) {
-  .article-cover {
-    width: 38%;
-    max-width: 300px;
-    margin-top: 0;
-  }
-}
-.article-cover img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  transition: transform 0.32s ease;
-}
-@media screen and (min-width: 768px) {
-  .article-cover {
-    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 25%);
-    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 25%);
-  }
-}
-.article-cover:hover img {
-  transform: scale(1.04);
 }
 
 .archive-inline-section {
@@ -680,6 +535,19 @@ figure.highlight .section {
 }
 .inline-archive--tags .inline-archive__menu-item {
   font-size: clamp(1.65rem, 3.1vw, 2.35rem);
+}
+.inline-archive--tags .inline-archive__menu-item.is-selected {
+  color: inherit;
+}
+.inline-archive--tags .inline-archive__menu-item.is-selected .inline-archive__menu-number {
+  color: #777;
+}
+.inline-archive--tags .inline-archive__menu-item:hover, .inline-archive--tags .inline-archive__menu-item:focus-visible {
+  color: var(--inline-accent);
+}
+.inline-archive--tags .inline-archive__hover-reveal {
+  width: 180px;
+  height: 242px;
 }
 
 .inline-archive__hover-reveal {
@@ -865,6 +733,10 @@ figure.highlight .section {
   .inline-archive__hover-reveal {
     width: 150px;
     height: 200px;
+  }
+  .inline-archive--tags .inline-archive__hover-reveal {
+    width: 120px;
+    height: 162px;
   }
   .inline-archive__gallery-item {
     flex-basis: clamp(14rem, 74vw, 24rem);
