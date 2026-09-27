@@ -51,8 +51,8 @@
   const SPLAT_FORCE = 5200;
   const PAPER_HEX = 0xf4efe6; // matches --paper, so it blends into the rest of the page
 
-  const INK_HEX = { sumi:0x1a1a1f, ai:0x16407a, shu:0xc8372d, matsuba:0x2e6e52 };
-  const CYCLE_ORDER = ['sumi','ai','shu','matsuba'];
+  const INK_HEX = { sumi:0x1a1a1f };
+  const CYCLE_ORDER = ['sumi'];
 
   function hexToRGB01(hex){ return [((hex>>16)&255)/255, ((hex>>8)&255)/255, (hex&255)/255]; }
   const PAPER_RGB = hexToRGB01(PAPER_HEX);
@@ -474,8 +474,8 @@
   // ---------- initial three-drop intro ----------
   function introSequence(){
     later(()=>applySplat(0.38,0.58,0,0,true,'sumi'), 0);
-    later(()=>applySplat(0.62,0.42,0,0,true,'ai'), 450);
-    later(()=>applySplat(0.5,0.62,0,0,true,'shu'), 950);
+    later(()=>applySplat(0.62,0.42,0,0,true,'sumi'), 450);
+    later(()=>applySplat(0.5,0.62,0,0,true,'sumi'), 950);
   }
 
   // ---------- render loop, gated by visibility ----------

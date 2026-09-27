@@ -1229,31 +1229,16 @@ figure.highlight .section {
   text-align: center;
 }
 
-.home-kicker {
-  margin: 0 0 clamp(1rem, 2.3vh, 1.45rem);
-  color: var(--home-ink-soft);
-  font-family: "Source Code Pro", monospace;
-  font-size: clamp(0.58rem, 0.8vw, 0.72rem);
-  font-weight: 400;
-  line-height: 1.3;
-  letter-spacing: 0.48em;
-  text-transform: uppercase;
-  opacity: 0;
-  animation: home-fade-up 1.2s ease forwards 0.2s;
-}
-
 .home-brand {
   margin: 0;
-  color: var(--home-ink);
-  font-family: "Ovo", "Times New Roman", serif;
-  font-size: clamp(3.25rem, 9.2vw, 8rem);
-  font-style: italic;
-  font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: 0.015em;
-  text-wrap: balance;
-  opacity: 0;
-  animation: home-fade-up 1.4s ease forwards 0.5s;
+  color: #000;
+  font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
+  font-size: clamp(1.8rem, 8.5vw, 10.5rem);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
 }
 
 .home-actions {
@@ -1261,75 +1246,94 @@ figure.highlight .section {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: clamp(0.7rem, 1.7vw, 1.3rem);
-  margin-top: clamp(2rem, 4.5vh, 3rem);
-  opacity: 0;
-  animation: home-fade-up 1.4s ease forwards 0.85s;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  margin-top: clamp(2rem, 4vh, 3.5rem);
 }
 
 .home-button {
   position: relative;
   display: inline-flex;
-  min-width: clamp(120px, 12vw, 168px);
-  min-height: 50px;
+  min-width: clamp(128px, 13vw, 184px);
+  min-height: 56px;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 0.85rem 1.8rem;
-  border: 1px solid rgba(43, 38, 34, 0.72);
-  border-radius: 0;
-  color: var(--home-ink);
-  background: rgba(244, 239, 230, 0.22);
-  backdrop-filter: blur(8px);
-  font-family: "Ovo", serif;
-  font-size: 0.92rem;
+  padding: 1rem 2rem;
+  border: 2px solid rgba(0, 0, 0, 0.72);
+  border-radius: 16px;
+  color: #000;
+  background: transparent;
+  font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
+  font-size: 1.1rem;
   line-height: 1;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  box-shadow: none;
-  transition: color 0.35s ease, border-color 0.35s ease, transform 0.25s ease;
+  letter-spacing: 0.035em;
+  text-transform: none;
+  text-shadow: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09), inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+  isolation: isolate;
+  transition: color 240ms ease, transform 180ms ease, box-shadow 300ms ease;
 }
 
-.home-button::before {
+.home-button > span {
+  position: relative;
+  z-index: 2;
+}
+
+.home-button::after {
   content: "";
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   inset: 0;
-  background: var(--home-ink);
-  transform: translateY(102%);
-  transition: transform 0.4s cubic-bezier(0.22, 0.72, 0.25, 1);
+  border-radius: 13px;
+  pointer-events: none;
+  background-color: #171918;
+  background-image: radial-gradient(ellipse, rgba(191, 187, 170, 0.52), transparent 64%), radial-gradient(ellipse, rgba(0, 0, 0, 0.95) 16%, transparent 68%), radial-gradient(ellipse, rgba(157, 159, 148, 0.45), transparent 65%), radial-gradient(ellipse, #080a09 20%, transparent 70%);
+  background-size: 95% 180%, 130% 210%, 85% 190%, 120% 220%;
+  background-position: -110% 30%, 30% 80%, 190% 100%, 150% 30%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 300ms ease;
 }
 
 .home-button:hover,
 .home-button:focus-visible {
-  color: var(--home-paper);
-  border-color: var(--home-ink);
-  transform: translateY(-2px);
+  color: #fff;
+  background-color: transparent;
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.22), 0 0 14px rgba(0, 0, 0, 0.18);
 }
 
-.home-button:hover::before,
-.home-button:focus-visible::before {
-  transform: translateY(0);
+.home-button:hover::after,
+.home-button:focus-visible::after {
+  opacity: 0.96;
+  animation: home-ink-drift 3.8s ease-in-out infinite alternate;
 }
 
 .home-button:focus-visible {
-  outline: 1px solid var(--home-ink);
+  outline: 2px solid #000;
   outline-offset: 5px;
 }
 
 .home-button:active {
-  transform: translateY(0);
+  transform: scale(0.97);
 }
 
+@keyframes home-ink-drift {
+  50% {
+    background-position: 20% 70%, 100% 20%, 60% 30%, -20% 80%;
+    background-size: 120% 210%, 100% 170%, 110% 160%, 145% 190%;
+  }
+  100% {
+    background-position: 160% 10%, -80% 100%, -100% 80%, 70% 0%;
+    background-size: 90% 150%, 140% 230%, 100% 210%, 105% 180%;
+  }
+}
 .home-social {
-  margin-top: clamp(1.25rem, 3vh, 2rem);
-  opacity: 0;
-  animation: home-fade-up 1.4s ease forwards 1.05s;
+  margin-top: clamp(1.75rem, 4vh, 3rem);
 }
 
 .home-social .profile-social {
   justify-content: center;
-  gap: 0.85rem;
+  gap: 1rem;
   margin: 0;
   padding: 0;
   border: 0;
@@ -1337,230 +1341,71 @@ figure.highlight .section {
 
 .home-social .profile-social-link {
   display: inline-flex;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   align-items: center;
   justify-content: center;
-  color: var(--home-ink);
-  font-size: 1rem;
-  filter: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  color: #fff;
+  font-size: 1.2rem;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.55));
 }
 
 .home-social .profile-social-link:hover {
-  color: var(--home-ink);
-  opacity: 0.55;
-  transform: translateY(-2px);
+  color: #fff;
+  opacity: 0.7;
 }
 
 .home-social .profile-social-link:focus-visible {
-  outline: 1px solid var(--home-ink);
+  outline: 2px solid #fff;
   outline-offset: 3px;
 }
 
-.home-ink-hint {
-  margin: clamp(1.2rem, 3vh, 2rem) 0 0;
-  color: var(--home-ink-soft);
-  font-family: "Ovo", serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.58em;
-  opacity: 0;
-  pointer-events: none;
-  animation: home-fade-up 1.4s ease forwards 1.3s;
-  transition: opacity 1.2s ease;
-}
-
-.home-ink-hint.is-faded {
-  opacity: 0 !important;
-}
-
-.home-ink-dock {
-  position: absolute;
-  z-index: 5;
-  left: 50%;
-  bottom: clamp(14px, 2.8vh, 26px);
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.52rem 0.86rem;
-  border: 1px solid rgba(43, 38, 34, 0.14);
-  border-radius: 999px;
-  color: var(--home-ink-soft);
-  background: rgba(244, 239, 230, 0.52);
-  box-shadow: 0 8px 24px rgba(43, 38, 34, 0.08);
-  backdrop-filter: blur(14px) saturate(1.1);
-  transform: translateX(-50%);
-  opacity: 0;
-  animation: home-dock-fade-up 1.4s ease forwards 1.45s;
-}
-
-.home-ink-swatch {
-  position: relative;
-  width: 24px;
-  height: 24px;
-  flex: 0 0 auto;
-  padding: 0;
-  border: 1px solid rgba(43, 38, 34, 0.18);
-  border-radius: 50%;
-  background: var(--swatch, var(--home-ink));
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.home-ink-swatch--cycle {
-  background: conic-gradient(#1a1a1f, #16407a, #c8372d, #2e6e52, #1a1a1f);
-}
-
-.home-ink-swatch:hover {
-  transform: scale(1.12);
-}
-
-.home-ink-swatch.is-active {
-  box-shadow: 0 0 0 2px var(--home-paper), 0 0 0 3px rgba(43, 38, 34, 0.55);
-}
-
-.home-ink-swatch span {
-  position: absolute;
-  bottom: 125%;
-  left: 50%;
-  color: var(--home-ink-soft);
-  font-size: 0.58rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(-50%);
-  transition: opacity 0.2s ease;
-}
-
-.home-ink-swatch:hover span,
-.home-ink-swatch.is-active span {
-  opacity: 1;
-}
-
-.home-ink-dock > i {
-  width: 1px;
-  height: 18px;
-  background: rgba(43, 38, 34, 0.16);
-}
-
-.home-dock-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.2rem 0.1rem;
-  border: 0;
-  color: var(--home-ink-soft);
-  background: none;
-  font-family: inherit;
-  font-size: 0.64rem;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.home-dock-button b {
-  width: 6px;
-  height: 6px;
-  border: 1px solid var(--home-ink-soft);
-  border-radius: 50%;
-  background: transparent;
-}
-
-.home-dock-button b.is-on {
-  border-color: #3a7bd5;
-  background: #3a7bd5;
-  box-shadow: 0 0 6px #3a7bd5;
-}
-
-@keyframes home-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes home-dock-fade-up {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 24px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
 .album-empty {
   color: #767670;
   margin-top: 2rem;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 600px) {
   .home-hero {
-    padding: 2.5rem 0.9rem 5.4rem;
-  }
-  .home-brand {
-    font-size: clamp(2.55rem, 13vw, 4.6rem);
-  }
-  .home-kicker {
-    letter-spacing: 0.27em;
+    padding: 2rem 1rem;
   }
   .home-actions {
-    gap: 0.55rem;
+    gap: 0.65rem;
   }
   .home-button {
     min-width: 0;
-    min-height: 44px;
-    padding: 0.75rem 1rem;
-    font-size: 0.76rem;
-    letter-spacing: 0.12em;
+    min-height: 48px;
+    padding: 0.85rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
   }
-  .home-ink-hint {
-    display: none;
-  }
-  .home-ink-dock {
-    gap: 0.42rem;
-    padding: 0.42rem 0.6rem;
-  }
-  .home-ink-swatch {
-    width: 20px;
-    height: 20px;
-  }
-  .home-dock-button {
-    font-size: 0.56rem;
+  .home-button::after {
+    border-radius: 9px;
   }
 }
-@media screen and (max-height: 610px) {
-  .home-hero {
-    padding-top: 2rem;
-    padding-bottom: 4.8rem;
-  }
+@media screen and (max-height: 480px) and (orientation: landscape) {
   .home-brand {
-    font-size: clamp(2.6rem, 10vw, 5.5rem);
+    font-size: clamp(1.8rem, 8.5vw, 6rem);
   }
   .home-actions {
     margin-top: 1.25rem;
   }
   .home-social {
-    margin-top: 0.8rem;
-  }
-  .home-ink-hint {
-    display: none;
+    margin-top: 1rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .home-petal {
     display: none;
   }
-  .home-kicker, .home-brand, .home-actions, .home-social, .home-ink-hint, .home-ink-dock {
-    opacity: 1;
+  .home-button, .home-button::after, .home-suminagashi {
+    transition: none;
+  }
+  .home-button:hover::after, .home-button:focus-visible::after {
     animation: none;
   }
-  .home-button, .home-button::before, .home-suminagashi {
-    transition: none;
+  .home-button:active {
+    transform: none;
   }
 }
 .post-section {
