@@ -445,7 +445,7 @@ figure.highlight .section {
 }
 .archive-inline-section .home-layout {
   position: relative;
-  width: min(92vw, 1500px);
+  width: min(94vw, 2400px);
   max-width: none;
 }
 .archive-inline-section .home-main {
@@ -456,8 +456,8 @@ figure.highlight .section {
 
 .inline-archive {
   --inline-accent: #3273dc;
-  --archive-menu-card-gap: clamp(1.75rem, 4.8svh, 3.25rem);
-  --archive-card-width: clamp(18rem, min(31vw, 52svh), 27rem);
+  --archive-menu-card-gap: clamp(2.25rem, 5svh, 6rem);
+  --archive-card-width: clamp(21rem, min(50vw, 72svh), 116rem);
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -498,7 +498,7 @@ figure.highlight .section {
   color: inherit;
   font: inherit;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(1.9rem, min(4.2vw, 6.5svh), 3.45rem);
+  font-size: clamp(2.1rem, min(4.6vw, 7svh), 5.5rem);
   text-transform: lowercase;
   line-height: 1;
   cursor: pointer;
@@ -542,7 +542,7 @@ figure.highlight .section {
 .inline-archive__hover-reveal {
   position: absolute;
   z-index: 2;
-  width: clamp(5.5rem, 9vw, 7.2rem);
+  width: clamp(5.5rem, min(9vw, 16svh), 11rem);
   height: auto;
   aspect-ratio: 23/31;
   top: 0;
@@ -641,7 +641,7 @@ figure.highlight .section {
   display: block;
   width: 100%;
   aspect-ratio: 16/10;
-  max-height: min(36svh, 22rem);
+  max-height: 54svh;
   position: relative;
   overflow: hidden;
   background: #efefec;
@@ -670,7 +670,7 @@ figure.highlight .section {
   min-width: 0;
   margin: 0 0 0.35rem;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(1.15rem, 2vw, 1.65rem);
+  font-size: clamp(1.2rem, min(2vw, 3.4svh), 2.4rem);
   font-weight: normal;
   line-height: 1.08;
   text-transform: none;
@@ -687,7 +687,7 @@ figure.highlight .section {
 .inline-archive__gallery-tags {
   margin: 0 0 0.4rem;
   color: var(--inline-accent);
-  font: 0.65rem/1.4 "Source Code Pro", monospace, "Microsoft YaHei";
+  font: clamp(0.65rem, min(0.85vw, 1.45svh), 0.95rem)/1.4 "Source Code Pro", monospace, "Microsoft YaHei";
   overflow-wrap: anywhere;
 }
 
@@ -697,22 +697,104 @@ figure.highlight .section {
   margin: 0;
   overflow: hidden;
   color: #555;
-  font-size: 0.76rem;
+  font-size: clamp(0.76rem, min(0.95vw, 1.6svh), 1.05rem);
   line-height: 1.5;
   white-space: pre-line;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
 
+@media screen and (min-width: 1024px) {
+  .inline-archive {
+    height: calc(80svh - 5.75rem);
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-content: stretch;
+  }
+}
 @media screen and (max-width: 1023px) {
   .archive-inline-section .home-layout {
-    width: min(88vw, 64rem);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: clamp(0.7rem, 1.8svh, 1rem);
+    width: min(90vw, 64rem);
   }
   .archive-inline-section .home-aside {
-    display: none;
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+  .archive-inline-section .home-main {
+    height: auto;
+  }
+  .archive-inline-section .home-aside .profile {
+    display: grid;
+    grid-template-columns: clamp(3.25rem, 11vw, 4rem) minmax(0, 1fr);
+    grid-template-areas: "avatar identity" "avatar bio" "avatar meta" "social social";
+    column-gap: 0.9rem;
+    row-gap: 0;
+    align-items: start;
+    padding: 0 0 clamp(0.55rem, 1.4svh, 0.8rem);
+    border-bottom: 1px solid #dbdbdb;
+    text-align: left;
+  }
+  .archive-inline-section .profile-avatar {
+    grid-area: avatar;
+    width: clamp(3.25rem, 11vw, 4rem);
+    height: clamp(3.25rem, 11vw, 4rem);
+    margin: 0.35rem 0 0;
+  }
+  .archive-inline-section .profile-identity {
+    grid-area: identity;
+  }
+  .archive-inline-section .profile-name {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+  }
+  .archive-inline-section .profile-status {
+    margin-top: 0.3rem;
+    padding: 0.2rem 0.42rem;
+    font-size: clamp(0.58rem, 2.2vw, 0.68rem);
+  }
+  .archive-inline-section .profile-bio {
+    grid-area: bio;
+    display: -webkit-box;
+    margin: 0.4rem 0 0;
+    overflow: hidden;
+    font-size: clamp(0.68rem, 2.6vw, 0.8rem);
+    line-height: 1.4;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .archive-inline-section .profile-meta {
+    grid-area: meta;
+    margin-top: 0.35rem;
+    font-size: clamp(0.64rem, 2.4vw, 0.75rem);
+  }
+  .archive-inline-section .profile-social {
+    grid-area: social;
+    justify-content: flex-start;
+    gap: 0.9rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+  }
+  .archive-inline-section .profile-social-link {
+    font-size: 1rem;
   }
   .inline-archive__menu {
     justify-content: center;
+  }
+}
+@media screen and (min-width: 1024px) and (max-height: 820px) {
+  .inline-archive {
+    --archive-menu-card-gap: clamp(1.75rem, 4.5svh, 2.3rem);
+    --archive-card-width: clamp(18rem, min(39vw, 56svh), 34rem);
+  }
+  .inline-archive__menu-item {
+    font-size: clamp(1.9rem, min(4vw, 6svh), 3.5rem);
+  }
+  .inline-archive__gallery-image-inner {
+    max-height: 40svh;
   }
 }
 @media screen and (max-width: 52.99em) {
@@ -786,6 +868,12 @@ figure.highlight .section {
     font-size: 0.7rem;
     line-height: 1.4;
     -webkit-line-clamp: 2;
+  }
+  .archive-inline-section .profile-bio {
+    -webkit-line-clamp: 1;
+  }
+  .archive-inline-section .profile-meta {
+    display: none;
   }
 }
 #site-page:has(.inline-archive) > .footer {
@@ -1840,6 +1928,13 @@ body:has(.post-toc) {
 }
 
 @media screen and (max-width: 1023px) {
+  .navbar-main.is-transparent > .container {
+    position: relative;
+  }
+  .navbar-main.is-transparent .navbar-brand {
+    min-height: 3.25rem;
+    align-items: center;
+  }
   .navbar-main.is-transparent .navbar-start.is-active {
     display: flex;
     padding: 0.8rem 1rem;
@@ -1855,10 +1950,26 @@ body:has(.post-toc) {
   .navbar-main.is-transparent .gooey-link {
     min-height: 44px;
   }
+  .navbar-main.is-transparent .navbar-end,
   .navbar-main.is-transparent .navbar-end.is-active {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    right: 3.25rem;
     display: flex;
-    padding: 0 1rem 0.5rem;
+    width: 3rem;
+    height: 3.25rem;
+    padding: 0;
+    background: transparent;
     box-shadow: none;
+  }
+  .navbar-main.is-transparent .navbar-end .search {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
   }
 }
 #site-page h1[tabindex="-1"]:focus {
