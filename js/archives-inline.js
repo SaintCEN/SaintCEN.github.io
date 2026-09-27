@@ -354,7 +354,8 @@
 
     function Controller() {
         this.DOM = {
-            menu: root.querySelector('.inline-archive__menu')
+            menu: root.querySelector('.inline-archive__menu'),
+            contentWrap: root.querySelector('.inline-archive__content-wrap')
         };
         this.DOM.menuItems = Array.from(this.DOM.menu.querySelectorAll('[data-inline-menu-item]'));
         this.DOM.contents = Array.from(root.querySelectorAll('[data-inline-content]'));
@@ -377,7 +378,51 @@
         this.animating = false;
         this.bind();
         this.activateInitial();
+        this.fitLayout();
     }
+
+    Controller.prototype.cardFrameHeightAt = function (width) {
+        root.style.setProperty('--archive-fitted-card-width', width + 'px');
+        return this.DOM.contents.reduce(function (maximum, content) {
+            var frame = content.querySelector('.inline-archive__gallery');
+            return frame ? Math.max(maximum, frame.getBoundingClientRect().height) : maximum;
+        }, 0);
+    };
+
+    Controller.prototype.fitLayout = function () {
+        var host = root.parentElement;
+        var firstCard = root.querySelector('.inline-archive__gallery-item');
+        if (!host || !firstCard || !this.DOM.menu) return;
+
+        root.style.removeProperty('--archive-layout-height');
+        root.style.removeProperty('--archive-fitted-card-width');
+
+        var maximumHeight = host.clientHeight;
+        var targetHeight = root.getBoundingClientRect().height;
+        var styles = getComputedStyle(root);
+        var gap = parseFloat(styles.rowGap) || 0;
+        var menuHeight = this.DOM.menu.getBoundingClientRect().height;
+        var availableForCards = Math.max(0, maximumHeight - menuHeight - gap);
+        var desiredWidth = firstCard.getBoundingClientRect().width;
+        var minimumWidth = Math.min(224, desiredWidth);
+        var cardHeight = this.cardFrameHeightAt(desiredWidth);
+
+        if (cardHeight > availableForCards && desiredWidth > minimumWidth) {
+            var low = minimumWidth;
+            var high = desiredWidth;
+            for (var step = 0; step < 9; step += 1) {
+                var middle = (low + high) / 2;
+                if (this.cardFrameHeightAt(middle) <= availableForCards) low = middle;
+                else high = middle;
+            }
+            desiredWidth = low;
+            cardHeight = this.cardFrameHeightAt(desiredWidth);
+        }
+
+        var requiredHeight = cardHeight + gap + menuHeight;
+        root.style.setProperty('--archive-layout-height', Math.min(maximumHeight, Math.max(targetHeight, requiredHeight)) + 'px');
+        this.contents.forEach(function (content) { content.gallery.resize(); });
+    };
 
     Controller.prototype.bind = function () {
         var self = this;
@@ -406,7 +451,7 @@
             if (gallery.addWheel(delta)) event.preventDefault();
         }, { passive: false });
         scope.listen(window, 'resize', function () {
-            self.contents.forEach(function (content) { content.gallery.resize(); });
+            self.fitLayout();
         });
         scope.listen(window, 'hashchange', function () {
             var hash = location.hash.slice(1);
@@ -544,6 +589,12 @@
 
     var controller = new Controller();
     root.classList.add('is-enhanced');
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+            if (scope.active) controller.fitLayout();
+        });
+    }
 
     scope.listen(reduced, 'change', function () {
         if (reduced.matches) animations.forEach(function (animation) { animation.progress(1); });
