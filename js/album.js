@@ -324,11 +324,19 @@ class MenuController {
             animations.delete(this.selectionTimeline);
             this.selectionTimeline.kill();
         }
-        const animated = [
-            currentItem.DOM.deco, currentItem.DOM.cta, ...currentItem.DOM.galleryItems,
-            upcomingItem.DOM.deco, upcomingItem.DOM.cta, ...upcomingItem.DOM.galleryItems
-        ];
+        const inactiveItems = this.menuItems.filter(item => item !== currentItem && item !== upcomingItem);
+        const animated = this.menuItems.flatMap(item => [
+            item.DOM.deco, item.DOM.cta, ...item.DOM.galleryItems
+        ]);
         gsap.killTweensOf(animated);
+        // A quick wheel/drag can interrupt the previous selection timeline.
+        // Normalize every older item so no half-finished preview survives behind
+        // the current pair; a future incoming item receives a fresh startAt.
+        inactiveItems.forEach(item => {
+            gsap.set(item.DOM.deco, {scaleY: 0, opacity: 0});
+            gsap.set(item.DOM.cta, {y: '100%', opacity: 0});
+            gsap.set(item.DOM.galleryItems, {y: 0, rotation: 0, opacity: 0});
+        });
         let selectionTimeline;
         selectionTimeline = timeline({
             defaults: {
@@ -349,6 +357,7 @@ class MenuController {
         }, 0);
         if (currentItem.DOM.galleryItems.length) selectionTimeline.to(currentItem.DOM.galleryItems, {
             y: dir*-winsize.height*1.2,
+            opacity: 0,
             stagger: dir*0.012,
             rotation: gsap.utils.random(-30,30)
         }, 0);
@@ -368,6 +377,7 @@ class MenuController {
             y: 0,
             opacity: 1,
             rotation: 0,
+            duration: 0.6,
             stagger: dir*0.012
         }, 'upcomingImages');
         this.selectionTimeline = selectionTimeline;
