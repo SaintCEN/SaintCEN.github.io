@@ -2346,7 +2346,37 @@ html.curve-home .navbar-main {
   opacity: 1;
 }
 .album-grid .menu__headline {
-  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+  width: min(100%, 30rem);
+  min-height: clamp(7rem, 17svh, 8rem);
+  margin-bottom: clamp(1.75rem, 4svh, 3rem);
+  overflow: visible;
+}
+.album-grid .menu__headline-copy {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  bottom: 0;
+}
+.album-grid .menu__headline-image {
+  display: block;
+  position: absolute;
+  z-index: 0;
+  right: clamp(1.5rem, 4vw, 3.5rem);
+  bottom: clamp(-5rem, -10svh, -3.5rem);
+  width: auto;
+  height: clamp(13rem, 31svh, 17rem);
+  max-width: none;
+  object-fit: contain;
+  opacity: 0.38;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.album-grid.is-enhanced .menu__wheel {
+  position: relative;
+  z-index: 2;
 }
 .album-grid .menu__headline-deco {
   display: block;
@@ -2639,6 +2669,15 @@ html.curve-home .navbar-main {
   }
   .album-grid .menu {
     padding: 4rem 0;
+  }
+  .album-grid .menu__headline {
+    width: min(100%, 24rem);
+    min-height: 6.5rem;
+  }
+  .album-grid .menu__headline-image {
+    right: 0.5rem;
+    bottom: -7rem;
+    height: clamp(10rem, 25svh, 12rem);
   }
   .album-grid .menu__item-deco {
     margin-left: 0.75rem;
