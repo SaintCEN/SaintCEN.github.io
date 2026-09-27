@@ -721,15 +721,26 @@ figure.highlight .section {
   will-change: transform, opacity;
 }
 
+.inline-archive__gallery-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+}
+
 .inline-archive__gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
-  gap: 2.25rem 1.6rem;
+  display: flex;
+  width: max-content;
+  height: 100%;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  will-change: transform;
 }
 
 .inline-archive__gallery-item {
+  flex: 0 0 clamp(20rem, 34vw, 34rem);
   min-width: 0;
   margin: 0;
+  will-change: transform;
 }
 
 .inline-archive__gallery-image {
@@ -743,38 +754,37 @@ figure.highlight .section {
 .inline-archive__gallery-image-inner {
   display: block;
   width: 100%;
-  padding-bottom: 151%;
+  aspect-ratio: 4/3;
   position: relative;
   overflow: hidden;
   background: #efefec;
-  will-change: transform, opacity;
+  will-change: transform;
 }
 .inline-archive__gallery-image-inner img {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: -12.5%;
   display: block;
-  width: 100%;
+  width: 125%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 15%;
+  object-position: 50% 50%;
+  will-change: transform;
 }
 
 .inline-archive__gallery-caption {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas: "caption-title caption-more" "caption-meta caption-meta" "caption-summary caption-summary";
+  display: block;
+  padding-top: 0.85rem;
 }
 
 .inline-archive__gallery-title {
-  grid-area: caption-title;
   min-width: 0;
-  margin: 0.85rem 0 0.45rem;
+  margin: 0 0 0.45rem;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(1.15rem, 2.1vw, 1.5rem);
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
   font-weight: normal;
-  line-height: 1.12;
+  line-height: 1.08;
   text-transform: none;
-  will-change: transform, opacity;
 }
 .inline-archive__gallery-title a {
   color: inherit;
@@ -785,46 +795,20 @@ figure.highlight .section {
   color: var(--inline-accent);
 }
 
-.inline-archive__gallery-meta {
-  grid-area: caption-meta;
-  margin: 0;
-  color: #777;
-  font: 0.63rem/1.55 "Source Code Pro", monospace, "Microsoft YaHei";
-  will-change: transform, opacity;
+.inline-archive__gallery-tags {
+  margin: 0 0 0.6rem;
+  color: var(--inline-accent);
+  font: 0.68rem/1.5 "Source Code Pro", monospace, "Microsoft YaHei";
+  overflow-wrap: anywhere;
 }
 
 .inline-archive__gallery-summary {
-  grid-area: caption-summary;
-  margin: 0.55rem 0 0;
+  max-width: 42rem;
+  margin: 0;
   color: #555;
-  font-size: 0.75rem;
-  line-height: 1.55;
+  font-size: 0.82rem;
+  line-height: 1.6;
   white-space: pre-line;
-  will-change: transform, opacity;
-}
-
-.inline-archive__gallery-more {
-  grid-area: caption-more;
-  align-self: center;
-  justify-self: end;
-  position: relative;
-  margin-left: 0.6rem;
-  color: inherit;
-  font-size: 1.2rem;
-  line-height: 1;
-  will-change: transform, opacity;
-}
-.inline-archive__gallery-more::after {
-  content: "";
-  position: absolute;
-  width: 300%;
-  height: 200%;
-  left: -100%;
-  top: -50%;
-}
-.inline-archive__gallery-more:hover, .inline-archive__gallery-more:focus-visible {
-  color: var(--inline-accent);
-  outline: none;
 }
 
 .inline-archive__back {
@@ -849,11 +833,8 @@ figure.highlight .section {
 }
 
 @media screen and (min-width: 53em) {
-  .inline-archive__gallery {
-    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
-    grid-auto-columns: minmax(165px, 1fr);
-    grid-auto-flow: column;
-    grid-template-rows: auto;
+  .inline-archive__content.is-current {
+    width: 100%;
   }
 }
 @media screen and (max-width: 1023px) {
@@ -877,9 +858,14 @@ figure.highlight .section {
     width: 150px;
     height: 200px;
   }
+  .inline-archive__gallery-item {
+    flex-basis: min(78vw, 28rem);
+  }
   .inline-archive__gallery {
-    grid-template-columns: repeat(auto-fit, minmax(min(145px, 42vw), 1fr));
-    gap: 2rem 1.1rem;
+    gap: 1rem;
+  }
+  .inline-archive__gallery-title {
+    font-size: clamp(1.2rem, 6vw, 1.7rem);
   }
 }
 @media (prefers-reduced-motion: reduce) {

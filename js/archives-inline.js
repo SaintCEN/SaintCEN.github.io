@@ -1,6 +1,7 @@
-/* InlineMenuLayout by Codrops, MIT (licenses/InlineMenuLayout.txt).
- * Original hover reveal and menu/content GSAP timelines, scoped to Hexo's
- * single-document page lifecycle. Custom cursor and demo-only UI omitted.
+/* InlineMenuLayout and Horizontal Parallax Gallery by Codrops, MIT
+ * (licenses/InlineMenuLayout.txt, licenses/HorizontalParallaxGallery.txt).
+ * Original hover reveal, menu/content timelines and 2D/DOM parallax model,
+ * scoped to Hexo's single-document page lifecycle.
  */
 (function () {
     'use strict';
@@ -168,33 +169,88 @@
         this.loop();
     };
 
+    // 2D/DOM horizontal parallax model from Horizontal Parallax Gallery.
+    // Vertical wheel input drives a horizontally translated track while each
+    // oversized image counter-moves according to its distance from the center.
+    function HorizontalGallery(wrapper) {
+        this.DOM = {
+            wrapper: wrapper,
+            track: wrapper.querySelector('.inline-archive__gallery'),
+            images: Array.from(wrapper.querySelectorAll('.inline-archive__gallery-image-media'))
+        };
+        this.scroll = { current: 0, target: 0, ease: 0.07, limit: 0 };
+        this.requestId = 0;
+        this.running = false;
+    }
+
+    HorizontalGallery.prototype.setLimit = function () {
+        this.scroll.limit = Math.max(0, this.DOM.track.scrollWidth - this.DOM.wrapper.clientWidth);
+        this.scroll.target = clamp(this.scroll.target, 0, this.scroll.limit);
+        this.scroll.current = clamp(this.scroll.current, 0, this.scroll.limit);
+    };
+
+    HorizontalGallery.prototype.applyParallax = function () {
+        var wrapperRect = this.DOM.wrapper.getBoundingClientRect();
+        var viewportCenter = wrapperRect.left + wrapperRect.width * 0.5;
+        var halfViewport = Math.max(1, wrapperRect.width * 0.5);
+        this.DOM.images.forEach(function (image) {
+            var frame = image.parentElement;
+            if (!frame) return;
+            var rect = frame.getBoundingClientRect();
+            var elementCenter = rect.left + rect.width * 0.5;
+            var distance = clamp((elementCenter - viewportCenter) / halfViewport, -1, 1);
+            image.style.transform = 'translate3d(' + (-distance * 10) + '%, 0, 0)';
+        });
+    };
+
+    HorizontalGallery.prototype.render = function () {
+        if (!this.running || !scope.active) return;
+        this.scroll.target = clamp(this.scroll.target, 0, this.scroll.limit);
+        this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
+        if (Math.abs(this.scroll.target - this.scroll.current) < 0.01) this.scroll.current = this.scroll.target;
+        this.DOM.track.style.transform = 'translate3d(' + (this.scroll.current < 0.01 ? 0 : -this.scroll.current) + 'px, 0, 0)';
+        this.applyParallax();
+        var self = this;
+        this.requestId = requestAnimationFrame(function () { self.render(); });
+    };
+
+    HorizontalGallery.prototype.open = function () {
+        this.stop();
+        this.scroll.current = 0;
+        this.scroll.target = 0;
+        this.DOM.track.style.transform = 'translate3d(0, 0, 0)';
+        this.setLimit();
+        this.running = true;
+        this.render();
+    };
+
+    HorizontalGallery.prototype.stop = function () {
+        this.running = false;
+        if (this.requestId) cancelAnimationFrame(this.requestId);
+        this.requestId = 0;
+    };
+
+    HorizontalGallery.prototype.addWheel = function (delta) {
+        if (!this.running || this.scroll.limit <= 0) return false;
+        this.scroll.target += delta;
+        return true;
+    };
+
+    HorizontalGallery.prototype.resize = function () {
+        this.setLimit();
+        this.applyParallax();
+    };
+
     function ContentItem(element) {
         this.DOM = {
             el: element,
             title: element.querySelector('.inline-archive__content-title-inner'),
             number: element.querySelector('.inline-archive__content-title-number'),
-            images: Array.from(element.querySelectorAll('.inline-archive__gallery-image-inner')),
-            titles: Array.from(element.querySelectorAll('.inline-archive__gallery-title')),
-            meta: Array.from(element.querySelectorAll('.inline-archive__gallery-meta, .inline-archive__gallery-summary')),
-            more: Array.from(element.querySelectorAll('.inline-archive__gallery-more'))
+            cards: Array.from(element.querySelectorAll('.inline-archive__gallery-item')),
+            gallery: element.querySelector('[data-horizontal-gallery]')
         };
-        this.bindCardHover();
+        this.gallery = new HorizontalGallery(this.DOM.gallery);
     }
-
-    ContentItem.prototype.bindCardHover = function () {
-        var self = this;
-        this.DOM.more.forEach(function (more, index) {
-            var image = self.DOM.images[index];
-            scope.listen(more, 'mouseenter', function () {
-                gsap.killTweensOf(image);
-                gsap.to(image, { duration: 1, ease: 'expo', scale: 0.95 });
-            });
-            scope.listen(more, 'mouseleave', function () {
-                gsap.killTweensOf(image);
-                gsap.to(image, { duration: 0.5, ease: 'expo', scale: 1 });
-            });
-        });
-    };
 
     function Controller() {
         this.DOM = {
@@ -221,6 +277,15 @@
             scope.listen(item, 'click', function () { self.open(index); });
         });
         scope.listen(this.DOM.back, 'click', function () { self.close(); });
+        scope.listen(root, 'wheel', function (event) {
+            if (self.currentIndex < 0) return;
+            var gallery = self.contents[self.currentIndex].gallery;
+            var delta = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaMode === 2 ? event.deltaY * innerHeight : event.deltaY;
+            if (gallery.addWheel(delta)) event.preventDefault();
+        }, { passive: false });
+        scope.listen(window, 'resize', function () {
+            self.contents.forEach(function (content) { content.gallery.resize(); });
+        });
         scope.listen(root, 'keydown', function (event) {
             if (event.key === 'Escape' && self.currentIndex >= 0 && !self.animating) {
                 event.preventDefault();
@@ -265,8 +330,7 @@
             .set(data.texts.concat([content.DOM.title]), { transformOrigin: '50% 100%' }, 'hideMenu')
             .set(content.DOM.title, { opacity: 0, y: '101%' }, 'hideMenu')
             .set(content.DOM.number, { scale: 0 }, 'hideMenu')
-            .set(content.DOM.images, { y: '101%' }, 'hideMenu')
-            .set(content.DOM.titles.concat(content.DOM.meta, content.DOM.more), { opacity: 0 }, 'hideMenu')
+            .set(content.DOM.cards, { y: '101%' }, 'hideMenu')
             .to(data.numbers, {
                 duration: 0.3, ease: 'sine', scale: 0, opacity: 0,
                 stagger: { from: position, each: 0.01 }
@@ -280,19 +344,16 @@
                 stagger: { from: position, each: 0.01 }
             }, 'hideMenu+=0.1')
             .addLabel('showContent', 0.3)
-            .add(function () { content.DOM.el.classList.add('is-current'); }, 'showContent')
+            .add(function () {
+                content.DOM.el.classList.add('is-current');
+                content.gallery.open();
+            }, 'showContent')
             .set(this.DOM.back, { pointerEvents: 'auto' }, 'showContent')
             .to(this.DOM.back, { startAt: { x: '-100%' }, opacity: 1, x: '0%' }, 'showContent')
             .to(content.DOM.title, { duration: 0.1, ease: 'quad.in', scaleY: 1.5, opacity: 1 }, 'showContent')
             .to(content.DOM.title, { duration: 0.8, ease: 'expo', scaleY: 1, startAt: { y: '100%' }, y: '0%' }, 'showContent+=0.1')
             .to(content.DOM.number, { scale: 1 }, 'showContent')
-            .to(content.DOM.images, { y: '0%', stagger: 0.02 }, 'showContent+=0.1')
-            .to(content.DOM.titles.concat(content.DOM.meta), {
-                startAt: { y: '100%' }, y: '0%', opacity: 1, stagger: 0.02
-            }, 'showContent+=0.2')
-            .to(content.DOM.more, {
-                startAt: { scale: 0 }, scale: 1, opacity: 1, stagger: 0.02
-            }, 'showContent+=0.2');
+            .to(content.DOM.cards, { y: '0%', stagger: 0.04 }, 'showContent+=0.1');
     };
 
     Controller.prototype.close = function () {
@@ -316,15 +377,12 @@
             .set(data.texts.concat([content.DOM.title]), { transformOrigin: '50% 0%' }, 'hideContent')
             .set(this.DOM.back, { pointerEvents: 'none' }, 'hideContent')
             .to(this.DOM.back, { opacity: 0, x: '-100%' }, 'hideContent')
-            .to(content.DOM.meta.concat(content.DOM.titles), {
-                y: '100%', opacity: 0, stagger: 0.02
-            }, 'hideContent')
-            .to(content.DOM.more, { scale: 0, opacity: 0, stagger: 0.02 }, 'hideContent')
-            .to(content.DOM.images, { y: '101%', stagger: 0.02 }, 'hideContent+=0.1')
+            .to(content.DOM.cards, { y: '101%', stagger: 0.04 }, 'hideContent')
             .to(content.DOM.number, { scale: 0 }, 'hideContent+=0.1')
             .to(content.DOM.title, { y: '100%', opacity: 1 }, 'hideContent+=0.1')
             .addLabel('showMenu', 0.6)
             .add(function () {
+                content.gallery.stop();
                 content.DOM.el.classList.remove('is-current');
                 content.DOM.el.setAttribute('aria-hidden', 'true');
                 content.DOM.el.setAttribute('inert', '');
@@ -361,6 +419,7 @@
     });
     scope.cleanup(function () {
         controller.items.forEach(function (item) { item.stop(); });
+        controller.contents.forEach(function (content) { content.gallery.stop(); });
         animations.forEach(function (animation) { animation.kill(); });
         gsap.killTweensOf([root].concat(Array.from(root.querySelectorAll('*'))));
     });
