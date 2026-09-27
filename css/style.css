@@ -621,7 +621,7 @@ figure.highlight .section {
   row-gap: clamp(0.55rem, 1.35svh, 0.9rem);
   width: 100%;
   margin: 0;
-  padding: clamp(1.5rem, 4.5svh, 3rem) 0 0;
+  padding: clamp(0.55rem, 2svh, 1.25rem) 0 0;
 }
 
 .inline-archive__menu-item {
@@ -846,7 +846,7 @@ figure.highlight .section {
   .inline-archive__menu {
     column-gap: 1rem;
     row-gap: 0.45rem;
-    padding-top: clamp(0.75rem, 2.5svh, 1.4rem);
+    padding-top: clamp(0.35rem, 1.25svh, 0.75rem);
   }
   .inline-archive__menu-item {
     font-size: clamp(1.55rem, 7vw, 2.4rem);

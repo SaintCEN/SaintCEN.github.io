@@ -247,7 +247,6 @@
         }
         var ticket = ++request;
         var fromHome = !document.documentElement.classList.contains('has-navbar-fixed-top');
-        var fromArticle = !!document.querySelector('meta[name="page-kind"][content="article"]');
         var oldPage = document.getElementById('site-page');
         oldPage.setAttribute('aria-busy', 'true');
         try {
@@ -275,7 +274,7 @@
             document.documentElement.classList.toggle('has-navbar-fixed-top', hasNavbar);
             var title = doc.querySelector('meta[name="page-transition-title"]');
             var toArticle = !!doc.querySelector('meta[name="page-kind"][content="article"]');
-            if (fromArticle || toArticle) clear();
+            if (toArticle) clear();
             else play(title ? title.content : doc.title, fromHome || !hasNavbar);
             oldPage.replaceWith(incoming);
             syncNavbar(doc);
