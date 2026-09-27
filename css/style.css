@@ -529,27 +529,6 @@ figure.highlight .section {
   color: currentColor;
 }
 
-.inline-archive--tags .inline-archive__menu {
-  column-gap: clamp(0.85rem, 2vw, 1.4rem);
-  row-gap: clamp(0.4rem, 1svh, 0.7rem);
-}
-.inline-archive--tags .inline-archive__menu-item {
-  font-size: clamp(1.65rem, 3.1vw, 2.35rem);
-}
-.inline-archive--tags .inline-archive__menu-item.is-selected {
-  color: inherit;
-}
-.inline-archive--tags .inline-archive__menu-item.is-selected .inline-archive__menu-number {
-  color: #777;
-}
-.inline-archive--tags .inline-archive__menu-item:hover, .inline-archive--tags .inline-archive__menu-item:focus-visible {
-  color: var(--inline-accent);
-}
-.inline-archive--tags .inline-archive__hover-reveal {
-  width: 180px;
-  height: 242px;
-}
-
 .inline-archive__hover-reveal {
   position: absolute;
   z-index: 2;
@@ -614,6 +593,11 @@ figure.highlight .section {
   min-height: 0;
   overflow: hidden;
   user-select: none;
+  touch-action: pan-y;
+  cursor: grab;
+}
+.inline-archive__gallery-wrapper.is-dragging {
+  cursor: grabbing;
 }
 
 .inline-archive__gallery {
@@ -727,16 +711,9 @@ figure.highlight .section {
   .inline-archive__menu-item {
     font-size: clamp(1.55rem, 7vw, 2.4rem);
   }
-  .inline-archive--tags .inline-archive__menu-item {
-    font-size: clamp(1.2rem, 5.5vw, 1.8rem);
-  }
   .inline-archive__hover-reveal {
     width: 150px;
     height: 200px;
-  }
-  .inline-archive--tags .inline-archive__hover-reveal {
-    width: 120px;
-    height: 162px;
   }
   .inline-archive__gallery-item {
     flex-basis: clamp(14rem, 74vw, 24rem);

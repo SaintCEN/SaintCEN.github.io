@@ -228,7 +228,55 @@
         this.scroll = { current: 0, target: 0, ease: 0.07, limit: 0 };
         this.requestId = 0;
         this.running = false;
+        this.drag = { active: false, pointerId: null, startX: 0, lastX: 0, moved: false };
+        this.suppressClick = false;
+        this.bindDrag();
     }
+
+    HorizontalGallery.prototype.bindDrag = function () {
+        var self = this;
+        scope.listen(this.DOM.wrapper, 'pointerdown', function (event) {
+            if (!self.running || !event.isPrimary || event.button !== 0) return;
+            self.drag.active = true;
+            self.drag.pointerId = event.pointerId;
+            self.drag.startX = event.clientX;
+            self.drag.lastX = event.clientX;
+            self.drag.moved = false;
+            self.suppressClick = false;
+            self.DOM.wrapper.classList.add('is-dragging');
+            if (self.DOM.wrapper.setPointerCapture) {
+                try { self.DOM.wrapper.setPointerCapture(event.pointerId); } catch (error) {}
+            }
+        });
+        scope.listen(this.DOM.wrapper, 'pointermove', function (event) {
+            if (!self.drag.active || event.pointerId !== self.drag.pointerId) return;
+            var delta = event.clientX - self.drag.lastX;
+            self.drag.lastX = event.clientX;
+            if (Math.abs(event.clientX - self.drag.startX) > 5) self.drag.moved = true;
+            if (!self.drag.moved) return;
+            self.scroll.target = clamp(self.scroll.target - delta, 0, self.scroll.limit);
+            if (event.cancelable) event.preventDefault();
+        }, { passive: false });
+        function finish(event) {
+            if (!self.drag.active || event.pointerId !== self.drag.pointerId) return;
+            self.suppressClick = self.drag.moved;
+            self.drag.active = false;
+            self.drag.pointerId = null;
+            self.DOM.wrapper.classList.remove('is-dragging');
+            if (self.DOM.wrapper.releasePointerCapture) {
+                try { self.DOM.wrapper.releasePointerCapture(event.pointerId); } catch (error) {}
+            }
+            setTimeout(function () { self.suppressClick = false; }, 0);
+        }
+        scope.listen(this.DOM.wrapper, 'pointerup', finish);
+        scope.listen(this.DOM.wrapper, 'pointercancel', finish);
+        scope.listen(this.DOM.wrapper, 'click', function (event) {
+            if (!self.suppressClick) return;
+            event.preventDefault();
+            event.stopPropagation();
+            self.suppressClick = false;
+        }, { capture: true });
+    };
 
     HorizontalGallery.prototype.setLimit = function () {
         this.scroll.limit = Math.max(0, this.DOM.track.scrollWidth - this.DOM.wrapper.clientWidth);
@@ -273,6 +321,9 @@
 
     HorizontalGallery.prototype.stop = function () {
         this.running = false;
+        this.drag.active = false;
+        this.drag.pointerId = null;
+        this.DOM.wrapper.classList.remove('is-dragging');
         if (this.requestId) cancelAnimationFrame(this.requestId);
         this.requestId = 0;
     };
@@ -326,8 +377,12 @@
 
     Controller.prototype.bind = function () {
         var self = this;
-        this.DOM.menuItems.forEach(function (item, index) {
-            scope.listen(item, 'click', function () { self.select(index); });
+        this.DOM.menuItems.forEach(function (item) {
+            scope.listen(item, 'click', function () {
+                var target = item.dataset.target;
+                var position = self.DOM.contents.findIndex(function (content) { return content.id === target; });
+                if (position >= 0) self.select(position);
+            });
         });
         scope.listen(this.DOM.menu, 'mouseleave', function () {
             self.items.forEach(function (item) {
@@ -342,7 +397,8 @@
         });
         scope.listen(root, 'wheel', function (event) {
             var gallery = self.contents[self.currentIndex].gallery;
-            var delta = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaMode === 2 ? event.deltaY * innerHeight : event.deltaY;
+            var raw = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+            var delta = event.deltaMode === 1 ? raw * 16 : event.deltaMode === 2 ? raw * innerHeight : raw;
             if (gallery.addWheel(delta)) event.preventDefault();
         }, { passive: false });
         scope.listen(window, 'resize', function () {
@@ -350,8 +406,8 @@
         });
         scope.listen(window, 'hashchange', function () {
             var hash = location.hash.slice(1);
-            var position = hash ? self.DOM.menuItems.findIndex(function (item) {
-                return item.dataset.target === hash;
+            var position = hash ? self.DOM.contents.findIndex(function (content) {
+                return content.id === hash;
             }) : 0;
             if (position >= 0) self.select(position);
         });
@@ -359,13 +415,14 @@
 
     Controller.prototype.activateInitial = function () {
         var hash = location.hash.slice(1);
-        var position = hash ? this.DOM.menuItems.findIndex(function (item) {
-            return item.dataset.target === hash;
+        var position = hash ? this.DOM.contents.findIndex(function (content) {
+            return content.id === hash;
         }) : 0;
         if (position < 0) position = 0;
         this.currentIndex = position;
-        this.DOM.menuItems.forEach(function (item, index) {
-            var selected = index === position;
+        var target = this.DOM.contents[position].id;
+        this.DOM.menuItems.forEach(function (item) {
+            var selected = item.dataset.target === target;
             item.classList.toggle('is-selected', selected);
             item.setAttribute('aria-pressed', selected ? 'true' : 'false');
         });
@@ -384,18 +441,18 @@
     };
 
     Controller.prototype.updateSelection = function (position) {
-        this.DOM.menuItems.forEach(function (item, index) {
-            var selected = index === position;
+        var target = this.DOM.contents[position].id;
+        this.DOM.menuItems.forEach(function (item) {
+            var selected = item.dataset.target === target;
             item.classList.toggle('is-selected', selected);
             item.setAttribute('aria-pressed', selected ? 'true' : 'false');
         });
-        var target = this.DOM.menuItems[position].dataset.target;
         var nextURL = location.pathname + location.search + (position === 0 ? '' : '#' + target);
         history.replaceState(history.state, '', nextURL);
     };
 
     Controller.prototype.select = function (position) {
-        if (position < 0 || position >= this.items.length) return;
+        if (position < 0 || position >= this.contents.length) return;
         if (this.animating) {
             this.pendingIndex = position;
             return;
@@ -406,13 +463,9 @@
         var previousIndex = this.currentIndex;
         var previous = this.contents[previousIndex];
         var incoming = this.contents[position];
-        var keepTagPreview = root.classList.contains('inline-archive--tags');
-        this.items.forEach(function (menuItem, index) {
-            if (keepTagPreview && index === position && menuItem.pointerInside) return;
-            menuItem.resetImage();
-        });
+        this.items.forEach(function (menuItem) { menuItem.resetImage(); });
         this.updateSelection(position);
-        trackedTimeline({
+        var timeline = trackedTimeline({
             defaults: { ease: 'expo' },
             onComplete: function () {
                 self.animating = false;
@@ -420,7 +473,8 @@
                 self.pendingIndex = -1;
                 if (queued >= 0 && queued !== self.currentIndex) self.select(queued);
             }
-        })
+        });
+        timeline
             .to(previous.DOM.cards, {
                 duration: 0.38,
                 ease: 'power3.in',
@@ -446,14 +500,18 @@
                 y: '0%',
                 opacity: 1,
                 stagger: 0.04
-            }, 0.42)
-            .to(this.items[position].DOM.inner, {
+            }, 0.42);
+        var selectedMenuItem = this.items.find(function (item) {
+            return item.DOM.el.dataset.target === incoming.DOM.el.id;
+        });
+        if (selectedMenuItem) timeline
+            .to(selectedMenuItem.DOM.inner, {
                 duration: 0.1,
                 ease: 'quad.in',
                 scaleY: 1.35,
                 transformOrigin: '50% 100%'
             }, 0)
-            .to(this.items[position].DOM.inner, {
+            .to(selectedMenuItem.DOM.inner, {
                 duration: 0.55,
                 scaleY: 1,
                 ease: 'expo'
