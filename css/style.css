@@ -2364,10 +2364,10 @@ html.curve-home .navbar-main {
   display: block;
   position: absolute;
   z-index: 0;
-  right: clamp(1.5rem, 4vw, 3.5rem);
-  top: clamp(4rem, 10svh, 5.5rem);
+  right: 0;
+  top: clamp(-4rem, -8svh, -3rem);
   width: auto;
-  height: clamp(22rem, 58svh, 28rem);
+  height: clamp(28rem, 74svh, 34rem);
   max-width: none;
   object-fit: contain;
   opacity: 0.24;
@@ -2675,9 +2675,9 @@ html.curve-home .navbar-main {
     min-height: 6.5rem;
   }
   .album-grid .menu__headline-image {
-    right: -0.5rem;
-    top: 7rem;
-    height: clamp(19rem, 40svh, 20.5rem);
+    right: -0.25rem;
+    top: 6.5rem;
+    height: clamp(20rem, 42svh, 21.5rem);
   }
   .album-grid .menu__item-deco {
     margin-left: 0.75rem;
