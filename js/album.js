@@ -371,6 +371,15 @@ class MenuController {
 
         // Scroll up first
         scrollIt(0, 300, () => {
+            // Restore the one-screen menu geometry before revealing it. Keeping
+            // the detail-page height until the end places the menu far below the
+            // viewport and makes its title jump upward on the final frame.
+            gsap.set(this.menuItems.map(item => item.DOM.title), {y: '0%'});
+            gsap.set(this.DOM.headline.text, {y: '0%'});
+            gsap.set(this.DOM.headline.deco, {scaleX: 1});
+            gsap.set(this.DOM.el, {opacity: 0});
+            root.classList.remove('is-open');
+
             timeline({
                 defaults: timelineDefaults,
                 onStart: () => this.isAnimating = true,
@@ -382,7 +391,7 @@ class MenuController {
                     this.DOM.el.inert = false;
                     menuItem.DOM.content.inert = true;
                     menuItem.DOM.el.setAttribute('aria-expanded', 'false');
-                    root.classList.remove('is-open');
+                    gsap.set(this.DOM.el, {opacity: 1});
                     menuItem.DOM.el.focus({preventScroll: true});
                 }
             })
@@ -406,11 +415,11 @@ class MenuController {
                 x: '50%',
                 opacity: 0
             }, 0)
-            .addLabel('showMenuItems', timelineDefaults.duration*.1)
-            .to(this.DOM.headline.text, {y: '0%'}, 'showMenuItems')
-            .to(this.DOM.headline.deco, {scaleX: 1}, 'showMenuItems')
-            .set(this.menuItems.map(item => item.DOM.title), {
-                y: '0%',
+            .addLabel('showMenuItems', timelineDefaults.duration)
+            .to(this.DOM.el, {
+                opacity: 1,
+                duration: 0.18,
+                ease: 'none'
             }, 'showMenuItems')
             .to(menuItem.DOM.galleryItems, {
                 startAt: {rotation: gsap.utils.random(-30,30)},
