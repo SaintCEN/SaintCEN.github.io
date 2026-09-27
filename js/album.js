@@ -148,10 +148,11 @@ class MenuController {
                 const row = Math.min(rows.length - 1, Math.floor(index / 2));
                 const x = (isLeft ? leftOffsets[row] : rightOffsets[row]) + Math.random() * 2.5;
                 const y = rows[row] + (Math.random() * 8 - 4);
+                const scale = 0.9 + Math.random() * 0.28;
                 item.style.setProperty('--album-preview-x', x.toFixed(2) + '%');
                 item.style.setProperty('--album-preview-y', y.toFixed(2) + '%');
-                item.style.setProperty('--album-preview-width', (9 + Math.random() * 3).toFixed(2) + 'vw');
-                item.style.setProperty('--album-preview-height', (14 + Math.random() * 6).toFixed(2) + 'svh');
+                item.style.setProperty('--album-preview-width', (13.2 * scale).toFixed(2) + 'vw');
+                item.style.setProperty('--album-preview-mobile-width', (29 * scale).toFixed(2) + 'vw');
             });
         });
     }

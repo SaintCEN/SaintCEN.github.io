@@ -2401,11 +2401,11 @@ html.curve-home .navbar-main {
     grid-area: auto !important;
     left: var(--album-preview-x, 4%);
     top: var(--album-preview-y, 6%);
-    width: clamp(7rem, var(--album-preview-width, 11vw), 14rem);
-    height: clamp(5rem, var(--album-preview-height, 18svh), 10rem);
+    width: clamp(9rem, var(--album-preview-width, 13.2vw), 18rem);
+    height: auto;
     max-width: none;
-    max-height: none;
-    object-fit: cover;
+    max-height: 26svh;
+    object-fit: contain;
     -webkit-mask-image: radial-gradient(ellipse 72% 72% at center, #000 54%, rgba(0, 0, 0, 0.72) 70%, transparent 100%);
     mask-image: radial-gradient(ellipse 72% 72% at center, #000 54%, rgba(0, 0, 0, 0.72) 70%, transparent 100%);
   }
@@ -2420,11 +2420,11 @@ html.curve-home .navbar-main {
   }
   .album-grid .bg-gallery__item,
   .album-grid .bg-gallery__item:nth-child(odd) {
-    width: clamp(6rem, 26vw, 8rem);
-    height: clamp(4.5rem, 16svh, 7rem);
+    width: clamp(7rem, var(--album-preview-mobile-width, 29vw), 10rem);
+    height: auto;
     max-width: none;
-    max-height: none;
-    object-fit: cover;
+    max-height: 19svh;
+    object-fit: contain;
     -webkit-mask-image: radial-gradient(ellipse 72% 72% at center, #000 54%, rgba(0, 0, 0, 0.72) 70%, transparent 100%);
     mask-image: radial-gradient(ellipse 72% 72% at center, #000 54%, rgba(0, 0, 0, 0.72) 70%, transparent 100%);
   }
