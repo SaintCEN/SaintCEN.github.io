@@ -190,12 +190,29 @@ class MenuController {
         this.current = pos;
         return true;
     }
+    queueWheelStep(direction) {
+        if (this.isOpen) return;
+        const pending = this.pendingWheelSteps || 0;
+        const target = Math.max(0, Math.min(
+            this.menuItems.length - 1,
+            this.current + pending + direction
+        ));
+        this.pendingWheelSteps = target - this.current;
+        this.processWheelQueue();
+    }
+    processWheelQueue() {
+        if (this.isAnimating || this.isOpen || !this.pendingWheelSteps) return;
+        const direction = Math.sign(this.pendingWheelSteps);
+        this.pendingWheelSteps -= direction;
+        this.select(this.current + direction);
+    }
     initEvents() {
         for (const [pos, item] of this.menuItems.entries()) {
             
             // Click/Select a menu item
             scope.listen(item.DOM.el, 'click', ev => {
                 ev.preventDefault();
+                this.pendingWheelSteps = 0;
                 this.select(pos);
             });
 
@@ -222,9 +239,8 @@ class MenuController {
             if (Math.abs(ev.deltaY) < 4) return;
             const now = performance.now();
             if (now - (this.lastWheelAt || 0) < 160) return;
-            if (this.isAnimating && activeTimeline) activeTimeline.progress(1);
             this.lastWheelAt = now;
-            this.select(this.current + (ev.deltaY > 0 ? 1 : -1));
+            this.queueWheelStep(ev.deltaY > 0 ? 1 : -1);
         }, {passive: false});
 
         let touchStartY = null;
@@ -232,11 +248,11 @@ class MenuController {
             if (!this.isOpen && ev.touches.length === 1) touchStartY = ev.touches[0].clientY;
         }, {passive: true});
         scope.listen(this.DOM.wheel, 'touchend', ev => {
-            if (touchStartY === null || this.isAnimating || this.isOpen) return;
+            if (touchStartY === null || this.isOpen) return;
             const distance = touchStartY - ev.changedTouches[0].clientY;
             touchStartY = null;
             if (Math.abs(distance) < 28) return;
-            this.select(this.current + (distance > 0 ? 1 : -1));
+            this.queueWheelStep(distance > 0 ? 1 : -1);
         }, {passive: true});
     }
     // Click/Select a menu item
@@ -256,7 +272,10 @@ class MenuController {
                 ease: 'expo.inOut'
             },
             onStart: () => this.isAnimating = true,
-            onComplete: () => this.isAnimating = false
+            onComplete: () => {
+                this.isAnimating = false;
+                this.processWheelQueue();
+            }
         })
         .to(this.DOM.track, {
             y: -upcomingIndex * this.wheelStep(),
