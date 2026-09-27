@@ -9,7 +9,7 @@
     var revealed = Promise.resolve(), finishReveal;
     var current = new URL(location.href), request = 0, frame = 0, layer, safety, scrollTimer;
     var svg, path, label, width, height, initialized = false, restoring = false;
-    var repeatScripts = /\/js\/(home-hero|post-toc|album|script|insight)\.js$/;
+    var repeatScripts = /\/js\/(home-hero|post-toc|album|archives-inline|script|insight)\.js$/;
     var bundleReady, preloadReady, jsonData = new Map(), images = new Map();
     function key(url) { return url.pathname.replace(/\/(?:index\.html)?$/, '') + url.search; }
     function localPage(url) {
