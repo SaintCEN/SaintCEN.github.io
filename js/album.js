@@ -121,6 +121,7 @@ class MenuController {
         this.init();
     }
     init() {
+        this.randomizePreviewLayout();
         this.fitTitles();
         // Current menu item index (starting with the first one).
         this.current = Math.max(0, this.menuItems.findIndex(item => item.DOM.el.dataset.folder === root.dataset.selected));
@@ -133,6 +134,23 @@ class MenuController {
             this.showContent(this.menuItems[this.current]);
             activeTimeline.progress(1);
         }
+    }
+    randomizePreviewLayout() {
+        const rows = [6, 39, 72];
+        const leftOffsets = [2, 9, 5];
+        const rightOffsets = [83, 78, 81];
+        this.DOM.galleries.forEach(gallery => {
+            [...gallery.querySelectorAll('.bg-gallery__item')].forEach((item, index) => {
+                const isLeft = index % 2 === 0;
+                const row = Math.min(rows.length - 1, Math.floor(index / 2));
+                const x = (isLeft ? leftOffsets[row] : rightOffsets[row]) + Math.random() * 2.5;
+                const y = rows[row] + (Math.random() * 8 - 4);
+                item.style.setProperty('--album-preview-x', x.toFixed(2) + '%');
+                item.style.setProperty('--album-preview-y', y.toFixed(2) + '%');
+                item.style.setProperty('--album-preview-width', (9 + Math.random() * 3).toFixed(2) + 'vw');
+                item.style.setProperty('--album-preview-height', (14 + Math.random() * 6).toFixed(2) + 'svh');
+            });
+        });
     }
     fitTitles() {
         const available = this.DOM.el.clientWidth;

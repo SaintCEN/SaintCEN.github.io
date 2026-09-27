@@ -2382,43 +2382,17 @@ html.curve-home .navbar-main {
   }
   .album-grid .bg-gallery__item,
   .album-grid .bg-gallery__item:nth-child(odd) {
-    width: clamp(7rem, 11vw, 14rem);
-    height: clamp(5rem, 18svh, 10rem);
+    position: absolute;
+    grid-area: auto !important;
+    left: var(--album-preview-x, 4%);
+    top: var(--album-preview-y, 6%);
+    width: clamp(7rem, var(--album-preview-width, 11vw), 14rem);
+    height: clamp(5rem, var(--album-preview-height, 18svh), 10rem);
     max-width: none;
     max-height: none;
     object-fit: cover;
     -webkit-mask-image: radial-gradient(ellipse 72% 72% at center, #000 54%, rgba(0, 0, 0, 0.72) 70%, transparent 100%);
     mask-image: radial-gradient(ellipse 72% 72% at center, #000 54%, rgba(0, 0, 0, 0.72) 70%, transparent 100%);
-  }
-  .album-grid .bg-gallery .bg-gallery__item:nth-child(1) {
-    grid-area: 2/3/8/8;
-    align-self: start;
-    justify-self: start;
-  }
-  .album-grid .bg-gallery .bg-gallery__item:nth-child(2) {
-    grid-area: 10/3/16/8;
-    align-self: center;
-    justify-self: start;
-  }
-  .album-grid .bg-gallery .bg-gallery__item:nth-child(3) {
-    grid-area: 19/3/25/8;
-    align-self: end;
-    justify-self: start;
-  }
-  .album-grid .bg-gallery .bg-gallery__item:nth-child(4) {
-    grid-area: 2/19/8/24;
-    align-self: start;
-    justify-self: end;
-  }
-  .album-grid .bg-gallery .bg-gallery__item:nth-child(5) {
-    grid-area: 10/19/16/24;
-    align-self: center;
-    justify-self: end;
-  }
-  .album-grid .bg-gallery .bg-gallery__item:nth-child(6) {
-    grid-area: 19/19/25/24;
-    align-self: end;
-    justify-self: end;
   }
 }
 @media (max-width: 847px) {
