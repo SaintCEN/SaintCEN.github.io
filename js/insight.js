@@ -35,7 +35,6 @@
         sectionTitle = CONFIG.TRANSLATION[type];
         switch (type) {
             case 'POSTS':
-            case 'PAGES':
                 $searchItems = array.map(function (item) {
                     // Use config.root instead of permalink to fix url issue
                     return searchItem('file', item.title, null, item.text.slice(0, 150), item.link);
@@ -62,7 +61,7 @@
     }
 
     /**
-     * Judge if a given post/page/category/tag contains all of the keywords.
+     * Judge if a given post/category/tag contains all of the keywords.
      * @param Object            obj     Object to be weighted
      * @param Array<String>     fields  Object's fields to find matches
      */
@@ -87,9 +86,6 @@
             POST: function (obj) {
                 return filter(keywords, obj, ['title', 'text']);
             },
-            PAGE: function (obj) {
-                return filter(keywords, obj, ['title', 'text']);
-            },
             CATEGORY: function (obj) {
                 return filter(keywords, obj, ['name', 'slug']);
             },
@@ -100,7 +96,7 @@
     }
 
     /**
-     * Calculate the weight of a matched post/page/category/tag.
+     * Calculate the weight of a matched post/category/tag.
      * @param Object            obj     Object to be weighted
      * @param Array<String>     fields  Object's fields to find matches
      * @param Array<Integer>    weights Weight of every field
@@ -124,9 +120,6 @@
             POST: function (obj) {
                 return weight(keywords, obj, ['title', 'text'], [3, 1]);
             },
-            PAGE: function (obj) {
-                return weight(keywords, obj, ['title', 'text'], [3, 1]);
-            },
             CATEGORY: function (obj) {
                 return weight(keywords, obj, ['name', 'slug'], [1, 1]);
             },
@@ -140,12 +133,10 @@
         var WEIGHTS = weightFactory(keywords);
         var FILTERS = filterFactory(keywords);
         var posts = json.posts;
-        var pages = json.pages;
         var tags = json.tags;
         var categories = json.categories;
         return {
             posts: posts.filter(FILTERS.POST).sort(function (a, b) { return WEIGHTS.POST(b) - WEIGHTS.POST(a); }).slice(0, 5),
-            pages: pages.filter(FILTERS.PAGE).sort(function (a, b) { return WEIGHTS.PAGE(b) - WEIGHTS.PAGE(a); }).slice(0, 5),
             categories: categories.filter(FILTERS.CATEGORY).sort(function (a, b) { return WEIGHTS.CATEGORY(b) - WEIGHTS.CATEGORY(a); }).slice(0, 5),
             tags: tags.filter(FILTERS.TAG).sort(function (a, b) { return WEIGHTS.TAG(b) - WEIGHTS.TAG(a); }).slice(0, 5)
         };
