@@ -348,6 +348,13 @@
         scope.listen(window, 'resize', function () {
             self.contents.forEach(function (content) { content.gallery.resize(); });
         });
+        scope.listen(window, 'hashchange', function () {
+            var hash = location.hash.slice(1);
+            var position = hash ? self.DOM.menuItems.findIndex(function (item) {
+                return item.dataset.target === hash;
+            }) : 0;
+            if (position >= 0) self.select(position);
+        });
     };
 
     Controller.prototype.activateInitial = function () {

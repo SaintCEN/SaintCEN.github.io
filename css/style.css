@@ -674,6 +674,14 @@ figure.highlight .section {
   color: currentColor;
 }
 
+.inline-archive--tags .inline-archive__menu {
+  column-gap: clamp(0.85rem, 2vw, 1.4rem);
+  row-gap: clamp(0.4rem, 1svh, 0.7rem);
+}
+.inline-archive--tags .inline-archive__menu-item {
+  font-size: clamp(1.65rem, 3.1vw, 2.35rem);
+}
+
 .inline-archive__hover-reveal {
   position: absolute;
   z-index: 2;
@@ -850,6 +858,9 @@ figure.highlight .section {
   }
   .inline-archive__menu-item {
     font-size: clamp(1.55rem, 7vw, 2.4rem);
+  }
+  .inline-archive--tags .inline-archive__menu-item {
+    font-size: clamp(1.2rem, 5.5vw, 1.8rem);
   }
   .inline-archive__hover-reveal {
     width: 150px;
