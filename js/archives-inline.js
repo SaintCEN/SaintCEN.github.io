@@ -437,13 +437,29 @@
             else content.DOM.el.setAttribute('inert', '');
         });
         var self = this;
+        function resetFilterScroll() {
+            var archiveSection = root.closest('.archive-inline-section');
+            if (archiveSection) {
+                archiveSection.scrollTop = 0;
+                archiveSection.scrollLeft = 0;
+            }
+            var contentWrap = root.querySelector('.inline-archive__content-wrap');
+            if (contentWrap) {
+                contentWrap.scrollTop = 0;
+                contentWrap.scrollLeft = 0;
+            }
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        }
         requestAnimationFrame(function () {
             if (!scope.active) return;
             // A tag/category hash is UI state rather than a document anchor.
             // Cancel the browser's native fragment jump on direct visits.
-            if (filterHash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            if (filterHash) resetFilterScroll();
             self.contents[position].gallery.open();
         });
+        if (filterHash && document.readyState !== 'complete') {
+            scope.listen(window, 'load', resetFilterScroll, { once: true });
+        }
     };
 
     Controller.prototype.updateSelection = function (position) {

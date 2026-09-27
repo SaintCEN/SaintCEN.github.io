@@ -436,6 +436,7 @@ figure.highlight .section {
   min-height: 0;
   padding: clamp(0.5rem, 1.5svh, 1rem) clamp(1rem, 3vw, 2rem) clamp(0.75rem, 2svh, 1.25rem);
   overflow: hidden;
+  overflow: clip;
 }
 .archive-inline-section .home-layout,
 .archive-inline-section .home-main {
@@ -574,6 +575,7 @@ figure.highlight .section {
   height: 100%;
   min-height: 0;
   overflow: hidden;
+  overflow: clip;
 }
 
 .inline-archive__content {
