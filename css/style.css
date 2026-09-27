@@ -620,7 +620,7 @@ figure.highlight .section {
   row-gap: clamp(0.7rem, 1.8svh, 1.1rem);
   width: 100%;
   margin: 0;
-  padding: clamp(10rem, 33svh, 22rem) 0 0;
+  padding: clamp(6rem, 17.5svh, 13rem) 0 0;
   grid-area: 1/1;
 }
 
@@ -633,7 +633,7 @@ figure.highlight .section {
   color: inherit;
   font: inherit;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(2.15rem, 4.2vw, 3.2rem);
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
   text-transform: lowercase;
   line-height: 1;
   cursor: pointer;
