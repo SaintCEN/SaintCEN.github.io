@@ -462,9 +462,12 @@ figure.highlight .section {
   isolation: isolate;
   width: 100%;
   height: 100%;
+  min-width: 0;
   min-height: 0;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-content: start;
   row-gap: var(--archive-menu-card-gap);
   overflow: visible;
   color: #171717;
@@ -481,6 +484,7 @@ figure.highlight .section {
   column-gap: clamp(1.15rem, 2.6vw, 1.9rem);
   row-gap: clamp(0.55rem, 1.35svh, 0.9rem);
   width: 100%;
+  min-width: 0;
   margin: 0;
   padding: 0 0 clamp(0.45rem, 1.5svh, 1rem);
 }
@@ -538,8 +542,9 @@ figure.highlight .section {
 .inline-archive__hover-reveal {
   position: absolute;
   z-index: 2;
-  width: 230px;
-  height: 310px;
+  width: clamp(5.5rem, 9vw, 7.2rem);
+  height: auto;
+  aspect-ratio: 23/31;
   top: 0;
   left: 0;
   pointer-events: none;
@@ -572,7 +577,8 @@ figure.highlight .section {
   grid-row: 1;
   position: relative;
   width: 100%;
-  height: 100%;
+  min-width: 0;
+  height: auto;
   min-height: 0;
   overflow: hidden;
   overflow: clip;
@@ -582,7 +588,7 @@ figure.highlight .section {
   position: absolute;
   inset: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
@@ -597,7 +603,7 @@ figure.highlight .section {
 .inline-archive__gallery-wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
   min-height: 0;
   overflow: hidden;
   user-select: none;
@@ -611,7 +617,7 @@ figure.highlight .section {
 .inline-archive__gallery {
   display: flex;
   width: max-content;
-  height: 100%;
+  height: auto;
   gap: clamp(1rem, 2vw, 1.6rem);
   will-change: transform;
 }
@@ -731,8 +737,8 @@ figure.highlight .section {
     font-size: clamp(1.55rem, min(7.2vw, 5svh), 2.4rem);
   }
   .inline-archive__hover-reveal {
-    width: 150px;
-    height: 200px;
+    width: clamp(5rem, 24vw, 6.25rem);
+    height: auto;
   }
   .inline-archive__gallery {
     gap: 0.9rem;
