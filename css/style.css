@@ -2024,7 +2024,20 @@ html.curve-home .navbar-main {
   padding-top: 10vh;
 }
 .album-grid.is-enhanced .menu {
-  align-self: center;
+  align-self: start;
+  padding-top: clamp(4rem, 8svh, 7rem);
+  padding-bottom: clamp(4rem, 8svh, 7rem);
+}
+.album-grid.is-enhanced .menu__item {
+  margin-top: 0;
+  min-height: clamp(6rem, 16svh, 9rem);
+  opacity: 0;
+  transform: translateY(2.5rem);
+  transition: opacity 0.55s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.album-grid.is-enhanced .menu__item--visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 .album-grid .menu__headline {
   margin-bottom: 3rem;
@@ -2317,9 +2330,8 @@ html.curve-home .navbar-main {
   .album-grid .menu {
     padding: 4rem 0;
   }
-  .album-grid .menu__item {
-    margin: 0;
-    min-height: 44px;
+  .album-grid.is-enhanced .menu__item {
+    min-height: clamp(6rem, 16svh, 8rem);
   }
   .album-grid .menu__item-deco {
     margin-left: 0.75rem;

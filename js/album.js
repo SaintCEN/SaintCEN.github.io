@@ -381,6 +381,19 @@ class MenuController {
     if (!menu.querySelector('.menu__item')) return;
     root.classList.add('is-enhanced');
     const controller = new MenuController(menu);
+    const revealItems = () => controller.menuItems.forEach(item => item.DOM.el.classList.add('menu__item--visible'));
+    if ('IntersectionObserver' in window && !reduced.matches && !root.dataset.selected) {
+        const titleObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('menu__item--visible');
+                titleObserver.unobserve(entry.target);
+            });
+        }, {rootMargin: '0px 0px -8% 0px', threshold: 0.08});
+        controller.menuItems.forEach(item => titleObserver.observe(item.DOM.el));
+        scope.cleanup(() => titleObserver.disconnect());
+    }
+    else revealItems();
     scope.listen(window, 'resize', () => {
         winsize = calcWinsize();
         controller.fitTitles();
