@@ -202,7 +202,9 @@
         var directionX = previousMouse.x - mouse.x;
         previousMouse = { x: mouse.x, y: mouse.y };
         this.properties.tx.current = mouse.x - this.box.host.left - this.box.reveal.width / 2;
-        this.properties.ty.current = mouse.y - this.box.host.top - this.box.reveal.height / 2;
+        // The category menu sits below the gallery, so unfold previews above
+        // the pointer and keep the full image inside the archive viewport.
+        this.properties.ty.current = mouse.y - this.box.host.top - this.box.reveal.height - 18;
         this.properties.rotation.current = this.firstFrame ? 0 : map(distanceX, 0, 200, 0, directionX < 0 ? -100 : 100);
         this.properties.tx.previous = this.firstFrame ? this.properties.tx.current : lerp(this.properties.tx.previous, this.properties.tx.current, this.properties.tx.amount);
         this.properties.ty.previous = this.firstFrame ? this.properties.ty.current : lerp(this.properties.ty.previous, this.properties.ty.current, this.properties.ty.amount);
