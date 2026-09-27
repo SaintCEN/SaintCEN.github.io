@@ -2057,11 +2057,12 @@ html.curve-home .navbar-main {
 }
 .album-grid .menu__item-title {
   font-size: var(--title-size-fallback);
-  font-size: var(--title-size);
+  font-size: var(--album-item-title-size, var(--title-size));
   font-weight: 700;
   font-style: italic;
   pointer-events: auto;
   color: var(--color-menu);
+  white-space: nowrap;
 }
 .album-grid .menu__item:hover .menu__item-title,
 .album-grid .menu__item--selected .menu__item-title,
@@ -2070,7 +2071,7 @@ html.curve-home .navbar-main {
 }
 .album-grid .menu__item-deco {
   font-size: var(--title-size-fallback);
-  font-size: var(--title-size);
+  font-size: var(--album-item-title-size, var(--title-size));
   font-weight: 100;
   transform: rotate(30deg);
   margin: 0 0.5rem 0 2rem;

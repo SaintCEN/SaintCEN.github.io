@@ -98,7 +98,6 @@ class MenuItem {
 
 // Calculate the viewport size
 let winsize = calcWinsize();
-scope.listen(window, 'resize', () => winsize = calcWinsize());
 
 class MenuController {
     constructor(el) {
@@ -122,6 +121,7 @@ class MenuController {
         this.init();
     }
     init() {
+        this.fitTitles();
         // Current menu item index (starting with the first one).
         this.current = Math.max(0, this.menuItems.findIndex(item => item.DOM.el.dataset.folder === root.dataset.selected));
         // Highlight the current menu item
@@ -133,6 +133,25 @@ class MenuController {
             this.showContent(this.menuItems[this.current]);
             activeTimeline.progress(1);
         }
+    }
+    fitTitles() {
+        const available = this.DOM.el.clientWidth;
+        const minimum = Math.min(28, parseFloat(getComputedStyle(document.documentElement).fontSize) * 1.75);
+        this.menuItems.forEach(item => {
+            const el = item.DOM.el;
+            el.style.removeProperty('--album-item-title-size');
+            const preferred = parseFloat(getComputedStyle(item.DOM.title).fontSize);
+            if (el.scrollWidth <= available) return;
+            let low = Math.min(minimum, preferred);
+            let high = preferred;
+            for (let step = 0; step < 9; step++) {
+                const size = (low + high) / 2;
+                el.style.setProperty('--album-item-title-size', size + 'px');
+                if (el.scrollWidth <= available) low = size;
+                else high = size;
+            }
+            el.style.setProperty('--album-item-title-size', low + 'px');
+        });
     }
     initEvents() {
         for (const [pos, item] of this.menuItems.entries()) {
@@ -363,6 +382,13 @@ class MenuController {
     if (!menu.querySelector('.menu__item')) return;
     root.classList.add('is-enhanced');
     const controller = new MenuController(menu);
+    scope.listen(window, 'resize', () => {
+        winsize = calcWinsize();
+        controller.fitTitles();
+    });
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => { if (scope.active) controller.fitTitles(); });
+    }
     scope.listen(menu, 'keydown', event => {
         if (event.key !== 'Enter' && event.key !== ' ') return;
         const link = event.target.closest('.menu__item');
