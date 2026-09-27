@@ -304,6 +304,11 @@ class MenuController {
         menuItem.DOM.el.setAttribute('aria-expanded', 'true');
         root.classList.add('is-open');
         gsap.killTweensOf(menuItem.DOM.galleryItems);
+        gsap.set([
+            menuItem.contentPage.DOM.titleInner,
+            menuItem.contentPage.DOM.introInner,
+            menuItem.contentPage.DOM.dateInner
+        ], {y: '0%'});
         const timelineDefaults = {
             duration: 0.8, 
             ease: 'expo.inOut'
@@ -317,6 +322,11 @@ class MenuController {
                 menuItem.contentPage.DOM.backCtrl.focus({preventScroll: true});
             }
         })
+        .to(this.DOM.el, {
+            opacity: 0,
+            duration: 0.18,
+            ease: 'none'
+        }, 0)
         .to(menuItem.DOM.deco, {scaleY: 0})
         .to(menuItem.DOM.ctaInner, {y: '100%'}, 0)
         .to(menuItem.DOM.galleryItems, {
@@ -325,28 +335,17 @@ class MenuController {
             stagger: 0.05,
             rotation: gsap.utils.random(-30,30)
         }, 0)
-        .to(this.menuItems.map(item => item.DOM.title), {
-            y: '100%',
-            stagger: {each: 0.03, from: 'end'}
-        }, 0)
         .to(this.DOM.headline.deco, {scaleX: 0}, 0)
-        .to(this.DOM.headline.text, {y: '100%'}, 0)
         .addLabel('showPageContent', timelineDefaults.duration*.1)
         .to(menuItem.contentPage.DOM.backCtrl, {
             startAt: {x: '50%'},
             x: '0%',
             opacity: 1
         }, 'showPageContent')
-        .to([menuItem.contentPage.DOM.titleInner, menuItem.contentPage.DOM.introInner, menuItem.contentPage.DOM.dateInner], {
-            startAt: {y: '-100%'},
-            onStart: () => {
-                gsap.set([menuItem.contentPage.DOM.title, menuItem.contentPage.DOM.intro, menuItem.contentPage.DOM.date], {
-                    opacity: 1, 
-                    stagger: -0.06
-                })
-            },
-            y: '0%',
-            stagger: -0.06
+        .to([menuItem.contentPage.DOM.title, menuItem.contentPage.DOM.intro, menuItem.contentPage.DOM.date], {
+            opacity: 1,
+            duration: 0.18,
+            ease: 'none'
         }, 'showPageContent')
         .to(menuItem.contentPage.DOM.galleryItems, {
             startAt: {y: '100%', rotation: () => gsap.utils.random(-20,20)},
@@ -377,6 +376,11 @@ class MenuController {
             gsap.set(this.menuItems.map(item => item.DOM.title), {y: '0%'});
             gsap.set(this.DOM.headline.text, {y: '0%'});
             gsap.set(this.DOM.headline.deco, {scaleX: 1});
+            gsap.set([
+                menuItem.contentPage.DOM.titleInner,
+                menuItem.contentPage.DOM.introInner,
+                menuItem.contentPage.DOM.dateInner
+            ], {y: '0%'});
             gsap.set(this.DOM.el, {opacity: 0});
             root.classList.remove('is-open');
 
@@ -402,14 +406,10 @@ class MenuController {
                 opacity: 0,
                 stagger: 0.08
             }, 0)
-            .to([menuItem.contentPage.DOM.titleInner, menuItem.contentPage.DOM.introInner, menuItem.contentPage.DOM.dateInner], {
-                onComplete: () => {
-                    gsap.set([menuItem.contentPage.DOM.title, menuItem.contentPage.DOM.intro, menuItem.contentPage.DOM.date], {
-                        opacity: 0
-                    })
-                },
-                y: '-100%',
-                stagger: 0.06
+            .to([menuItem.contentPage.DOM.title, menuItem.contentPage.DOM.intro, menuItem.contentPage.DOM.date], {
+                opacity: 0,
+                duration: 0.18,
+                ease: 'none'
             }, 0)
             .to(menuItem.contentPage.DOM.backCtrl, {
                 x: '50%',
