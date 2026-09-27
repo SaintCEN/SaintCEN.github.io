@@ -616,7 +616,7 @@ figure.highlight .section {
   z-index: 10;
   justify-content: flex-start;
   align-content: flex-start;
-  column-gap: clamp(1rem, 2.4vw, 1.75rem);
+  column-gap: clamp(1.25rem, 3vw, 2rem);
   row-gap: clamp(0.7rem, 1.8svh, 1.1rem);
   width: 100%;
   margin: 0;
@@ -633,7 +633,7 @@ figure.highlight .section {
   color: inherit;
   font: inherit;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(1.85rem, 3.4vw, 2.65rem);
+  font-size: clamp(2.15rem, 4.2vw, 3.2rem);
   text-transform: lowercase;
   line-height: 1;
   cursor: pointer;
@@ -890,7 +890,7 @@ figure.highlight .section {
     overflow: hidden;
   }
   .inline-archive__menu-item {
-    font-size: clamp(1.6rem, 8vw, 2.6rem);
+    font-size: clamp(1.85rem, 9vw, 3rem);
   }
   .inline-archive__hover-reveal {
     width: 150px;
