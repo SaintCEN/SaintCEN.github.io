@@ -2667,7 +2667,7 @@ html.curve-home .navbar-main {
     font-size: 0.65rem;
   }
 }
-@media (max-height: 900px) and (min-width: 848px) {
+@media (min-width: 848px) {
   .album-grid {
     --album-gallery-inset: clamp(1rem, 3svh, 1.5rem);
   }
@@ -2681,10 +2681,10 @@ html.curve-home .navbar-main {
     grid-area: auto !important;
     left: var(--album-preview-x, 4%);
     top: var(--album-preview-y, 6%);
-    width: clamp(9rem, var(--album-preview-width, 13.2vw), 18rem);
+    width: var(--album-preview-width, clamp(9rem, 13.2vw, 18rem));
     height: auto;
     max-width: none;
-    max-height: 26svh;
+    max-height: 22svh;
     object-fit: contain;
     -webkit-mask-image: radial-gradient(ellipse 72% 72% at center, #000 54%, rgba(0, 0, 0, 0.72) 70%, transparent 100%);
     mask-image: radial-gradient(ellipse 72% 72% at center, #000 54%, rgba(0, 0, 0, 0.72) 70%, transparent 100%);

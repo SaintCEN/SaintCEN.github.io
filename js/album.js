@@ -163,21 +163,71 @@ class MenuController {
         }
     }
     randomizePreviewLayout() {
-        const rows = [6, 39, 72];
-        const leftOffsets = [2, 9, 5];
-        const rightOffsets = [83, 78, 81];
         this.DOM.galleries.forEach(gallery => {
-            [...gallery.querySelectorAll('.bg-gallery__item')].forEach((item, index) => {
-                const isLeft = index % 2 === 0;
-                const row = Math.min(rows.length - 1, Math.floor(index / 2));
-                const x = (isLeft ? leftOffsets[row] : rightOffsets[row]) + Math.random() * 2.5;
-                const y = rows[row] + (Math.random() * 8 - 4);
+            [...gallery.querySelectorAll('.bg-gallery__item')].forEach(item => {
                 const scale = 0.9 + Math.random() * 0.28;
-                item.style.setProperty('--album-preview-x', x.toFixed(2) + '%');
-                item.style.setProperty('--album-preview-y', y.toFixed(2) + '%');
-                item.style.setProperty('--album-preview-width', (13.2 * scale).toFixed(2) + 'vw');
+                item.dataset.previewScale = scale.toFixed(4);
+                item.dataset.previewX = Math.random().toFixed(4);
                 item.style.setProperty('--album-preview-mobile-width', (29 * scale).toFixed(2) + 'vw');
+                if (!item.complete) scope.listen(item, 'load', () => this.layoutPreviewImages());
             });
+        });
+        this.layoutPreviewImages();
+    }
+    layoutPreviewImages() {
+        if (winsize.width < 848) return;
+        this.DOM.galleries.forEach(gallery => {
+            const items = [...gallery.querySelectorAll('.bg-gallery__item')];
+            const width = gallery.clientWidth;
+            const height = gallery.clientHeight;
+            if (!width || !height) return;
+
+            const safeX = Math.max(12, width * 0.018);
+            const safeY = Math.max(12, height * 0.025);
+            const minimumGap = Math.max(12, height * 0.025);
+            const sideWidth = Math.max(1, width * 0.28 - safeX * 2);
+            const availableHeight = Math.max(1, height - safeY * 2);
+
+            [items.filter((_, index) => index % 2 === 0), items.filter((_, index) => index % 2 === 1)]
+                .forEach((column, side) => {
+                    const sizes = column.map(item => {
+                        const scale = Number(item.dataset.previewScale) || 1;
+                        const sourceWidth = Number(item.getAttribute('width')) || item.naturalWidth || 1;
+                        const sourceHeight = Number(item.getAttribute('height')) || item.naturalHeight || 1;
+                        const ratio = sourceWidth / sourceHeight;
+                        let itemWidth = Math.min(winsize.width * 0.132 * scale, 288, sideWidth);
+                        let itemHeight = itemWidth / ratio;
+                        const maxHeight = winsize.height * 0.22;
+                        if (itemHeight > maxHeight) {
+                            itemHeight = maxHeight;
+                            itemWidth = itemHeight * ratio;
+                        }
+                        return {item, width: itemWidth, height: itemHeight};
+                    });
+                    const gaps = Math.max(0, sizes.length - 1);
+                    const totalHeight = sizes.reduce((sum, size) => sum + size.height, 0);
+                    const fit = totalHeight + minimumGap * gaps > availableHeight
+                        ? Math.max(0.1, (availableHeight - minimumGap * gaps) / totalHeight)
+                        : 1;
+                    sizes.forEach(size => {
+                        size.width *= fit;
+                        size.height *= fit;
+                    });
+                    const fittedHeight = sizes.reduce((sum, size) => sum + size.height, 0);
+                    const gap = gaps ? Math.max(0, (availableHeight - fittedHeight) / gaps) : 0;
+                    let y = sizes.length === 1 ? safeY + (availableHeight - fittedHeight) / 2 : safeY;
+                    sizes.forEach(size => {
+                        const freeX = Math.max(0, sideWidth - size.width);
+                        const offset = (Number(size.item.dataset.previewX) || 0) * freeX;
+                        const x = side === 0
+                            ? safeX + offset
+                            : width - safeX - size.width - offset;
+                        size.item.style.setProperty('--album-preview-width', size.width.toFixed(2) + 'px');
+                        size.item.style.setProperty('--album-preview-x', x.toFixed(2) + 'px');
+                        size.item.style.setProperty('--album-preview-y', y.toFixed(2) + 'px');
+                        y += size.height + gap;
+                    });
+                });
         });
     }
     fitTitles() {
@@ -335,7 +385,9 @@ class MenuController {
         inactiveItems.forEach(item => {
             gsap.set(item.DOM.deco, {scaleY: 0, opacity: 0});
             gsap.set(item.DOM.cta, {y: '100%', opacity: 0});
-            gsap.set(item.DOM.galleryItems, {y: 0, rotation: 0, opacity: 0});
+            if (item.DOM.galleryItems.length) {
+                gsap.set(item.DOM.galleryItems, {y: 0, rotation: 0, opacity: 0});
+            }
         });
         let selectionTimeline;
         selectionTimeline = timeline({
@@ -532,6 +584,7 @@ class MenuController {
     const controller = new MenuController(menu);
     scope.listen(window, 'resize', () => {
         winsize = calcWinsize();
+        controller.layoutPreviewImages();
         controller.fitTitles();
         controller.syncWheel(true);
     });
