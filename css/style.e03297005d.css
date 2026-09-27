@@ -1438,6 +1438,22 @@ figure.highlight .section {
     padding-top: 7px;
     padding-left: 7px;
   }
+  .post-section.has-toc {
+    padding-right: clamp(1rem, 2vw, 2rem);
+  }
+  .post-section.has-toc .post-layout {
+    max-width: calc(1088px + var(--post-toc-width) + var(--post-toc-gap));
+    grid-template-columns: clamp(180px, 16vw, 240px) minmax(0, 1fr) var(--post-toc-width);
+    column-gap: var(--post-toc-gap);
+  }
+  .post-section.has-toc .post-toc {
+    position: sticky;
+    top: var(--post-toc-top);
+    right: auto;
+    width: 100%;
+    max-width: none;
+    align-self: start;
+  }
 }
 @media screen and (min-width: 1024px) and (max-width: 1199px) {
   .post-aside .profile {
