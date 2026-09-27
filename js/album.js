@@ -22,7 +22,7 @@
         return animation;
     }
     function calcWinsize() { return {width: innerWidth, height: innerHeight}; }
-    function scrollIt(destination, duration, easing, complete) {
+    function scrollIt(destination, duration, complete) {
         cancelAnimationFrame(scrollFrame);
         const start = scrollY;
         const target = root.getBoundingClientRect().top + scrollY - 52 + destination;
@@ -304,7 +304,7 @@ class MenuController {
         };
 
         // Scroll up first
-        scrollIt(0, 300, 'easeOutQuad', () => {
+        scrollIt(0, 300, () => {
             timeline({
                 defaults: timelineDefaults,
                 onStart: () => this.isAnimating = true,

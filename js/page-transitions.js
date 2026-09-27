@@ -19,7 +19,7 @@
         cancelAnimationFrame(frame); clearTimeout(safety); frame = 0;
         if (layer) layer.remove();
         layer = null;
-        document.documentElement.classList.remove('curve-home', 'curve-entering');
+        document.documentElement.classList.remove('curve-home');
         if (finishReveal) { finishReveal(); finishReveal = null; }
     }
     function measure() { width = innerWidth; height = innerHeight; }
@@ -181,7 +181,7 @@
                 document.head.appendChild(local); local.remove();
             });
         }
-        if (!repeat && scripts.has(url)) return scripts.get(url);
+        if (scripts.has(url)) return scripts.get(url);
         var promise = new Promise(function (resolve, reject) {
             var script = document.createElement('script');
             var timeout = setTimeout(function () { script.onerror(); }, 15000);
@@ -190,7 +190,7 @@
             script.onerror = function () { clearTimeout(timeout); script.remove(); scripts.delete(url); reject(new Error('Cannot load ' + url)); };
             document.head.appendChild(script);
         });
-        if (!repeat) scripts.set(url, promise);
+        scripts.set(url, promise);
         return promise;
     }
     async function activate(list, scope, element) {
