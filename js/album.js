@@ -362,9 +362,8 @@ class MenuController {
             .addLabel('showMenuItems', timelineDefaults.duration*.1)
             .to(this.DOM.headline.text, {y: '0%'}, 'showMenuItems')
             .to(this.DOM.headline.deco, {scaleX: 1}, 'showMenuItems')
-            .to(this.menuItems.map(item => item.DOM.title), {
+            .set(this.menuItems.map(item => item.DOM.title), {
                 y: '0%',
-                stagger: {each: 0.03, from: 'start'}
             }, 'showMenuItems')
             .to(menuItem.DOM.galleryItems, {
                 startAt: {rotation: gsap.utils.random(-30,30)},
