@@ -2365,12 +2365,12 @@ html.curve-home .navbar-main {
   position: absolute;
   z-index: 0;
   right: clamp(1.5rem, 4vw, 3.5rem);
-  bottom: clamp(-5rem, -10svh, -3.5rem);
+  top: clamp(4rem, 10svh, 5.5rem);
   width: auto;
-  height: clamp(13rem, 31svh, 17rem);
+  height: clamp(22rem, 58svh, 28rem);
   max-width: none;
   object-fit: contain;
-  opacity: 0.38;
+  opacity: 0.24;
   mix-blend-mode: multiply;
   pointer-events: none;
 }
@@ -2675,9 +2675,9 @@ html.curve-home .navbar-main {
     min-height: 6.5rem;
   }
   .album-grid .menu__headline-image {
-    right: 0.5rem;
-    bottom: -7rem;
-    height: clamp(10rem, 25svh, 12rem);
+    right: -0.5rem;
+    top: 7rem;
+    height: clamp(19rem, 40svh, 20.5rem);
   }
   .album-grid .menu__item-deco {
     margin-left: 0.75rem;
