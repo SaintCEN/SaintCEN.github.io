@@ -2300,6 +2300,9 @@ html.curve-home .navbar-main {
   font: 0.65rem "Source Code Pro", monospace, "Microsoft YaHei";
   color: #777;
 }
+.album-grid .content__date small:only-child {
+  margin-top: 0;
+}
 .album-grid .content__back svg {
   fill: #171717;
   stroke: #171717;
