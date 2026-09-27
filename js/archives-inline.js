@@ -291,8 +291,6 @@
     function ContentItem(element) {
         this.DOM = {
             el: element,
-            title: element.querySelector('.inline-archive__content-title-inner'),
-            number: element.querySelector('.inline-archive__content-title-number'),
             cards: Array.from(element.querySelectorAll('.inline-archive__gallery-item')),
             gallery: element.querySelector('[data-horizontal-gallery]')
         };
@@ -301,8 +299,7 @@
 
     function Controller() {
         this.DOM = {
-            menu: root.querySelector('.inline-archive__menu'),
-            back: root.querySelector('.inline-archive__back')
+            menu: root.querySelector('.inline-archive__menu')
         };
         this.DOM.menuItems = Array.from(this.DOM.menu.querySelectorAll('[data-inline-menu-item]'));
         this.DOM.contents = Array.from(root.querySelectorAll('[data-inline-content]'));
@@ -320,17 +317,18 @@
             });
         });
         this.contents = this.DOM.contents.map(function (content) { return new ContentItem(content); });
-        this.currentIndex = -1;
+        this.currentIndex = 0;
+        this.pendingIndex = -1;
         this.animating = false;
         this.bind();
+        this.activateInitial();
     }
 
     Controller.prototype.bind = function () {
         var self = this;
         this.DOM.menuItems.forEach(function (item, index) {
-            scope.listen(item, 'click', function () { self.open(index); });
+            scope.listen(item, 'click', function () { self.select(index); });
         });
-        scope.listen(this.DOM.back, 'click', function () { self.close(); });
         scope.listen(this.DOM.menu, 'mouseleave', function () {
             self.items.forEach(function (item) {
                 if (!item.focusVisible) item.resetImage();
@@ -343,7 +341,6 @@
             if (document.hidden) self.items.forEach(function (item) { item.resetImage(); });
         });
         scope.listen(root, 'wheel', function (event) {
-            if (self.currentIndex < 0) return;
             var gallery = self.contents[self.currentIndex].gallery;
             var delta = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaMode === 2 ? event.deltaY * innerHeight : event.deltaY;
             if (gallery.addWheel(delta)) event.preventDefault();
@@ -351,133 +348,109 @@
         scope.listen(window, 'resize', function () {
             self.contents.forEach(function (content) { content.gallery.resize(); });
         });
-        scope.listen(root, 'keydown', function (event) {
-            if (event.key === 'Escape' && self.currentIndex >= 0 && !self.animating) {
-                event.preventDefault();
-                self.close();
-            }
+    };
+
+    Controller.prototype.activateInitial = function () {
+        var hash = location.hash.slice(1);
+        var position = hash ? this.DOM.menuItems.findIndex(function (item) {
+            return item.dataset.target === hash;
+        }) : 0;
+        if (position < 0) position = 0;
+        this.currentIndex = position;
+        this.DOM.menuItems.forEach(function (item, index) {
+            var selected = index === position;
+            item.classList.toggle('is-selected', selected);
+            item.setAttribute('aria-pressed', selected ? 'true' : 'false');
+        });
+        this.contents.forEach(function (content, index) {
+            var selected = index === position;
+            content.DOM.el.classList.toggle('is-current', selected);
+            content.DOM.el.setAttribute('aria-hidden', selected ? 'false' : 'true');
+            if (selected) content.DOM.el.removeAttribute('inert');
+            else content.DOM.el.setAttribute('inert', '');
+        });
+        var self = this;
+        requestAnimationFrame(function () {
+            if (!scope.active) return;
+            self.contents[position].gallery.open();
         });
     };
 
-    Controller.prototype.data = function (position) {
-        return {
-            item: this.items[position],
-            texts: this.items.map(function (item) { return item.DOM.inner; }),
-            numbers: this.items.map(function (item) { return item.DOM.number; }),
-            content: this.contents[position]
-        };
+    Controller.prototype.updateSelection = function (position) {
+        this.DOM.menuItems.forEach(function (item, index) {
+            var selected = index === position;
+            item.classList.toggle('is-selected', selected);
+            item.setAttribute('aria-pressed', selected ? 'true' : 'false');
+        });
+        var target = this.DOM.menuItems[position].dataset.target;
+        var nextURL = location.pathname + location.search + (position === 0 ? '' : '#' + target);
+        history.replaceState(history.state, '', nextURL);
     };
 
-    Controller.prototype.open = function (position) {
-        if (this.animating || position < 0 || position >= this.items.length) return;
+    Controller.prototype.select = function (position) {
+        if (position < 0 || position >= this.items.length) return;
+        if (this.animating) {
+            this.pendingIndex = position;
+            return;
+        }
+        if (position === this.currentIndex) return;
         this.animating = true;
-        this.currentIndex = position;
         var self = this;
-        var data = this.data(position);
-        var item = data.item;
-        var content = data.content;
+        var previousIndex = this.currentIndex;
+        var previous = this.contents[previousIndex];
+        var incoming = this.contents[position];
         this.items.forEach(function (menuItem) { menuItem.resetImage(); });
-        item.DOM.el.setAttribute('aria-expanded', 'true');
-        this.DOM.menu.style.pointerEvents = 'none';
-        item.DOM.el.style.pointerEvents = 'none';
-        content.DOM.el.removeAttribute('inert');
-        content.DOM.el.setAttribute('aria-hidden', 'false');
-
+        this.updateSelection(position);
         trackedTimeline({
-            defaults: { duration: 1, ease: 'expo' },
+            defaults: { ease: 'expo' },
             onComplete: function () {
                 self.animating = false;
-                self.DOM.back.focus({ preventScroll: true });
+                var queued = self.pendingIndex;
+                self.pendingIndex = -1;
+                if (queued >= 0 && queued !== self.currentIndex) self.select(queued);
             }
         })
-            .addLabel('hideMenu', 0)
-            .set(data.texts.concat([content.DOM.title]), { transformOrigin: '50% 100%' }, 'hideMenu')
-            .set(content.DOM.title, { opacity: 0, y: '101%' }, 'hideMenu')
-            .set(content.DOM.number, { scale: 0 }, 'hideMenu')
-            .set(content.DOM.cards, { y: '101%' }, 'hideMenu')
-            .to(data.numbers, {
-                duration: 0.3, ease: 'sine', scale: 0, opacity: 0,
-                stagger: { from: position, each: 0.01 }
-            }, 'hideMenu')
-            .to(data.texts, {
-                duration: 0.1, ease: 'quad.in', scaleY: 1.5,
-                stagger: { from: position, each: 0.01 }
-            }, 'hideMenu')
-            .to(data.texts, {
-                duration: 0.8, ease: 'expo', scaleY: 1, y: '-100%', opacity: 0,
-                stagger: { from: position, each: 0.01 }
-            }, 'hideMenu+=0.1')
-            .addLabel('showContent', 0.3)
+            .to(previous.DOM.cards, {
+                duration: 0.38,
+                ease: 'power3.in',
+                y: '101%',
+                opacity: 0,
+                stagger: 0.025
+            }, 0)
             .add(function () {
-                content.DOM.el.classList.add('is-current');
-                content.gallery.open();
-            }, 'showContent')
-            .set(this.DOM.back, { pointerEvents: 'auto' }, 'showContent')
-            .to(this.DOM.back, { startAt: { x: '-100%' }, opacity: 1, x: '0%' }, 'showContent')
-            .to(content.DOM.title, { duration: 0.1, ease: 'quad.in', scaleY: 1.5, opacity: 1 }, 'showContent')
-            .to(content.DOM.title, { duration: 0.8, ease: 'expo', scaleY: 1, startAt: { y: '100%' }, y: '0%' }, 'showContent+=0.1')
-            .to(content.DOM.number, { scale: 1 }, 'showContent')
-            .to(content.DOM.cards, { y: '0%', stagger: 0.04 }, 'showContent+=0.1');
-    };
-
-    Controller.prototype.close = function () {
-        if (this.animating || this.currentIndex < 0) return;
-        this.animating = true;
-        var self = this;
-        var data = this.data(this.currentIndex);
-        var item = data.item;
-        var content = data.content;
-
-        trackedTimeline({
-            defaults: { duration: 0.4, ease: 'power3.in' },
-            onComplete: function () {
-                self.animating = false;
-                self.currentIndex = -1;
-                item.DOM.el.setAttribute('aria-expanded', 'false');
-                self.items.forEach(function (menuItem) { menuItem.resetImage(); });
-                item.DOM.el.focus({ preventScroll: true });
-            }
-        })
-            .addLabel('hideContent', 0)
-            .set(data.texts.concat([content.DOM.title]), { transformOrigin: '50% 0%' }, 'hideContent')
-            .set(this.DOM.back, { pointerEvents: 'none' }, 'hideContent')
-            .to(this.DOM.back, { opacity: 0, x: '-100%' }, 'hideContent')
-            .to(content.DOM.cards, { y: '101%', stagger: 0.04 }, 'hideContent')
-            .to(content.DOM.number, { scale: 0 }, 'hideContent+=0.1')
-            .to(content.DOM.title, { y: '100%', opacity: 1 }, 'hideContent+=0.1')
-            .addLabel('showMenu', 0.6)
-            .add(function () {
-                content.gallery.stop();
-                content.DOM.el.classList.remove('is-current');
-                content.DOM.el.setAttribute('aria-hidden', 'true');
-                content.DOM.el.setAttribute('inert', '');
-            }, 'showMenu')
-            .add(function () {
-                self.DOM.menu.style.pointerEvents = '';
-                item.DOM.el.style.pointerEvents = '';
-            }, 'showMenu')
-            .to(data.numbers, {
-                duration: 0.3, ease: 'sine', scale: 1, opacity: 1,
-                stagger: { from: this.currentIndex, each: 0.01 }
-            }, 'showMenu')
-            .to(data.texts, {
-                duration: 0.1, ease: 'quad.in', scaleY: 1.5, opacity: 1,
-                stagger: { from: this.currentIndex, each: 0.01 }
-            }, 'showMenu')
-            .to(data.texts, {
-                duration: 0.8, ease: 'expo', scaleY: 1, y: '0%',
-                stagger: { from: this.currentIndex, each: 0.01 }
-            }, 'showMenu+=0.1');
+                previous.gallery.stop();
+                previous.DOM.el.classList.remove('is-current');
+                previous.DOM.el.setAttribute('aria-hidden', 'true');
+                previous.DOM.el.setAttribute('inert', '');
+                gsap.set(previous.DOM.cards, { clearProps: 'transform,opacity' });
+                incoming.DOM.el.classList.add('is-current');
+                incoming.DOM.el.removeAttribute('inert');
+                incoming.DOM.el.setAttribute('aria-hidden', 'false');
+                gsap.set(incoming.DOM.cards, { y: '101%', opacity: 0 });
+                self.currentIndex = position;
+                incoming.gallery.open();
+            }, 0.4)
+            .to(incoming.DOM.cards, {
+                duration: 0.8,
+                y: '0%',
+                opacity: 1,
+                stagger: 0.04
+            }, 0.42)
+            .to(this.items[position].DOM.inner, {
+                duration: 0.1,
+                ease: 'quad.in',
+                scaleY: 1.35,
+                transformOrigin: '50% 100%'
+            }, 0)
+            .to(this.items[position].DOM.inner, {
+                duration: 0.55,
+                scaleY: 1,
+                ease: 'expo'
+            }, 0.1);
     };
 
     var controller = new Controller();
     root.classList.add('is-enhanced');
-
-    var hash = location.hash.slice(1);
-    if (hash) {
-        var hashIndex = controller.DOM.menuItems.findIndex(function (item) { return item.dataset.target === hash; });
-        if (hashIndex >= 0) requestAnimationFrame(function () { if (scope.active) controller.open(hashIndex); });
-    }
 
     scope.listen(reduced, 'change', function () {
         if (reduced.matches) animations.forEach(function (animation) { animation.progress(1); });
