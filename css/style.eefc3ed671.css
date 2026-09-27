@@ -456,7 +456,7 @@ figure.highlight .section {
 
 .inline-archive {
   --inline-accent: #3273dc;
-  --archive-menu-card-gap: clamp(1.5rem, 3.6svh, 2.75rem);
+  --archive-menu-card-gap: clamp(1.75rem, 4.8svh, 3.25rem);
   --archive-card-width: clamp(18rem, min(31vw, 52svh), 27rem);
   position: relative;
   isolation: isolate;
@@ -759,22 +759,32 @@ figure.highlight .section {
     padding-bottom: 0.5rem;
   }
   .inline-archive {
-    --archive-menu-card-gap: clamp(1rem, 2.5svh, 1.35rem);
+    --archive-menu-card-gap: clamp(1.75rem, 5svh, 2.25rem);
+    --archive-card-width: clamp(13rem, min(29vw, 43svh), 18rem);
   }
   .inline-archive__menu {
     row-gap: 0.3rem;
     padding-bottom: 0.25rem;
   }
   .inline-archive__menu-item {
-    font-size: clamp(1.7rem, min(4.5vw, 7svh), 3rem);
+    font-size: clamp(1.55rem, min(4vw, 5.8svh), 2.5rem);
   }
   .inline-archive__gallery-image-inner {
-    max-height: 32svh;
+    max-height: 28svh;
   }
   .inline-archive__gallery-caption {
     padding-top: 0.45rem;
   }
+  .inline-archive__gallery-title {
+    font-size: clamp(1rem, min(1.8vw, 3.5svh), 1.45rem);
+  }
+  .inline-archive__gallery-tags {
+    margin-bottom: 0.28rem;
+    font-size: 0.6rem;
+  }
   .inline-archive__gallery-summary {
+    font-size: 0.7rem;
+    line-height: 1.4;
     -webkit-line-clamp: 2;
   }
 }
