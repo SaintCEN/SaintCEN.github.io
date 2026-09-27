@@ -18,12 +18,12 @@
 
 
 
-    <meta name="description" content="&amp;#x79D1;&amp;#x7814;&amp;#x5C0F;&amp;#x767D;&amp;#x5F97;&amp;#x5B66;&amp;#xFF01;">
+    <meta name="description" content="科研小白得学！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于Linux服务器的使用入门（以AutoDL为例）">
 <meta property="og:url" content="https://saintcen.github.io/2025/09/25/%E5%85%B3%E4%BA%8ELinux%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8%E5%85%A5%E9%97%A8%EF%BC%88%E4%BB%A5AutoDL%E4%B8%BA%E4%BE%8B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Sa1ntCHENのHome">
-<meta property="og:description" content="&amp;#x79D1;&amp;#x7814;&amp;#x5C0F;&amp;#x767D;&amp;#x5F97;&amp;#x5B66;&amp;#xFF01;">
+<meta property="og:description" content="科研小白得学！">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-09-24T16:00:00.000Z">
 <meta property="article:modified_time" content="2026-07-14T04:42:36.082Z">
@@ -47,9 +47,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
 
 
-
-<link rel="stylesheet" href="/css/style.css">
-
+<link rel="stylesheet" href="/css/style.605e3305fd.css">
 
 <meta name="page-transition-title" content="关于Linux服务器的使用入门（以AutoDL为例）">
 <meta name="page-kind" content="article">
@@ -229,35 +227,35 @@
                 <span id="more"></span>
 
 <blockquote>
-<p>&#x5FC5;&#x5907;&#xFF1A;VSCode + Remote-SSH Extension&#xFF0C;&#x5177;&#x4F53;&#x8FDE;&#x63A5;&#x65B9;&#x6CD5;&#x7565;</p>
-<p>&#x4E0D;&#x4F1A;&#x7684;&#x95EE;&#x9898;&#x90FD;&#x95EE;&#x5927;&#x6A21;&#x578B;&#x6216;<a target="_blank" rel="noopener" href="https://www.autodl.com/docs/">AutoDL&#x5E2E;&#x52A9;&#x6587;&#x6863;</a></p>
+<p>必备：VSCode + Remote-SSH Extension，具体连接方法略</p>
+<p>不会的问题都问大模型或<a target="_blank" rel="noopener" href='https://www.autodl.com/docs/'>AutoDL帮助文档</a></p>
 </blockquote>
-<h2 id="&#x5F00;&#x670D;&#x52A1;&#x5668;"><a href="#&#x5F00;&#x670D;&#x52A1;&#x5668;" class="headerlink" title="&#x5F00;&#x670D;&#x52A1;&#x5668;"></a>&#x5F00;&#x670D;&#x52A1;&#x5668;</h2><p>&#x5148;&#x9605;&#x8BFB;&#x4ED3;&#x5E93;&#x7684;<code>README</code>&#x6587;&#x4EF6;&#xFF0C;&#x786E;&#x5B9A;<code>CUDA</code>&#x7248;&#x672C;&#x540E;&#x9009;&#x62E9;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x6839;&#x636E;&#x663E;&#x5B58;&#x8003;&#x8651;&#x663E;&#x5361;&#x578B;&#x53F7;&#x3002;&#x73AF;&#x5883;&#x53EF;&#x4EE5;&#x5F00;&#x65E0;&#x5361;&#x6A21;&#x5F0F;&#x5728;&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x914D;&#x7F6E;&#xFF08;&#x5047;&#x8BBE;&#x6CA1;&#x6709;&#x4F9D;&#x8D56;<code>torch</code>&#x7684;<code>C++</code>&#x7F16;&#x8BD1;&#xFF09;&#xFF0C;&#x8FD0;&#x884C;&#x518D;&#x5F00;<code>GPU</code>&#xFF0C;&#x65E0;<code>GPU</code>&#x53EF;&#x4EE5;&#x514B;&#x9686;&#x5B9E;&#x4F8B;&#x3002;&#x670D;&#x52A1;&#x5668;&#x90FD;&#x662F;&#x81EA;&#x5E26;<code>torch</code>&#x7684;&#xFF0C;&#x5982;&#x679C;&#x914D;&#x7F6E;&#x6307;&#x5357;&#x91CC;&#x6CA1;&#x6709;&#x786E;&#x8BA4;&#x7684;<code>torch</code>&#x7248;&#x672C;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x7528;<code>base</code>&#x73AF;&#x5883;&#x7684;<code>torch</code>&#xFF0C;&#x8DF3;&#x8FC7;&#x8FD9;&#x4E00;&#x5B89;&#x88C5;&#x6B65;&#x9AA4;&#x3002;</p>
-<h2 id="&#x514D;&#x5BC6;&#x767B;&#x5F55;"><a href="#&#x514D;&#x5BC6;&#x767B;&#x5F55;" class="headerlink" title="&#x514D;&#x5BC6;&#x767B;&#x5F55;"></a>&#x514D;&#x5BC6;&#x767B;&#x5F55;</h2><p>&#x8BBE;&#x7F6E;<code>SSH</code>&#x5BC6;&#x94A5;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x6211;&#x4EEC;&#x6BCF;&#x6B21;&#x767B;&#x5F55;/&#x4F7F;&#x7528;&#x90FD;&#x9700;&#x8981;&#x8F93;&#x5BC6;&#x7801;&#x3002;&#x6267;&#x884C;&#x547D;&#x4EE4;&#x540E;&#x4E00;&#x76F4;&#x56DE;&#x8F66;&#x8F93;&#x4E00;&#x6B21;&#x5BC6;&#x7801;&#x5373;&#x53EF;&#x3002;</p>
+<h2 id="开服务器"><a href="#开服务器" class="headerlink" title="开服务器"></a>开服务器</h2><p>先阅读仓库的<code>README</code>文件，确定<code>CUDA</code>版本后选择服务器，根据显存考虑显卡型号。环境可以开无卡模式在服务器上配置（假设没有依赖<code>torch</code>的<code>C++</code>编译），运行再开<code>GPU</code>，无<code>GPU</code>可以克隆实例。服务器都是自带<code>torch</code>的，如果配置指南里没有确认的<code>torch</code>版本，可以直接用<code>base</code>环境的<code>torch</code>，跳过这一安装步骤。</p>
+<h2 id="免密登录"><a href="#免密登录" class="headerlink" title="免密登录"></a>免密登录</h2><p>设置<code>SSH</code>密钥可以避免我们每次登录/使用都需要输密码。执行命令后一直回车输一次密码即可。</p>
 <pre><code class="bash"># Windows Powershell
 ssh-keygen -t rsa -b 4096 -f &quot;$env:USERPROFILE\.ssh\id_rsa&quot; -N &quot;&quot;; type &quot;$env:USERPROFILE\.ssh\id_rsa.pub&quot; | ssh user@serverip &quot;cat &gt;&gt; ~/.ssh/authorized_keys&quot;
 
 # Linux
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N &quot;&quot; &amp;&amp; ssh-copy-id -i ~/.ssh/id_rsa.pub user@serverip
 </code></pre>
-<h2 id="&#x6587;&#x4EF6;&#x4E0A;&#x4F20;"><a href="#&#x6587;&#x4EF6;&#x4E0A;&#x4F20;" class="headerlink" title="&#x6587;&#x4EF6;&#x4E0A;&#x4F20;"></a>&#x6587;&#x4EF6;&#x4E0A;&#x4F20;</h2><p><code>Linux</code>&#x548C;<code>Cmd/Powershell</code>&#x5747;&#x652F;&#x6301;<code>scp</code>&#x547D;&#x4EE4;&#x3002;</p>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><p><code>Linux</code>和<code>Cmd/Powershell</code>均支持<code>scp</code>命令。</p>
 <pre><code class="bash">scp -r -P &lt;PORT&gt; &lt;YOUR FILE PATH&gt; user@serverip:&lt;SERVER FILE PATH&gt;
 </code></pre>
-<p><code>-r</code>&#x8868;&#x793A;&#x6587;&#x4EF6;&#x5939;&#xFF08;&#x4E0A;&#x4F20;&#x5355;&#x6587;&#x4EF6;&#x65F6;&#x4E0D;&#x9700;&#x8981;&#x6DFB;&#x52A0;&#xFF09;&#x3002;<code>-P</code> &#x8868;&#x793A;&#x7AEF;&#x53E3;&#xFF0C; <code>user@serverip</code>&#x4E3A;<code>SSH</code>&#x670D;&#x52A1;&#x5668;&#x57DF;&#x540D;&#xFF0C;&#x7AEF;&#x53E3;&#x548C;&#x57DF;&#x540D;&#x90FD;&#x5728;&#x670D;&#x52A1;&#x5668;&#x7684;<code>SSH</code>&#x547D;&#x4EE4;&#x5904;&#x590D;&#x5236;&#x3002;&#x968F;&#x540E;&#x8865;&#x5145;&#x597D;&#x8DEF;&#x5F84;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x521D;&#x59CB;&#x4ED3;&#x5E93;&#x4EE3;&#x7801;&#x590D;&#x5236;&#x5230;&#x6570;&#x636E;&#x76D8;<code>/root/autodl-tmp/</code>&#x5904;&#x3002;&#x8FD9;&#x91CC;&#x5982;&#x679C;&#x547D;&#x4EE4;&#x8BB0;&#x4E0D;&#x4F4F;&#xFF0C;&#x590D;&#x5236;<code>SSH</code>&#x547D;&#x4EE4;&#x3001;&#x4E0A;&#x4F20;&#x7684;&#x6587;&#x4EF6;&#x5730;&#x5740;&#x548C;&#x76EE;&#x6807;&#x6587;&#x4EF6;&#x5730;&#x5740;&#x7ED9;&#x5927;&#x6A21;&#x578B;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x5373;&#x53EF;&#x3002;</p>
-<p>&#x5982;&#x679C;&#x9700;&#x8981;&#x6392;&#x9664;&#x67D0;&#x4E2A;&#x76EE;&#x5F55;&#xFF08;&#x5982;&#x6570;&#x636E;&#x96C6;/&#x6743;&#x91CD;&#xFF09;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>rsync</code>&#xFF0C;&#x53EA;&#x80FD;&#x5728;<code>Linux</code>&#x6216;<code>Windows-WSL</code>&#x4E2D;&#x4F7F;&#x7528;&#x3002;</p>
-<pre><code>rsync -avz --exclude=&apos;&lt;EXCLUDE FILE PATH&gt;&apos; &lt;YOUR FILE PATH&gt; user@serverip:&lt;SERVER FILE PATH&gt;
+<p><code>-r</code>表示文件夹（上传单文件时不需要添加）。<code>-P</code> 表示端口， <code>user@serverip</code>为<code>SSH</code>服务器域名，端口和域名都在服务器的<code>SSH</code>命令处复制。随后补充好路径，如果是初始仓库代码复制到数据盘<code>/root/autodl-tmp/</code>处。这里如果命令记不住，复制<code>SSH</code>命令、上传的文件地址和目标文件地址给大模型自动生成即可。</p>
+<p>如果需要排除某个目录（如数据集/权重）可以使用<code>rsync</code>，只能在<code>Linux</code>或<code>Windows-WSL</code>中使用。</p>
+<pre><code>rsync -avz --exclude=&#39;&lt;EXCLUDE FILE PATH&gt;&#39; &lt;YOUR FILE PATH&gt; user@serverip:&lt;SERVER FILE PATH&gt;
 </code></pre>
-<h2 id="&#x7F13;&#x5B58;&#x6E05;&#x7406;"><a href="#&#x7F13;&#x5B58;&#x6E05;&#x7406;" class="headerlink" title="&#x7F13;&#x5B58;&#x6E05;&#x7406;"></a>&#x7F13;&#x5B58;&#x6E05;&#x7406;</h2><p>&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;&#x662F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5220;&#x9664;&#xFF0C;&#x4E0D;&#x5F71;&#x54CD;&#x7CFB;&#x7EDF;&#x8FD0;&#x884C;&#x7684;&#x76EE;&#x5F55;&#x3002;</p>
-<pre><code class="bash">du -sh /root/miniconda3/pkgs/ &amp;&amp; rm -rf /root/miniconda3/pkgs/*      # conda&#x7684;&#x5386;&#x53F2;&#x5305;
-du -sh /root/.local/share/Trash &amp;&amp; rm -rf /root/.local/share/Trash   # jupyterlab&#x7684;&#x56DE;&#x6536;&#x7AD9;
+<h2 id="缓存清理"><a href="#缓存清理" class="headerlink" title="缓存清理"></a>缓存清理</h2><p>以下两个是可以直接删除，不影响系统运行的目录。</p>
+<pre><code class="bash">du -sh /root/miniconda3/pkgs/ &amp;&amp; rm -rf /root/miniconda3/pkgs/*      # conda的历史包
+du -sh /root/.local/share/Trash &amp;&amp; rm -rf /root/.local/share/Trash   # jupyterlab的回收站
 </code></pre>
-<p>&#x4EE5;&#x4E0B;&#x4E24;&#x4E2A;&#x662F;&#x53EF;&#x80FD;&#x5360;&#x7528;&#x8F83;&#x5927;&#x7A7A;&#x95F4;&#xFF0C;&#x4F46;&#x9700;&#x8981;&#x6839;&#x636E;&#x5B9E;&#x9645;&#x60C5;&#x51B5;&#x6E05;&#x7406;&#x7684;&#x76EE;&#x5F55;&#x3002;</p>
-<pre><code class="bash">du -sh /tmp/         #&#x67E5;&#x770B;/tmp&#x5360;&#x7528;&#x7684;&#x7A7A;&#x95F4;&#x5927;&#x5C0F;
-du -sh /root/.cache  #&#x67E5;&#x770B;/root/.cache&#x5360;&#x7528;&#x7684;&#x7A7A;&#x95F4;&#x5927;&#x5C0F;
+<p>以下两个是可能占用较大空间，但需要根据实际情况清理的目录。</p>
+<pre><code class="bash">du -sh /tmp/         #查看/tmp占用的空间大小
+du -sh /root/.cache  #查看/root/.cache占用的空间大小
 </code></pre>
-<h2 id="&#x672C;&#x5730;VPN&#x4EE3;&#x7406;"><a href="#&#x672C;&#x5730;VPN&#x4EE3;&#x7406;" class="headerlink" title="&#x672C;&#x5730;VPN&#x4EE3;&#x7406;"></a>&#x672C;&#x5730;VPN&#x4EE3;&#x7406;</h2><p>&#x8BF7;&#x53C2;&#x8003;<a href="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/">&#x5982;&#x4F55;&#x4F18;&#x96C5;&#x5730;&#x5728;SSH&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x4F7F;&#x7528;Codex</a>&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x914D;&#x7F6E;<code>Codex</code>&#x53EF;&#x987A;&#x4FBF;&#x968F;&#x672C;&#x5730;&#x4EE3;&#x7406;&#x914D;&#x7F6E;&#x3002;</p>
-<p>&#x5982;&#x6B64;&#x53EF;&#x4EE5;&#x52A0;&#x901F;<code>git clone</code>&#x548C;<code>hf download</code>&#x7B49;&#x4E0B;&#x8F7D;&#x8DEF;&#x5F84;&#x3002;</p>
-<h2 id="&#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x9879;"><a href="#&#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x9879;" class="headerlink" title="&#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x9879;"></a>&#x5B89;&#x88C5;&#x4F9D;&#x8D56;&#x9879;</h2><p><code>pip</code>&#x548C;<code>conda</code>&#x4F7F;&#x7528;&#x955C;&#x50CF;&#x6E90;&#x80FD;&#x52A0;&#x901F;&#x4E0B;&#x8F7D;&#x4F9D;&#x8D56;&#x5305;&#xFF0C;&#x5207;&#x6362;&#x6E90;&#x65B9;&#x6CD5;&#x53C2;&#x8003;<a target="_blank" rel="noopener" href="https://www.autodl.com/docs/">AutoDL&#x5E2E;&#x52A9;&#x6587;&#x6863;</a>&#xFF0C;&#x53E6;&#x5916;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;(<code>.condarc</code>)&#x3002;&#x4F46;&#x5BF9;&#x4E8E;<code>pytorch</code>&#x6211;&#x5EFA;&#x8BAE;&#x5728;&#x914D;&#x7F6E;&#x5B8C;&#x672C;&#x5730;<code>VPN</code>&#x540E;&#x5355;&#x72EC;&#x5B89;&#x88C5;&#xFF0C;&#x8D70;&#x5B98;&#x65B9;&#x7684;<code>cuxxx</code>&#x8DEF;&#x5F84;&#x9632;&#x6B62;<code>CUDA</code>&#x7F16;&#x8BD1;&#x9519;&#x8BEF;&#x3002;&#x6A21;&#x578B;&#x6743;&#x91CD;&#x548C;&#x6570;&#x636E;&#x96C6;&#x7B49;&#x5927;&#x6587;&#x4EF6;&#x4E2A;&#x4EBA;&#x4E0D;&#x5EFA;&#x8BAE;&#x5728;&#x670D;&#x52A1;&#x5668;&#x4E0B;&#x8F7D;&#xFF0C;&#x56E0;&#x4E3A;&#x7F51;&#x7EDC;&#x6CE2;&#x52A8;&#x3002;&#x6700;&#x597D;&#x5728;&#x672C;&#x5730;&#x4E0B;&#x8F7D;&#x540E;&#x518D;&#x4E0A;&#x4F20;&#xFF08;&#x5F00;&#x65E0;&#x5361;&#x6A21;&#x5F0F;&#xFF09;&#x3002;&#x5982;&#x679C;&#x590D;&#x73B0;&#x4EE3;&#x7801;&#x4E2D;&#x4F1A;&#x81EA;&#x52A8;&#x89E6;&#x53D1;&#x4E0B;&#x8F7D;&#xFF0C;&#x9700;&#x8981;&#x628A;&#x4EE3;&#x7801;&#x6539;&#x4E3A;&#x5141;&#x8BB8;&#x8BFB;&#x53D6;&#x672C;&#x5730;&#x6A21;&#x578B;&#xFF08;&#x5982;&#x8BBE;&#x7F6E;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#xFF09;&#x3002;</p>
+<h2 id="本地VPN代理"><a href="#本地VPN代理" class="headerlink" title="本地VPN代理"></a>本地VPN代理</h2><p>请参考<a href="/2026/03/28/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E5%9C%B0%E5%9C%A8SSH%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E4%BD%BF%E7%94%A8Codex/">如何优雅地在SSH服务器上使用Codex</a>，如果需要配置<code>Codex</code>可顺便随本地代理配置。</p>
+<p>如此可以加速<code>git clone</code>和<code>hf download</code>等下载路径。</p>
+<h2 id="安装依赖项"><a href="#安装依赖项" class="headerlink" title="安装依赖项"></a>安装依赖项</h2><p><code>pip</code>和<code>conda</code>使用镜像源能加速下载依赖包，切换源方法参考<a target="_blank" rel="noopener" href='https://www.autodl.com/docs/'>AutoDL帮助文档</a>，另外也可以通过命令行修改配置文件(<code>.condarc</code>)。但对于<code>pytorch</code>我建议在配置完本地<code>VPN</code>后单独安装，走官方的<code>cuxxx</code>路径防止<code>CUDA</code>编译错误。模型权重和数据集等大文件个人不建议在服务器下载，因为网络波动。最好在本地下载后再上传（开无卡模式）。如果复现代码中会自动触发下载，需要把代码改为允许读取本地模型（如设置环境变量）。</p>
 
             </div>
 

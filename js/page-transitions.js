@@ -232,7 +232,11 @@
         if (saved) { scrollTo({ left: saved[0], top: saved[1], behavior: 'instant' }); return; }
         var anchor;
         try { anchor = url.hash && document.getElementById(decodeURIComponent(url.hash.slice(1))); } catch (error) {}
-        if (anchor) anchor.scrollIntoView({ behavior: 'instant' }); else scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        // Archive hashes select an in-page data set. Scrolling their hidden
+        // content sections into view shifts the entire fixed-height canvas.
+        var archiveFilter = anchor && anchor.closest('[data-inline-archive]');
+        if (anchor && !archiveFilter) anchor.scrollIntoView({ behavior: 'instant' });
+        else scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
     async function navigate(value, options) {
         options = options || {};

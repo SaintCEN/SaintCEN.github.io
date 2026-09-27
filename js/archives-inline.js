@@ -418,6 +418,7 @@
         var position = hash ? this.DOM.contents.findIndex(function (content) {
             return content.id === hash;
         }) : 0;
+        var filterHash = position >= 0 && !!hash;
         if (position < 0) position = 0;
         this.currentIndex = position;
         var target = this.DOM.contents[position].id;
@@ -436,6 +437,9 @@
         var self = this;
         requestAnimationFrame(function () {
             if (!scope.active) return;
+            // A tag/category hash is UI state rather than a document anchor.
+            // Cancel the browser's native fragment jump on direct visits.
+            if (filterHash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             self.contents[position].gallery.open();
         });
     };
