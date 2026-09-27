@@ -430,11 +430,11 @@ figure.highlight .section {
 }
 
 .archive-inline-section {
+  --archive-height: calc(100svh - 52px);
   box-sizing: border-box;
-  height: calc(100svh - 52px);
+  height: var(--archive-height);
   min-height: 0;
-  padding-top: clamp(0.5rem, 1.5svh, 1rem);
-  padding-bottom: clamp(0.75rem, 2svh, 1.25rem);
+  padding: clamp(0.5rem, 1.5svh, 1rem) clamp(1rem, 3vw, 2rem) clamp(0.75rem, 2svh, 1.25rem);
   overflow: hidden;
 }
 .archive-inline-section .home-layout,
@@ -444,6 +444,8 @@ figure.highlight .section {
 }
 .archive-inline-section .home-layout {
   position: relative;
+  width: min(92vw, 1500px);
+  max-width: none;
 }
 .archive-inline-section .home-main {
   position: relative;
@@ -453,6 +455,8 @@ figure.highlight .section {
 
 .inline-archive {
   --inline-accent: #3273dc;
+  --archive-menu-card-gap: clamp(1.5rem, 3.6svh, 2.75rem);
+  --archive-card-width: clamp(15rem, min(27vw, 42svh), 22rem);
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -460,7 +464,7 @@ figure.highlight .section {
   min-height: 0;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
-  row-gap: clamp(0.9rem, 2svh, 1.4rem);
+  row-gap: var(--archive-menu-card-gap);
   overflow: visible;
   color: #171717;
 }
@@ -488,7 +492,7 @@ figure.highlight .section {
   color: inherit;
   font: inherit;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(2.25rem, 4.6vw, 3.55rem);
+  font-size: clamp(1.9rem, min(4.2vw, 6.5svh), 3.45rem);
   text-transform: lowercase;
   line-height: 1;
   cursor: pointer;
@@ -609,7 +613,7 @@ figure.highlight .section {
 }
 
 .inline-archive__gallery-item {
-  flex: 0 0 clamp(15rem, 29vw, 22rem);
+  flex: 0 0 var(--archive-card-width);
   min-width: 0;
   margin: 0;
   will-change: transform, opacity;
@@ -627,7 +631,7 @@ figure.highlight .section {
   display: block;
   width: 100%;
   aspect-ratio: 16/10;
-  max-height: 30svh;
+  max-height: min(31svh, 20rem);
   position: relative;
   overflow: hidden;
   background: #efefec;
@@ -691,6 +695,9 @@ figure.highlight .section {
 }
 
 @media screen and (max-width: 1023px) {
+  .archive-inline-section .home-layout {
+    width: min(88vw, 64rem);
+  }
   .archive-inline-section .home-aside {
     display: none;
   }
@@ -699,8 +706,16 @@ figure.highlight .section {
   }
 }
 @media screen and (max-width: 52.99em) {
+  .archive-inline-section {
+    padding-right: clamp(0.75rem, 5vw, 1.25rem);
+    padding-left: clamp(0.75rem, 5vw, 1.25rem);
+  }
+  .archive-inline-section .home-layout {
+    width: 100%;
+  }
   .inline-archive {
-    row-gap: 0.75rem;
+    --archive-menu-card-gap: clamp(1.25rem, 3svh, 1.9rem);
+    --archive-card-width: clamp(13.5rem, 78vw, 20rem);
     overflow: hidden;
   }
   .inline-archive__menu {
@@ -709,14 +724,11 @@ figure.highlight .section {
     padding-top: clamp(0.35rem, 1.25svh, 0.75rem);
   }
   .inline-archive__menu-item {
-    font-size: clamp(1.55rem, 7vw, 2.4rem);
+    font-size: clamp(1.35rem, min(6.4vw, 4.4svh), 2.1rem);
   }
   .inline-archive__hover-reveal {
     width: 150px;
     height: 200px;
-  }
-  .inline-archive__gallery-item {
-    flex-basis: clamp(14rem, 74vw, 24rem);
   }
   .inline-archive__gallery {
     gap: 0.9rem;
@@ -726,6 +738,31 @@ figure.highlight .section {
   }
   .inline-archive__gallery-title {
     font-size: clamp(1.05rem, 5vw, 1.45rem);
+  }
+  .inline-archive__gallery-summary {
+    -webkit-line-clamp: 2;
+  }
+}
+@media screen and (max-height: 680px) {
+  .archive-inline-section {
+    padding-top: 0.35rem;
+    padding-bottom: 0.5rem;
+  }
+  .inline-archive {
+    --archive-menu-card-gap: clamp(1rem, 2.5svh, 1.35rem);
+  }
+  .inline-archive__menu {
+    row-gap: 0.3rem;
+    padding-top: 0.25rem;
+  }
+  .inline-archive__menu-item {
+    font-size: clamp(1.25rem, min(3.6vw, 5.3svh), 2.4rem);
+  }
+  .inline-archive__gallery-image-inner {
+    max-height: 24svh;
+  }
+  .inline-archive__gallery-caption {
+    padding-top: 0.45rem;
   }
   .inline-archive__gallery-summary {
     -webkit-line-clamp: 2;
