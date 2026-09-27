@@ -604,7 +604,7 @@ figure.highlight .section {
   height: 100%;
   min-height: 0;
   display: grid;
-  align-items: center;
+  align-items: start;
   overflow: visible;
   color: #171717;
 }
@@ -614,11 +614,13 @@ figure.highlight .section {
   flex-wrap: wrap;
   position: relative;
   z-index: 10;
-  justify-content: center;
-  align-content: center;
-  width: min(100%, 42rem);
-  margin-inline: auto;
-  padding: 2rem clamp(1rem, 3vw, 2rem);
+  justify-content: flex-start;
+  align-content: flex-start;
+  column-gap: clamp(1rem, 2.4vw, 1.75rem);
+  row-gap: clamp(0.7rem, 1.8svh, 1.1rem);
+  width: 100%;
+  margin: 0;
+  padding: clamp(1.25rem, 4svh, 2.5rem) 0 0;
   grid-area: 1/1;
 }
 
@@ -631,11 +633,11 @@ figure.highlight .section {
   color: inherit;
   font: inherit;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(2.6rem, 6.4vw, 4.7rem);
+  font-size: clamp(1.85rem, 3.4vw, 2.65rem);
   text-transform: lowercase;
   line-height: 1;
   cursor: pointer;
-  margin: 0 1.6rem 0 0;
+  margin: 0;
   display: flex;
   align-items: flex-start;
   flex: none;
@@ -656,7 +658,7 @@ figure.highlight .section {
 
 .inline-archive__menu-label {
   display: inline-block;
-  margin-bottom: 1.35rem;
+  margin-bottom: 0.2rem;
   will-change: transform, opacity;
 }
 
@@ -888,8 +890,7 @@ figure.highlight .section {
     overflow: hidden;
   }
   .inline-archive__menu-item {
-    font-size: clamp(2.25rem, 12vw, 4rem);
-    margin-right: 1rem;
+    font-size: clamp(1.6rem, 8vw, 2.6rem);
   }
   .inline-archive__hover-reveal {
     width: 150px;
