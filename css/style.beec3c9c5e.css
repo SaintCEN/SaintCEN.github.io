@@ -675,7 +675,7 @@ figure.highlight .section {
   min-width: 0;
   margin: 0 0 0.35rem;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(1.2rem, min(2vw, 3.4svh), 2.4rem);
+  font-size: clamp(1.35rem, min(2.2vw, 3.8svh), 2.7rem);
   font-weight: normal;
   line-height: 1.08;
   text-transform: none;
@@ -692,7 +692,7 @@ figure.highlight .section {
 .inline-archive__gallery-tags {
   margin: 0 0 0.4rem;
   color: var(--inline-accent);
-  font: clamp(0.65rem, min(0.85vw, 1.45svh), 0.95rem)/1.4 "Source Code Pro", monospace, "Microsoft YaHei";
+  font: clamp(0.75rem, min(0.95vw, 1.65svh), 1.05rem)/1.4 "Source Code Pro", monospace, "Microsoft YaHei";
   overflow-wrap: anywhere;
 }
 
@@ -702,7 +702,7 @@ figure.highlight .section {
   margin: 0;
   overflow: hidden;
   color: #555;
-  font-size: clamp(0.76rem, min(0.95vw, 1.6svh), 1.05rem);
+  font-size: clamp(0.86rem, min(1.08vw, 1.8svh), 1.15rem);
   line-height: 1.5;
   white-space: pre-line;
   -webkit-box-orient: vertical;
@@ -810,9 +810,6 @@ figure.highlight .section {
   .inline-archive__gallery {
     gap: 0.9rem;
   }
-  .inline-archive__gallery-title {
-    font-size: clamp(1.05rem, 5vw, 1.45rem);
-  }
   .inline-archive__gallery-summary {
     -webkit-line-clamp: 2;
   }
@@ -832,15 +829,10 @@ figure.highlight .section {
   .inline-archive__gallery-caption {
     padding-top: 0.45rem;
   }
-  .inline-archive__gallery-title {
-    font-size: clamp(1rem, min(1.8vw, 3.5svh), 1.45rem);
-  }
   .inline-archive__gallery-tags {
     margin-bottom: 0.28rem;
-    font-size: 0.6rem;
   }
   .inline-archive__gallery-summary {
-    font-size: 0.7rem;
     line-height: 1.4;
     -webkit-line-clamp: 2;
   }
