@@ -2386,7 +2386,7 @@ html.curve-home .navbar-main {
   grid-area: back;
   position: fixed;
   top: calc(3.25rem + clamp(1rem, 2svh, 2rem));
-  left: calc((100vw - min(50vw, 1000px)) / 2);
+  left: max(1rem, (100vw - min(50vw, 1000px)) / 2 - clamp(4.25rem, 5vw, 5.25rem));
   z-index: 20;
   width: 3rem;
   height: 3rem;
@@ -2614,7 +2614,7 @@ html.curve-home .navbar-main {
     height: 2.5rem;
   }
   .album-grid .content__back {
-    left: 6vw;
+    left: clamp(0.5rem, 2vw, 1rem);
     width: 2.5rem;
     height: 2.5rem;
   }
