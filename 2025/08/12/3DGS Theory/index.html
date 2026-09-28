@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>3DGS Theory - Sa1ntCHENのHome</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="A local site used to preview and style the Minos theme.">
+
+
+
+
+
+    <meta name="description" content="入坑方向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3DGS Theory">
+<meta property="og:url" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/index.html">
+<meta property="og:site_name" content="Sa1ntCHENのHome">
+<meta property="og:description" content="入坑方向">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Frame.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Gaussian.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Form.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Features.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;SH_math.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;SH.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Coordinate_Graph.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Coordinates.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Projection.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Transfer.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Tile.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Splatting.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Density.png">
+<meta property="article:published_time" content="2025-08-12T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-26T09:51:23.159Z">
+<meta property="article:author" content="Author">
+<meta property="article:tag" content="CG">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://saintcen.github.io/2025/08/12/3DGS%20Theory/&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Frame.png">
+
+
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="/css/style.1051befdf0.css">
+
+<meta name="page-transition-title" content="3DGS Theory">
+<meta name="page-kind" content="article">
+<meta name="site-bundle" content="/site-bundle.json">
+<script src="/js/page-lifecycle.js"></script>
+<script src="/js/page-transitions.js"></script>
+<script defer src="/js/gooey-nav.js"></script>
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+<body>
+    <div id="site-navigation-shell">
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                <img src="/images/logo.jpg" alt="" height="28">
+                
+            </a>
+            <button class="navbar-burger" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation site-tools">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="navbar-menu navbar-start" id="site-navigation">
+          <div class="gooey-nav-container">
+           <nav class="gooey-nav" aria-label="Pages">
+            <ul>
+            
+            
+            <li class="active">
+            <a class="gooey-link"
+               aria-current="location"
+               href="/archives">Archives</a>
+            </li>
+            
+            <li class="">
+            <a class="gooey-link"
+               
+               href="/album">Album</a>
+            </li>
+            
+            <li class="">
+            <a class="gooey-link"
+               
+               href="/about">About</a>
+            </li>
+            
+            
+            </ul>
+           </nav>
+           <span class="effect filter" aria-hidden="true"></span>
+           <span class="effect text" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="navbar-menu navbar-end" id="site-tools">
+            
+            <a class="navbar-item search" title="Search" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+        </div>
+    </div>
+</nav>
+<svg width="0" height="0" aria-hidden="true" focusable="false" class="nav-ink-defs">
+    <defs><filter id="nav-ink-alpha" x="-100%" y="-300%" width="300%" height="700%" color-interpolation-filters="sRGB">
+        <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1 0 0 0 1" result="ink" />
+        <feComposite in="ink" in2="SourceGraphic" operator="in" />
+    </filter></defs>
+</svg>
+<noscript><link rel="stylesheet" href="/css/no-script.css"></noscript>
+
+    </div>
+    <div id="site-page">
+    
+<section class="section post-section has-toc">
+    <div class="post-layout">
+        <aside class="post-aside">
+            
+
+<div class="profile">
+    <div class="profile-avatar">
+        
+        <img src="/images/avatar-profile.jpg" alt="Sa1ntCHEN">
+        
+    </div>
+    <div class="profile-identity">
+        <h2 class="profile-name">Sa1ntCHEN</h2>
+        
+        <p class="profile-status">
+            <i class="profile-status-icon fas fa-terminal" aria-hidden="true"></i>
+            <span>插秧中[GPT-6-Astra]</span>
+        </p>
+        
+    </div>
+    <p class="profile-bio">They deemed my downfall the final chapter, yet I shall return to rewrite the tale.</p>
+    
+    <p class="profile-meta"><i class="fas fa-map-marker-alt"></i><span>Xidian University,China</span></p>
+    
+    
+
+<div class="profile-social">
+    
+    <a class="profile-social-link" href="https://github.com/SaintCEN" title="github" aria-label="github"
+       target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+    </a>
+    
+    <a class="profile-social-link" href="https://x.com/" title="x" aria-label="x"
+       target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25h6.83l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    
+    <a class="profile-social-link" href="#" title="wechat" aria-label="wechat"
+       >
+        <i class="fab fa-weixin"></i>
+    </a>
+    
+    <a class="profile-social-link" href="#" title="qq" aria-label="qq"
+       >
+        <i class="fab fa-qq"></i>
+    </a>
+    
+</div>
+
+
+</div>
+
+
+        </aside>
+        <div class="post-main">
+            <article class="article content gallery" itemscope itemprop="blogPost">
+            <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+                3DGS Theory
+            </h1>
+            <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+                <span class="column is-narrow">
+                    
+                        <time datetime="2025-08-12T00:00:00.000Z" itemprop="datePublished">Aug 12 2025</time>
+                    
+                </span>
+                
+                <span class="column is-narrow article-category">
+                    <i class="far fa-folder"></i>
+                    
+                        
+                        <a class="article-category-link" href="/archives/#category-566973696f6e">Vision</a>
+                    
+                </span>
+                
+                
+                <span class="column is-narrow">
+                    
+                    
+                    13 minutes read (About 1974 words)
+                </span>
+                
+            </div>
+            <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+                <span id="more"></span>
+
+<h2 id="3DGS原理"><a href="#3DGS原理" class="headerlink" title="3DGS原理"></a>3DGS原理</h2><h3 id="框架图"><a href="#框架图" class="headerlink" title="框架图"></a>框架图</h3><p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Frame.png"></p>
+<ul>
+<li><strong>SfM Points</strong>：基于<code>RGB</code>图像，用<code>SfM(Structure from Motion)</code>算法生成初始化点云（实际应用中使用<code>colmap</code>）。</li>
+<li><strong>Initialization</strong>：基于初始化点云进行<code>3D Gaussian</code>椭球集的创建。</li>
+<li><strong>Projection</strong>：基于相机位姿，将椭球投影到<code>2D</code>图像空间中。</li>
+<li><strong>Differentiable Tile Rasterizer</strong>：基于图形块<code>Tile</code>进行光栅化图像渲染。</li>
+<li><strong>Gradient Flow</strong>：生成的图像和真实图像比较计算<code>loss</code>，反向传播更新参数。</li>
+<li><strong>Adaptive Density Control</strong>：自适应密度控制将<code>3D</code>高斯基元进行参数优化。</li>
+</ul>
+<h3 id="3DGS椭球集的创建"><a href="#3DGS椭球集的创建" class="headerlink" title="3DGS椭球集的创建"></a>3DGS椭球集的创建</h3><p>初始化点云即为<code>3DGS</code>的<code>Dataset</code>。</p>
+<blockquote>
+<p>如何利用<code>SfM</code>初始化点云? (<code>colmap</code>原理)</p>
+</blockquote>
+<p>从多个图像（视频截取多个帧）提取特征点；不同图像的特征点进行匹配；建立两两图像的对应关系；利用像素坐标、相机参数计算三维点坐标；推断相机位姿（移动轨迹）；恢复三维结构。</p>
+<p>接下来将点云扩展为<code>3D Gaussian</code>并设置参数。</p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Gaussian.png"></p>
+<p>$$<br>G(x)=\exp\left(-\frac{1}{2}(x-\sigma)^T\Sigma^{-1}(x-\sigma)\right)<br>$$</p>
+<p>其中，位置信息为$\sigma$（坐标），形状信息为$\Sigma$（协方差矩阵）。<code>3D Gaussian</code>具有良好的几何性质，中心点不透明度最大，边缘随着中心点偏离，不透明度降低，且线性变换后仍为高斯函数，方便几何变换建模。</p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Form.png"></p>
+<p>而协方差矩阵可拆解为：</p>
+<p>$$<br>\Sigma = R S S^T R^T<br>$$</p>
+<p>其中，$R$为旋转矩阵（正交矩阵），$S$为缩放矩阵（对角矩阵）。对角矩阵和对角矩阵的转置的乘积即为对角线元的平方和，控制大小缩放。旋转矩阵为正交矩阵，从$x，y，z$三个分量控制<code>3D</code>椭球的旋转。</p>
+<p>$$<br>\begin{aligned}<br>R_x(\theta)<br>&amp;=<br>\begin{bmatrix}<br>1 &amp; 0 &amp; 0 \\<br>0 &amp; \cos\theta &amp; -\sin\theta \\<br>0 &amp; \sin\theta &amp; \cos\theta<br>\end{bmatrix} \\<br>R R^T &amp;= E<br>\end{aligned}<br>$$</p>
+<p>其中，旋转矩阵只改变方向，不改变大小；$\theta$ 控制绕坐标轴旋转的角度。</p>
+<p>最终，<code>3D Gaussians</code>包含的参数有：</p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Features.png"></p>
+<blockquote>
+<p>如何通过球谐函数确认颜色信息？</p>
+</blockquote>
+<p><code>SH</code>的基函数可以表示为：</p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;SH_math.png"></p>
+<p><code>SH</code>基函数模拟光强分布，其具有正交性互不干扰，维数越高和原先的图形越接近，根据系数加权和得到最终结果，而方位角对应<code>RGB</code>像素值，由此来模拟光照和色彩。</p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;SH.png"></p>
+<blockquote>
+<p>缩放矩阵S如何确定缩放的程度？</p>
+</blockquote>
+<p>利用<code>simple-knn</code>算法，找到$k$个最近欧氏距离最近邻点。</p>
+<p>$$<br>\Sigma = \frac{1}{k-1}\sum_{j=1}^{k}(x_j-\sigma)(x_j-\sigma)^T,\quad \sigma\text{为坐标平均值}<br>$$</p>
+<p>我们通过奇异值分解<code>SVD</code>$\Sigma = U S U^T$，可得到缩放程度为$\sqrt{s}$，旋转矩阵为$U$，进而初始化为<code>3D</code>高斯椭球。</p>
+<h3 id="3DGS椭球投影"><a href="#3DGS椭球投影" class="headerlink" title="3DGS椭球投影"></a>3DGS椭球投影</h3><p>先学习坐标系变换。</p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Coordinate_Graph.png"></p>
+<ul>
+<li>世界坐标系[$(x_w,y_w,z_w)$]（真实世界中物体的坐标，原点的选取取决于具体情况）</li>
+<li>相机坐标系[$(x_c,y_c,z_c)$]（在相机上建立）</li>
+<li>图像坐标系[$(x,y)$]（描述相机到图像的投影投射）</li>
+<li>像素坐标系[$(u,v)$]（确定像点坐标）</li>
+</ul>
+<p><strong>世界 to 相机</strong></p>
+<p>$$<br>\begin{aligned}<br>\begin{bmatrix}<br>x_c \\<br>y_c \\<br>z_c<br>\end{bmatrix}<br>&amp;=<br>R<br>\begin{bmatrix}<br>x_w \\<br>y_w \\<br>z_w<br>\end{bmatrix} + t<br>\end{aligned}<br>$$</p>
+<p>其中，$R$为旋转矩阵，$t$为平移矩阵。</p>
+<p><strong>相机 to 图像</strong></p>
+<p>$$<br>\begin{aligned}<br>\begin{bmatrix}<br>x_c \\<br>y_c \\<br>z_c<br>\end{bmatrix}<br>&amp;=<br>z_c<br>\begin{bmatrix}<br>x \\<br>y \\<br>1<br>\end{bmatrix}<br>\end{aligned}<br>$$</p>
+<p>$z_c$为物体在相机坐标系中的深度，利用相似三角形的性质进行一次缩放变换。</p>
+<p><strong>图像 to 像素</strong></p>
+<p>$$<br>K =<br>\begin{bmatrix}<br>f_x &amp; 0 &amp; c_x \\<br>0 &amp; f_y &amp; c_y \\<br>0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>$$</p>
+<p>$$<br>\begin{bmatrix}<br>u \\<br>v \\<br>1<br>\end{bmatrix}<br>=<br>K<br>\begin{bmatrix}<br>x \\<br>y \\<br>1<br>\end{bmatrix}<br>$$</p>
+<p>$$<br>u = f_xx + c_x,\qquad v = f_yy + c_y<br>$$</p>
+<p>其中$f_x，f_y$为焦距，$c_x，c_y$为主点，即经历了一次缩放变换和一次平移变换。</p>
+<ul>
+<li>模型变换：将物体从局部坐标系内旋转、缩放、平移到我们定义的世界坐标系内</li>
+<li>视图变换：从世界坐标系转到相机坐标系</li>
+<li>投影变换：从相机坐标系变换到归一化坐标系（图像坐标系）</li>
+<li>视口变换：归一化坐标系计算像素坐标</li>
+</ul>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Coordinates.png"></p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Projection.png"></p>
+<p>拥有了这些前置知识，我们可以推导出<code>3DGS</code>的投影过程：</p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Transfer.png"></p>
+<p><code>3D Gaussian</code>椭圆中心点可通过上述计算得到<code>2D Gaussian</code>的椭圆中心点。</p>
+<p>其中，<code>2D Gaussian</code>的协方差矩阵可以这样计算：</p>
+<p>$$<br>\begin{aligned}<br>\Sigma^\prime &amp;= J W \Sigma W^T J^T \\<br>J &amp;= \frac{\partial(u,v)}{\partial(x,y,z)}<br>\end{aligned}<br>$$</p>
+<p>其中，$W$为视图变换矩阵（世界坐标系到相机坐标系，旋转），$J$为仿射近似的雅可比矩阵，$(u,v)$为投影坐标，$(x,y,z)$为<code>3D</code>位置$P$，隐含了仿射变换中的线性部分。</p>
+<h3 id="Tile-based光栅化图像渲染"><a href="#Tile-based光栅化图像渲染" class="headerlink" title="Tile_based光栅化图像渲染"></a>Tile_based光栅化图像渲染</h3><p>先将绘制图像离散化（一张图像分为多个<code>16*16</code>像素块<code>Tile</code>）。</p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Tile.png"></p>
+<ul>
+<li><p>并行遍历计算所有椭球，查看涉及哪些<code>Tile</code>，每个<code>Tile</code>分配<code>ID</code>，根据<code>TileID</code>和<code>depth</code>生成索引。</p>
+</li>
+<li><p>先按<code>Tile ID</code>，再按<code>depth</code>升序排序。后面涉及不透明度的计算，由先<code>splat</code>的椭球进行叠加，而且远端先<code>splat</code>特征容易丢失。</p>
+</li>
+<li><p>二维协方差矩阵<code>Conv2D</code>，<code>2D</code>椭圆中心像素坐标$X$计算<code>alpha</code>。</p>
+</li>
+</ul>
+<p>$$<br>\begin{aligned}<br>\alpha_i^\prime<br>&amp;=<br>\alpha\cdot<br>\exp\left(<br>-\frac{1}{2}<br>(x_i^\prime-\sigma_i^\prime)^T<br>(\Sigma_i^\prime)^{-1}<br>(x_i^\prime-\sigma_i^\prime)<br>\right)<br>\end{aligned}<br>$$</p>
+<ul>
+<li>指数部分是高斯函数的概率密度值，由此可推导公式，其中累乘部分为先前<code>splat</code>图层的连接，模拟不透明度。</li>
+</ul>
+<p>$$<br>c=\sum_{i\in N}c_i\alpha_i^\prime\prod_{j=1}^{i-1}(1-\alpha_j^\prime)<br>$$</p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Splatting.png"></p>
+<h3 id="损失计算"><a href="#损失计算" class="headerlink" title="损失计算"></a>损失计算</h3><p>$$<br>L = (1-t)L_1+tL_{SSIM}<br>$$</p>
+<p>$L_1$代表$M$个像素的绝对灰度值误差。</p>
+<p>$$<br>\frac{1}{M}\sum_{i=1}^{M}|I(i)-I^\prime(i)|<br>$$</p>
+<p><code>SSIM</code>代表图像之间的相似度。</p>
+<p>$$<br>\begin{aligned}<br>\text{SSIM}(x, y)<br>&amp;=<br>\underset{\text{亮度}}{[l(x, y)]^\alpha}<br>\cdot<br>\underset{\text{对比度}}{[c(x, y)]^\beta}<br>\cdot<br>\underset{\text{结构}}{[s(x, y)]^\gamma}<br>\end{aligned}<br>$$</p>
+<p>其中 $(x, y)$ 为待比较的图像块（通常为局部窗口），$(\alpha, \beta, \gamma)$ 为权重参数（默认均为<code>1</code>）。</p>
+<p>先将图像划分为$N$的局部窗口（通常$N$=<code>8</code>或<code>11</code>），接着对每个窗口计算以下值。</p>
+<ol>
+<li><strong>均值（亮度）</strong>：<br>$$<br>\mu_x = \frac{1}{N^2} \sum_{i=1}^N \sum_{j=1}^N x(i,j)<br>$$</li>
+<li><strong>方差（对比度）</strong>：<br>$$<br>\sigma_x^2 = \frac{1}{N^2 - 1} \sum_{i=1}^N \sum_{j=1}^N (x(i,j) - \mu_x)^2<br>$$</li>
+<li><strong>协方差（结构）</strong>：<br>$$<br>\sigma_{xy} = \frac{1}{N^2 - 1} \sum_{i=1}^N \sum_{j=1}^N (x(i,j) - \mu_x)(y(i,j) - \mu_y)<br>$$</li>
+</ol>
+<p>计算所有窗口的SSIM，并对所有窗口的<code>SSIM</code>取均值，得到全局<code>SSIM</code>：</p>
+<p>$$<br>\begin{aligned}<br>\text{SSIM}(x, y)<br>&amp;=<br>\frac{(2\mu_x\mu_y + C_1)(2\sigma_{xy} + C_2)}<br>{(\mu_x^2 + \mu_y^2 + C_1)(\sigma_x^2 + \sigma_y^2 + C_2)} \\<br>\text{MSSIM}<br>&amp;=<br>\frac{1}{M} \sum_{k=1}^M \text{SSIM}(x_k, y_k)<br>\end{aligned}<br>$$</p>
+<h3 id="自适应密度控制"><a href="#自适应密度控制" class="headerlink" title="自适应密度控制"></a>自适应密度控制</h3><p><img src="&#x2F;media&#x2F;posts&#x2F;3DGS%20Theory&#x2F;Density.png"></p>
+<p>重建不充分的区域在反向传播中梯度更大，一般分为欠重建和过重建。</p>
+<ul>
+<li>欠重建：<code>3D</code>高斯基元覆盖不足</li>
+<li>过重建：不够细化，需要分割</li>
+</ul>
+<p>这两种情况需要对3D高斯基元进行参数优化（删除不透明度低于阈值或体积过大的基元）</p>
+
+            </div>
+
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/archives/#tag-4347">#CG</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2025/10/12/MoeCTF2025%20Writeup/">MoeCTF2025-Writeup</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-next">
+            
+        </span>
+    </div>
+    
+</article>
+
+        </div>
+        
+        <aside class="post-toc" aria-label="Table of Contents">
+            <div class="post-toc-title">
+                <span>Contents</span>
+            </div>
+            <nav class="post-toc-scroll" aria-label="Table of Contents">
+                <ol class="post-toc-list">
+    
+    <li class="post-toc-item" style="--toc-depth: 0">
+        <a href="#3DGS%E5%8E%9F%E7%90%86">
+            <span class="post-toc-marker" aria-hidden="true"></span>
+            <span class="post-toc-number" aria-hidden="true">1</span>
+            <span class="post-toc-text">3DGS原理</span>
+        </a>
+        
+            <ol class="post-toc-list">
+    
+    <li class="post-toc-item" style="--toc-depth: 1">
+        <a href="#%E6%A1%86%E6%9E%B6%E5%9B%BE">
+            <span class="post-toc-marker" aria-hidden="true"></span>
+            <span class="post-toc-number" aria-hidden="true">1.1</span>
+            <span class="post-toc-text">框架图</span>
+        </a>
+        
+    </li>
+    
+    <li class="post-toc-item" style="--toc-depth: 1">
+        <a href="#3DGS%E6%A4%AD%E7%90%83%E9%9B%86%E7%9A%84%E5%88%9B%E5%BB%BA">
+            <span class="post-toc-marker" aria-hidden="true"></span>
+            <span class="post-toc-number" aria-hidden="true">1.2</span>
+            <span class="post-toc-text">3DGS椭球集的创建</span>
+        </a>
+        
+    </li>
+    
+    <li class="post-toc-item" style="--toc-depth: 1">
+        <a href="#3DGS%E6%A4%AD%E7%90%83%E6%8A%95%E5%BD%B1">
+            <span class="post-toc-marker" aria-hidden="true"></span>
+            <span class="post-toc-number" aria-hidden="true">1.3</span>
+            <span class="post-toc-text">3DGS椭球投影</span>
+        </a>
+        
+    </li>
+    
+    <li class="post-toc-item" style="--toc-depth: 1">
+        <a href="#Tile-based%E5%85%89%E6%A0%85%E5%8C%96%E5%9B%BE%E5%83%8F%E6%B8%B2%E6%9F%93">
+            <span class="post-toc-marker" aria-hidden="true"></span>
+            <span class="post-toc-number" aria-hidden="true">1.4</span>
+            <span class="post-toc-text">Tile_based光栅化图像渲染</span>
+        </a>
+        
+    </li>
+    
+    <li class="post-toc-item" style="--toc-depth: 1">
+        <a href="#%E6%8D%9F%E5%A4%B1%E8%AE%A1%E7%AE%97">
+            <span class="post-toc-marker" aria-hidden="true"></span>
+            <span class="post-toc-number" aria-hidden="true">1.5</span>
+            <span class="post-toc-text">损失计算</span>
+        </a>
+        
+    </li>
+    
+    <li class="post-toc-item" style="--toc-depth: 1">
+        <a href="#%E8%87%AA%E9%80%82%E5%BA%94%E5%AF%86%E5%BA%A6%E6%8E%A7%E5%88%B6">
+            <span class="post-toc-marker" aria-hidden="true"></span>
+            <span class="post-toc-number" aria-hidden="true">1.6</span>
+            <span class="post-toc-text">自适应密度控制</span>
+        </a>
+        
+    </li>
+    
+</ol>
+
+        
+    </li>
+    
+</ol>
+
+            </nav>
+        </aside>
+        
+    </div>
+</section>
+
+<script defer src="/js/post-toc.js"></script>
+
+
+    
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-hidden-mobile"></div>
+            <div class="column is-narrow has-text-centered footer-copyright">
+                &copy; 2026 Author&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+
+            
+            
+        </div>
+    </div>
+</footer>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script data-minos-once="outdated-browser">
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("en-AU");
+</script>
+
+
+    
+    
+<script>
+    window.MathJax = window.MathJax || { skipStartupTypeset: true };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+    (function () {
+        var scope = window.MinosPage.scope;
+        var article = document.querySelector('.article-entry');
+        window.MinosRouter.whenRevealed().then(function () {
+            if (scope.active && article) MathJax.Hub.Queue(['Typeset', MathJax.Hub, article]);
+        });
+    })();
+</script>
+
+
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/js/lightgallery-all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/js/jquery.justifiedGallery.min.js"></script>
+<script>
+    (function ($) {
+        var scope = window.MinosPage.scope;
+        scope.listen(document, 'minos:article-ready', function () {
+            if (!scope.active) return;
+            if (typeof($.fn.lightGallery) === 'function') {
+                $('.article.gallery').lightGallery({ selector: '.gallery-item' });
+                var galleries = $('.article.gallery');
+                scope.cleanup(function () {
+                    galleries.each(function () { var gallery = $(this).data('lightGallery'); if (gallery) gallery.destroy(true); });
+                });
+            }
+            if (typeof($.fn.justifiedGallery) === 'function') {
+                $('.justified-gallery > p > .gallery-item').unwrap();
+                $('.justified-gallery').justifiedGallery();
+            }
+        }, { once: true });
+    })(jQuery);
+</script>
+
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <script>
+      (function () {
+      var scope = window.MinosPage.scope;
+      $(document).ready(function () {
+        if (!scope.active) return;
+        $('figure.hljs, .article-entry pre').filter(function () {
+          return this.matches('figure.hljs') || !$(this).closest('figure.hljs').length;
+        }).each(function(i, figure) {
+          var codeId = 'code-' + i;
+          var code = figure.querySelector('.code, code');
+          if (!code) return;
+          var copyButton = $('<button>Copy <i class="far fa-clipboard"></i></button>');
+          code.id = codeId;
+          copyButton.addClass('clipboard-btn');
+          copyButton.attr('data-clipboard-target-id', codeId);
+
+          var figcaption = figure.querySelector('figcaption');
+
+          if (figcaption) {
+            figcaption.append(copyButton[0]);
+          } else {
+            figure.prepend(copyButton[0]);
+          }
+        })
+
+        var clipboard = new ClipboardJS('.clipboard-btn', {
+          target: function(trigger) {
+            return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+          }
+        });
+        scope.cleanup(function () { clipboard.destroy(); });
+        clipboard.on('success', function(e) {
+          e.clearSelection();
+        })
+      })
+      })();
+    </script>
+
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+    
+    
+    </div>
+</body>
+</html>
