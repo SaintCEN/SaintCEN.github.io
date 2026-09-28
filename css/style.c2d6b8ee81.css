@@ -709,6 +709,13 @@ figure.highlight .section {
   -webkit-line-clamp: 3;
 }
 
+.inline-archive__gallery-date {
+  display: block;
+  margin-top: clamp(0.35rem, 0.8svh, 0.55rem);
+  color: #999;
+  font: clamp(0.7rem, min(0.82vw, 1.35svh), 0.9rem)/1.35 "Source Code Pro", monospace, "Microsoft YaHei";
+}
+
 @media screen and (max-width: 1023px) {
   .archive-inline-section .home-layout {
     display: grid;
