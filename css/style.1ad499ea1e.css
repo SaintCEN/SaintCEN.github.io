@@ -2498,7 +2498,7 @@ html.curve-home .navbar-main {
 }
 .album-grid .content {
   grid-template-areas: "back back" "title title" "intro date" "gallery gallery";
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 2fr) minmax(10rem, 1fr);
   padding-top: 2rem;
   min-width: 0;
 }
@@ -2602,6 +2602,8 @@ html.curve-home .navbar-main {
     max-width: 16vw;
   }
   .album-grid .content {
+    grid-template-areas: "back" "title" "intro" "date" "gallery";
+    grid-template-columns: minmax(0, 1fr);
     padding-top: 2rem;
     gap: 1.5rem;
   }
@@ -2609,6 +2611,8 @@ html.curve-home .navbar-main {
     font-size: 1rem;
   }
   .album-grid .content__date {
+    justify-self: start;
+    text-align: left;
     font-size: 0.8rem;
   }
   .album-grid .content::before {
