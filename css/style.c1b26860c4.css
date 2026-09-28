@@ -2359,6 +2359,12 @@ html.curve-home .navbar-main {
   grid-template-areas: "back" "title" "intro" "date" "gallery";
   grid-gap: 2rem;
 }
+.album-grid .content::before {
+  content: "";
+  grid-area: back;
+  width: 3rem;
+  height: 3rem;
+}
 .album-grid.is-enhanced .content {
   position: absolute;
   top: 0;
@@ -2378,6 +2384,10 @@ html.curve-home .navbar-main {
 }
 .album-grid .content__back {
   grid-area: back;
+  position: fixed;
+  top: calc(3.25rem + clamp(1rem, 2svh, 2rem));
+  left: calc((100vw - min(50vw, 1000px)) / 2);
+  z-index: 20;
   width: 3rem;
   height: 3rem;
   cursor: pointer;
@@ -2393,12 +2403,13 @@ html.curve-home .navbar-main {
   width: 100%;
   height: 100%;
   pointer-events: none;
+  fill: #171717;
   stroke: #000;
   stroke-width: 17px;
 }
 .album-grid .content__back:hover svg,
 .album-grid .content__back:focus svg {
-  fill: transparent;
+  fill: #171717;
 }
 .album-grid .content__title {
   grid-area: title;
@@ -2598,7 +2609,12 @@ html.curve-home .navbar-main {
   .album-grid .content__date {
     font-size: 0.8rem;
   }
+  .album-grid .content::before {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
   .album-grid .content__back {
+    left: 6vw;
     width: 2.5rem;
     height: 2.5rem;
   }
