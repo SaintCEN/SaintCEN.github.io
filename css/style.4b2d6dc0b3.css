@@ -2390,10 +2390,11 @@ html.curve-home .navbar-main {
   z-index: 20;
   width: 3rem;
   height: 3rem;
+  visibility: hidden;
   cursor: pointer;
 }
-.album-grid:not(.is-enhanced) .content__back svg {
-  transform: rotate(90deg);
+.album-grid.is-enhanced .content--current .content__back {
+  visibility: visible;
 }
 .album-grid .content__back:focus {
   outline: none;
@@ -2425,7 +2426,8 @@ html.curve-home .navbar-main {
   grid-area: intro;
   margin: 0;
   font-size: 1.65rem;
-  max-width: 300px;
+  width: 100%;
+  max-width: none;
   position: relative;
   overflow: hidden;
 }
