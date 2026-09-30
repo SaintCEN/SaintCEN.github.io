@@ -28,12 +28,12 @@
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;1.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;2.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;3.png">
-<meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;9.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;4.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;5.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;6.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;7.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;8.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;9.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;10.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;11.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;12.png">
@@ -92,13 +92,13 @@
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;65.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;66.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;67.png">
-<meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;70.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;68.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;69.png">
+<meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;70.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;71.png">
 <meta property="og:image" content="https://saintcen.github.io/2025/11/07/CS231/&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;72.png">
 <meta property="article:published_time" content="2025-11-07T00:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-28T06:48:59.451Z">
+<meta property="article:modified_time" content="2026-09-30T10:10:55.583Z">
 <meta property="article:author" content="Author">
 <meta property="article:tag" content="CV">
 <meta property="article:tag" content="Course">
@@ -356,7 +356,7 @@ $$
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;2.png"></p>
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;3.png"></p>
 <h3 id="NiN"><a href="#NiN" class="headerlink" title="NiN"></a>NiN</h3><p><code>Network in NetWork</code>，最早提出了<code>bottleneck layers</code>的概念，启发了后续网络的局部拓扑结构。简单讲，它在空间卷积后用<code>1*1</code>卷积压缩通道、再用<code>1*1</code>扩展映射回去，用来在保持特征信息的同时减少参数量和计算量，还增加了非线性。</p>
-<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;9.png"></p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;4.png"></p>
 <h3 id="GoogLeNet"><a href="#GoogLeNet" class="headerlink" title="GoogLeNet"></a>GoogLeNet</h3><p>在增加深度的基础上加速了计算效率，提出了<code>Inception module</code>局部拓扑结构，用到了<code>bottleneck layers</code>的想法。</p>
 <table>
 <thead>
@@ -388,9 +388,9 @@ $$
 </tr>
 </tbody></table>
 <p>最后这<code>4</code>条分支输出在 通道维度上拼接成整体输出。</p>
-<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;4.png"></p>
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;5.png"></p>
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;6.png"></p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;7.png"></p>
 <p>1.进行<code>multiple convolution</code>时，若尺寸不匹配会进行<code>padding</code>，方便最后对输出进行拼接。</p>
 <p>2.网络太深了会出现梯度消失问题。为此在中间层插入了两个辅助分类头，帮助梯度反传。</p>
 <h3 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h3><p>当网络更深，损失函数下降趋于平缓时更难优化，因此<code>ResNet</code>提出了残差的概念。假设我们想让若干层网络拟合目标函数$H(x)$，传统做法是让堆叠的卷积层直接学$H(x)$，而<code>ResNet</code>提出：不直接学$H(x)$，而是学「残差函数」$F(x)=H(x)-x$，于是输出为$H(x)=F(x)+x$。也就是说，这些卷积层不需要从零学到整个映射，只需学出相对于输入的微调。反向传播时，梯度可以直接沿着旁路流回前层，从而缓解梯度消失问题。</p>
@@ -400,8 +400,8 @@ $$
 $$
 
 <p>因为恒等项<code>1</code>存在，即使 $\frac{\partial F}{\partial x}$ 很小，梯度也不会完全消失。</p>
-<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;7.png"></p>
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;8.png"></p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;9.png"></p>
 <p>至于改进，我们会采用更宽的残差块，也就是增加卷积核的数量，或者像<code>ResNeXt</code>将残差块设置为多分支，原理是一样的。也可以用正则化的思路，引入随机深度，跳过一些残差块。</p>
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;10.png"></p>
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;11.png"></p>
@@ -595,15 +595,15 @@ $$
 <p>其中，$D_{\theta_d}(x)$为判别器对真实样本 $x$ 输出为真的概率（<code>0–1</code>），$D_{\theta_d}(G_{\theta_g}(z))$为判别器对生成样本 $G(z)$输出为真的概率 。判别器希望最大化该目标函数，使真伪样本区分得更好（对真实图像 $x$：输出 $D(x) \approx 1$；对生成图像 $G(z)$：输出 $D(G(z)) \approx 0$）。判别器的训练相当于一个二分类问题，真实样本标记为<code>1</code>，生成样本标记为<code>0</code>。生成器希望最小化该目标函数，使得生成样本尽可能逼真。目标是让判别器认为生成图像也是真实的，即$D(G(z)) \approx 1$，生成器不断优化，使 $G(z)$ 更接近真实数据分布 $p_\text{data}(x)$。</p>
 <p>训练过程构成一个零和博弈：判别器最大化损失 $\Rightarrow$ 学会区分真假，生成器最小化损失 $\Rightarrow$ 欺骗判别器，当二者达到平衡时$p_G(x) = p_\text{data}(x), \quad D(x) = 0.5$，判别器无法再区分真假样本。</p>
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;67.png"></p>
-<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;70.png"></p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;68.png"></p>
 <p>当判别器训练得很强时，$D(G(z)) \approx 0$，此时生成器的梯度 $\nabla_{\theta_g}\log(1 - D(G(z)))$ 极小，导致生成器几乎无法更新，训练停滞。为增强梯度信号，提出改用以下目标，即不再最小化 $\log(1 - D(G(z)))$，而是最大化$\log D(G(z))$，这样即使生成样本较差，梯度仍保持较大，生成器能持续学习。</p>
 
 $$
 \max_{\theta_g} \mathbb{E}_{z \sim p(z)}[\log D_{\theta_d}(G_{\theta_g}(z))]
 $$
 
-<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;68.png"></p>
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;69.png"></p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;70.png"></p>
 <p><code>CNN</code>能更好地建模局部相关性与空间层次信息，相比全连接层，通过<code>Convolutional Architectures</code>能够帮助<code>Generator</code>生成更好的样本。</p>
 <p><img src="&#x2F;media&#x2F;posts&#x2F;CS231&#x2F;71.png"></p>
 <p><code>GAN</code>有很多有意思的应用，比如<code>interpretable vector math</code>，通过向量的加减叠加实现视觉效果的合成。除此之外，<code>GAN</code>还被广泛用于风格转换等任务，从而衍生出了<code>GAN</code>家族。</p>
