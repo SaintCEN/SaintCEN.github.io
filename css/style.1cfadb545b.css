@@ -1518,12 +1518,10 @@ body:has(.post-toc) {
 }
 .post-toc-item a {
   position: relative;
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
+  display: block;
   align-items: start;
-  gap: 0.35rem;
   min-height: 36px;
-  padding: 0.5rem 0.2rem 0.5rem calc(1.4rem + var(--toc-depth) * 0.65rem);
+  padding: 0.5rem 0.2rem 0.5rem calc(1.4rem + var(--toc-depth) * 1rem);
   font-size: 0.8rem;
   color: #6a6a66;
   transition: color 160ms ease;
@@ -1563,19 +1561,10 @@ body:has(.post-toc) {
   background: #3273dc;
 }
 
-.post-toc-number {
-  font-family: "Source Code Pro", monospace, "Microsoft YaHei";
-  font-size: 0.62rem;
-  line-height: 1.9;
-  opacity: 0.75;
-}
-
-.post-toc-number, .post-toc-text {
+.post-toc-text {
+  display: block;
   transform: translateX(calc(var(--emphasis) * 4px));
   transition: transform 160ms ease;
-}
-
-.post-toc-text {
   min-width: 0;
   overflow-wrap: anywhere;
 }
@@ -1596,18 +1585,13 @@ body:has(.post-toc) {
     font-size: 0.6rem;
     letter-spacing: 0.06em;
   }
-  .post-toc-number {
-    font-size: 0.55rem;
-    overflow-wrap: anywhere;
-  }
   .post-toc-scroll {
     padding-right: 0.25rem;
   }
   .post-toc-item a {
     box-sizing: border-box;
-    grid-template-columns: fit-content(35%) minmax(0, 1fr);
     min-height: 44px;
-    padding-left: calc(0.65rem + var(--toc-depth) * 0.25rem);
+    padding-left: calc(0.65rem + var(--toc-depth) * 0.6rem);
     font-size: 0.7rem;
   }
   .post-toc-marker {
@@ -1618,7 +1602,7 @@ body:has(.post-toc) {
   html:has(.post-toc) {
     scroll-behavior: auto;
   }
-  .post-toc-item a, .post-toc-marker, .post-toc-number, .post-toc-text {
+  .post-toc-item a, .post-toc-marker, .post-toc-text {
     transition: none;
     transform: none;
   }
