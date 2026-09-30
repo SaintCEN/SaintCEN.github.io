@@ -10,7 +10,7 @@
     const gsap = window.gsap;
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const animations = new Set();
-    let activeTimeline, scrollFrame;
+    let activeTimeline;
     function timeline(options) {
         const complete = options.onComplete;
         const animation = gsap.timeline(Object.assign({}, options, {
@@ -22,21 +22,12 @@
         return animation;
     }
     function calcWinsize() { return {width: innerWidth, height: innerHeight}; }
-    function scrollIt(destination, duration, complete) {
-        cancelAnimationFrame(scrollFrame);
-        const start = scrollY;
+    function resetScroll(destination, complete) {
         const target = root.getBoundingClientRect().top + scrollY - 52 + destination;
-        const started = performance.now();
-        function step(now) {
-            if (!scope.active) return;
-            const t = reduced.matches ? 1 : Math.min(1, (now - started) / duration);
-            scrollTo({top: start + (target - start) * t * (2 - t), behavior: 'instant'});
-            if (t < 1) scrollFrame = requestAnimationFrame(step); else complete();
-        }
-        scrollFrame = requestAnimationFrame(step);
+        scrollTo({top: target, behavior: 'instant'});
+        complete();
     }
     scope.cleanup(() => {
-        cancelAnimationFrame(scrollFrame);
         animations.forEach(animation => animation.kill());
         gsap.killTweensOf([root, ...root.querySelectorAll('*')]);
     });
@@ -513,8 +504,9 @@ class MenuController {
             ease: 'expo.inOut'
         };
 
-        // Scroll up first
-        scrollIt(0, 300, () => {
+        // Reset the document and menu geometry in the same frame so returning
+        // from a long gallery never exposes a separate scroll-to-top motion.
+        resetScroll(0, () => {
             // Restore the one-screen menu geometry before revealing it. Keeping
             // the detail-page height until the end places the menu far below the
             // viewport and makes its title jump upward on the final frame.
