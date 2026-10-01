@@ -2712,6 +2712,7 @@ body:has(.about-portfolio) {
   --about-system: #477d82;
   --about-user: #d97836;
   --about-terminal-width: clamp(24rem, 35vw, 36rem);
+  --about-terminal-half-width: clamp(12rem, 17.5vw, 18rem);
   position: relative;
   width: 100%;
   height: calc(100svh - 3.25rem);
@@ -2777,7 +2778,7 @@ body:has(.about-portfolio) {
 .about-avatar-loader {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: calc(50% - var(--about-terminal-half-width) - 1rem);
   display: grid;
   place-items: center;
   color: var(--about-muted);
@@ -3298,6 +3299,9 @@ body:has(.about-portfolio) {
   }
 }
 @media screen and (max-width: 700px) {
+  .about-avatar-loader {
+    left: 50%;
+  }
   .about-icon-button {
     width: 1.7rem;
   }
