@@ -3054,8 +3054,9 @@ body:has(.about-portfolio) {
 }
 
 .about-info-bio {
-  width: max-content;
-  max-width: 100%;
+  width: 100%;
+  min-width: max-content;
+  max-width: none;
 }
 
 .about-pixel-name {
@@ -3120,7 +3121,6 @@ body:has(.about-portfolio) {
   flex: 1;
   overflow-x: hidden;
   overflow-y: auto;
-  border-top: 1px solid var(--about-border);
 }
 
 .about-tree-section ul {
