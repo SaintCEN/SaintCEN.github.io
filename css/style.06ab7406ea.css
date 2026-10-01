@@ -2723,7 +2723,7 @@ body:has(.about-portfolio) {
 .about-avatar {
   position: absolute;
   z-index: 1;
-  inset: 0;
+  inset: 0 var(--about-panel-width) 0 0;
 }
 
 .about-avatar-canvas {
@@ -2742,7 +2742,7 @@ body:has(.about-portfolio) {
 .about-avatar-loader {
   position: absolute;
   top: 50%;
-  left: calc(50% - var(--about-panel-half-width));
+  left: 50%;
   display: grid;
   place-items: center;
   color: var(--about-muted);
@@ -3906,6 +3906,7 @@ body:has(.about-portfolio) {
     min-height: 32rem;
   }
   .about-avatar {
+    right: 0;
     bottom: 54%;
   }
   .about-avatar-loader {
