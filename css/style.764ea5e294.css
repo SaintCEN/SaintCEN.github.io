@@ -3031,126 +3031,44 @@ body:has(.about-portfolio) {
   height: var(--arc-diameter);
   border: 1px solid rgba(17, 17, 17, 0.2);
   border-radius: 50%;
-  opacity: 0;
-  clip-path: inset(0 0 0 50%);
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.35);
-  transition: opacity 0.3s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.about-arc-menu.is-open .about-arc-menu__orbit {
   opacity: 1;
+  clip-path: inset(0 50% 0 0);
+  pointer-events: none;
   transform: translate(-50%, -50%) scale(1);
 }
 
 .about-arc-menu__items,
-.about-arc-menu__items > button {
+.about-arc-menu__items > a {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-.about-arc-menu__items > button {
+.about-arc-menu__items > a {
   display: inline-flex;
   width: max-content;
-  min-width: 5.8rem;
   align-items: center;
-  gap: 0.55rem;
   justify-content: center;
-  padding: 0.54rem 0.68rem;
-  border: 1px solid rgba(17, 17, 17, 0.2);
-  border-radius: 999px;
+  padding: 0.35rem 0.5rem;
   color: var(--about-ink);
-  opacity: 0;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 0.35rem 1.2rem rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  pointer-events: none;
-  white-space: nowrap;
-  transform: translate(-50%, -50%) scale(0.2);
-  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease, opacity 0.32s calc(var(--arc-index) * 0.045s) ease, transform 0.7s calc(var(--arc-index) * 0.045s) cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.about-arc-menu.is-open .about-arc-menu__items > button {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%, -50%) rotate(var(--arc-angle)) translateX(var(--arc-radius)) rotate(var(--arc-angle-inverse));
-}
-
-.about-arc-menu__items > button > span {
-  color: var(--about-muted);
-  font: 500 0.55rem "Source Code Pro", monospace;
-}
-
-.about-arc-menu__items > button > strong {
-  font: 600 0.7rem "Space Grotesk", sans-serif;
+  background: var(--about-bg);
+  font: 600 0.72rem "Space Grotesk", sans-serif;
   letter-spacing: 0.04em;
+  text-decoration: none;
   text-transform: uppercase;
+  white-space: nowrap;
+  transform: translate(-50%, -50%) rotate(var(--arc-angle)) translateX(var(--arc-radius)) rotate(var(--arc-angle-inverse));
+  transition: color 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.about-arc-menu__items > button:hover,
-.about-arc-menu__items > button.is-active {
-  border-color: var(--about-ink);
-  color: #fff;
-  background: var(--about-ink);
+.about-arc-menu__items > a:hover,
+.about-arc-menu__items > a.is-active {
+  color: var(--about-accent);
 }
 
-.about-arc-menu__items > button:hover > span,
-.about-arc-menu__items > button.is-active > span {
-  color: rgba(255, 255, 255, 0.58);
-}
-
-.about-arc-menu__hub {
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  display: grid;
-  width: 3.4rem;
-  height: 3.4rem;
-  place-items: center;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  color: #fff;
-  background: var(--about-ink);
-  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.14);
-  cursor: pointer;
-  transform: translate(-50%, -50%);
-}
-
-.about-arc-menu__hub:focus-visible,
-.about-arc-menu__items > button:focus-visible {
+.about-arc-menu__items > a:focus-visible {
   outline: 2px solid var(--about-accent);
   outline-offset: 3px;
-}
-
-.about-arc-menu__hub > span {
-  position: relative;
-  display: block;
-  width: 1rem;
-  height: 1rem;
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.about-arc-menu__hub > span::before,
-.about-arc-menu__hub > span::after {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 1px;
-  background: currentColor;
-  content: "";
-}
-
-.about-arc-menu__hub > span::after {
-  transform: rotate(90deg);
-}
-
-.about-arc-menu.is-open .about-arc-menu__hub > span {
-  transform: rotate(45deg);
 }
 
 .about-dialog {
@@ -4091,7 +4009,7 @@ body:has(.about-portfolio) {
   .about-arc-menu {
     --arc-diameter: clamp(11rem, 50vw, 15rem);
     top: 68%;
-    left: 1.7rem;
+    left: calc(100% - 0.75rem);
   }
   .about-profile-hero {
     min-height: 100%;
