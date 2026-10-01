@@ -2694,6 +2694,12 @@ html.curve-home .navbar-main {
   display: none;
 }
 
+@font-face {
+  font-family: "About CJK";
+  src: local("STZhongsong"), local("Songti SC"), local("Noto Serif CJK SC"), local("Microsoft YaHei");
+  font-display: swap;
+  unicode-range: U+2E80-2FFF, U+3000-303F, U+31C0-31EF, U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FE30-FE4F, U+FF00-FFEF, U+20000-323AF;
+}
 html:has(.about-portfolio),
 body:has(.about-portfolio) {
   overflow: hidden;
@@ -2711,6 +2717,7 @@ body:has(.about-portfolio) {
   --about-accent: #3273dc;
   --about-panel-width: 50vw;
   --about-panel-half-width: 25vw;
+  --about-cjk-family: "About CJK";
   position: relative;
   width: 100%;
   height: calc(100svh - 3.25rem);
@@ -2718,7 +2725,7 @@ body:has(.about-portfolio) {
   overflow: hidden;
   color: var(--about-ink);
   background: var(--about-bg);
-  font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
+  font-family: "Ovo", "Georgia", var(--about-cjk-family), serif;
 }
 
 .about-avatar {
@@ -2811,7 +2818,7 @@ body:has(.about-portfolio) {
   color: var(--about-ink);
   background: #fff;
   box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.08);
-  font-family: "Ovo", "Georgia", serif;
+  font-family: "Ovo", "Georgia", var(--about-cjk-family), serif;
 }
 
 .about-terminal.is-collapsed {
@@ -2964,7 +2971,7 @@ body:has(.about-portfolio) {
   box-shadow: none;
   color: var(--about-ink);
   background: transparent;
-  font: 0.8rem/1.4 "Source Code Pro", monospace;
+  font: 0.8rem/1.4 "Source Code Pro", var(--about-cjk-family), monospace;
 }
 
 .about-terminal__form textarea::placeholder {
@@ -3071,7 +3078,7 @@ body:has(.about-portfolio) {
   padding: 0.35rem 0.5rem;
   color: var(--about-ink);
   background: transparent;
-  font: 600 0.72rem "Space Grotesk", sans-serif;
+  font: 600 0.72rem "Space Grotesk", var(--about-cjk-family), sans-serif;
   letter-spacing: 0.04em;
   text-decoration: none;
   text-transform: uppercase;
@@ -3127,7 +3134,7 @@ body:has(.about-portfolio) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.5rem, 3vw, 3rem);
   padding: clamp(1.5rem, 3vw, 3rem);
-  font: var(--about-pixel-size)/1.05 "Source Code Pro", monospace;
+  font: var(--about-pixel-size)/1.05 "Source Code Pro", var(--about-cjk-family), monospace;
 }
 
 .about-info-bio,
@@ -3187,7 +3194,7 @@ body:has(.about-portfolio) {
 
 .about-command-header h2 {
   margin: 0;
-  font: 500 1rem "Source Code Pro", monospace;
+  font: 500 1rem "Source Code Pro", var(--about-cjk-family), monospace;
 }
 
 .about-command-header > span {
@@ -3224,7 +3231,7 @@ body:has(.about-portfolio) {
 .about-tree-section li {
   position: relative;
   padding: 0.45rem 0.6rem;
-  font: 0.78rem "Source Code Pro", monospace;
+  font: 0.78rem "Source Code Pro", var(--about-cjk-family), monospace;
 }
 
 .about-tree-section li::before {
@@ -3302,14 +3309,14 @@ body:has(.about-portfolio) {
 }
 
 .about-profile-name > span {
-  font: 800 clamp(3.4rem, 5.65vw, 6.25rem)/0.86 "Space Grotesk", "Source Code Pro", sans-serif;
+  font: 800 clamp(3.4rem, 5.65vw, 6.25rem)/0.86 "Space Grotesk", "Source Code Pro", var(--about-cjk-family), sans-serif;
   letter-spacing: -0.025em;
 }
 
 .about-profile-name > em {
   margin-top: 0.18em;
   margin-left: clamp(3rem, 14vw, 13rem);
-  font: 400 italic clamp(3.2rem, 5.25vw, 5.8rem)/0.85 "Instrument Serif", "Ovo", Georgia, serif;
+  font: 400 italic clamp(3.2rem, 5.25vw, 5.8rem)/0.85 "Instrument Serif", "Ovo", Georgia, var(--about-cjk-family), serif;
   letter-spacing: 0;
 }
 
@@ -3332,7 +3339,7 @@ body:has(.about-portfolio) {
   width: min(35rem, 100%);
   margin: 0 auto 1.9rem;
   color: #555;
-  font: clamp(1rem, 1.35vw, 1.28rem)/1.65 "Ovo", Georgia, serif;
+  font: clamp(1rem, 1.35vw, 1.28rem)/1.65 "Ovo", Georgia, var(--about-cjk-family), serif;
 }
 
 .about-role-ticker {
@@ -3342,7 +3349,7 @@ body:has(.about-portfolio) {
   margin: 0 auto 2rem;
   overflow: hidden;
   color: var(--about-accent);
-  font: 500 0.75rem/1.5rem "Source Code Pro", monospace;
+  font: 500 0.75rem/1.5rem "Source Code Pro", var(--about-cjk-family), monospace;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -3412,7 +3419,7 @@ body:has(.about-portfolio) {
   border-radius: 999px;
   color: var(--about-ink);
   background: transparent;
-  font: 600 0.7rem "Source Code Pro", monospace;
+  font: 600 0.7rem "Source Code Pro", var(--about-cjk-family), monospace;
   letter-spacing: 0.06em;
   text-decoration: none;
   text-transform: uppercase;
@@ -3492,7 +3499,7 @@ body:has(.about-portfolio) {
   align-items: baseline;
   gap: 0.12em 0.28em;
   margin: 0;
-  font: 800 clamp(3rem, 5vw, 6.5rem)/0.9 "Space Grotesk", sans-serif;
+  font: 800 clamp(3rem, 5vw, 6.5rem)/0.9 "Space Grotesk", var(--about-cjk-family), sans-serif;
   letter-spacing: -0.025em;
   text-transform: uppercase;
 }
@@ -3500,7 +3507,7 @@ body:has(.about-portfolio) {
 .about-section-heading h2 em,
 .about-experience h3 em {
   color: var(--about-accent);
-  font: 400 italic 1.06em/1 "Instrument Serif", Georgia, serif;
+  font: 400 italic 1.06em/1 "Instrument Serif", Georgia, var(--about-cjk-family), serif;
   letter-spacing: 0;
   text-transform: none;
 }
@@ -3548,7 +3555,7 @@ body:has(.about-portfolio) {
   flex-wrap: wrap;
   margin: 0 0 clamp(3rem, 7vh, 6rem);
   color: #aaa;
-  font: clamp(1rem, 1.45vw, 1.3rem)/1.65 "Ovo", Georgia, serif;
+  font: clamp(1rem, 1.45vw, 1.3rem)/1.65 "Ovo", Georgia, var(--about-cjk-family), serif;
 }
 
 .about-word-reveal {
@@ -3573,11 +3580,11 @@ body:has(.about-portfolio) {
   padding-bottom: clamp(4rem, 9vh, 7rem);
 }
 
-.about-flow-field {
+.about-info-image {
   position: relative;
   grid-column: span 5;
   width: 100%;
-  height: clamp(22rem, 46vh, 30rem);
+  margin: 0;
   overflow: hidden;
   border: 1px solid #2f3431;
   border-radius: 1rem;
@@ -3585,18 +3592,10 @@ body:has(.about-portfolio) {
   box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.28);
 }
 
-.about-flow-field canvas {
+.about-info-image img {
   display: block;
   width: 100%;
-  height: 100%;
-}
-
-.about-flow-field::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(0deg, rgba(10, 15, 13, 0.6), transparent 50%);
-  content: "";
-  pointer-events: none;
+  height: auto;
 }
 
 .about-profile-copy {
@@ -3609,7 +3608,7 @@ body:has(.about-portfolio) {
 .about-profile-copy p {
   margin: 0;
   color: var(--about-light);
-  font: clamp(0.95rem, 1.2vw, 1.1rem)/1.72 "Ovo", Georgia, serif;
+  font: clamp(0.95rem, 1.2vw, 1.1rem)/1.72 "Ovo", Georgia, var(--about-cjk-family), serif;
 }
 
 .about-experience {
@@ -3723,7 +3722,7 @@ body:has(.about-portfolio) {
   position: absolute;
   top: 1.7rem;
   color: #b5aaa4;
-  font: 0.6rem "Source Code Pro", monospace;
+  font: 0.6rem "Source Code Pro", var(--about-cjk-family), monospace;
   letter-spacing: 0.16em;
   white-space: nowrap;
 }
@@ -3762,14 +3761,14 @@ body:has(.about-portfolio) {
 
 .about-timeline-content small {
   color: var(--about-accent);
-  font: 0.6rem "Source Code Pro", monospace;
+  font: 0.6rem "Source Code Pro", var(--about-cjk-family), monospace;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
 .about-timeline-content h4 {
   margin: 1rem 0 1.5rem;
-  font: 700 clamp(1.7rem, 3vw, 3.6rem)/0.9 "Space Grotesk", sans-serif;
+  font: 700 clamp(1.7rem, 3vw, 3.6rem)/0.9 "Space Grotesk", var(--about-cjk-family), sans-serif;
   letter-spacing: -0.06em;
   text-transform: uppercase;
 }
@@ -3826,7 +3825,7 @@ body:has(.about-portfolio) {
 .about-service-card h3 {
   grid-column: 2/span 10;
   margin: 0;
-  font: 700 clamp(1.7rem, 3.4vw, 3.5rem)/1 "Space Grotesk", sans-serif;
+  font: 700 clamp(1.7rem, 3.4vw, 3.5rem)/1 "Space Grotesk", var(--about-cjk-family), sans-serif;
 }
 
 .about-service-detail {
@@ -3862,7 +3861,7 @@ body:has(.about-portfolio) {
 
 .about-service-detail li b {
   color: var(--about-accent);
-  font: 0.65rem "Source Code Pro", monospace;
+  font: 0.65rem "Source Code Pro", var(--about-cjk-family), monospace;
 }
 
 .about-service-detail li span {
@@ -3891,7 +3890,7 @@ body:has(.about-portfolio) {
 .about-stack-groups header h3 {
   margin: 0;
   color: var(--about-accent);
-  font: 700 clamp(1.5rem, 5cqw, 3rem)/1 "Space Grotesk", sans-serif;
+  font: 700 clamp(1.5rem, 5cqw, 3rem)/1 "Space Grotesk", var(--about-cjk-family), sans-serif;
   letter-spacing: -0.04em;
   text-transform: uppercase;
 }
@@ -3900,7 +3899,7 @@ body:has(.about-portfolio) {
   display: block;
   margin-top: 0.5rem;
   color: #777;
-  font: 0.75rem "Source Code Pro", monospace;
+  font: 0.75rem "Source Code Pro", var(--about-cjk-family), monospace;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -3942,7 +3941,7 @@ body:has(.about-portfolio) {
 .about-tech-item span {
   min-width: 0;
   overflow-wrap: anywhere;
-  font: 700 0.75rem/1.5 "Source Code Pro", monospace;
+  font: 700 0.75rem/1.5 "Source Code Pro", var(--about-cjk-family), monospace;
 }
 
 @container about-stack (min-width:32rem) {
@@ -4008,7 +4007,7 @@ body:has(.about-portfolio) {
   height: 1.4rem;
   overflow: hidden;
   color: #888;
-  font: 0.7rem "Source Code Pro", monospace;
+  font: 0.7rem "Source Code Pro", var(--about-cjk-family), monospace;
 }
 
 .about-project-number i, .about-project-number b {
@@ -4043,7 +4042,7 @@ body:has(.about-portfolio) {
   position: relative;
   margin: 0;
   overflow: hidden;
-  font: 800 clamp(1.7rem, 3vw, 3.4rem)/1 "Space Grotesk", sans-serif;
+  font: 800 clamp(1.7rem, 3vw, 3.4rem)/1 "Space Grotesk", var(--about-cjk-family), sans-serif;
   letter-spacing: -0.025em;
   text-transform: uppercase;
 }
@@ -4082,12 +4081,12 @@ body:has(.about-portfolio) {
   border: 1px solid #484d49;
   border-radius: 999px;
   color: #aaa;
-  font: 0.56rem "Source Code Pro", monospace;
+  font: 0.56rem "Source Code Pro", var(--about-cjk-family), monospace;
 }
 
 .about-project-link {
   justify-self: end;
-  font: 0.62rem "Source Code Pro", monospace;
+  font: 0.62rem "Source Code Pro", var(--about-cjk-family), monospace;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -4182,7 +4181,7 @@ body:has(.about-portfolio) {
 
 .about-marquee span {
   color: #756b65;
-  font: 500 0.7rem "Source Code Pro", monospace;
+  font: 500 0.7rem "Source Code Pro", var(--about-cjk-family), monospace;
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -4225,7 +4224,7 @@ body:has(.about-portfolio) {
 
 .about-contact-direct > span, .about-contact-direct small {
   color: #b5aaa4;
-  font: 0.6rem "Source Code Pro", monospace;
+  font: 0.6rem "Source Code Pro", var(--about-cjk-family), monospace;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -4247,7 +4246,7 @@ body:has(.about-portfolio) {
   border: 0;
   color: var(--about-ink);
   background: transparent;
-  font: 800 clamp(1.25rem, 2.5vw, 3rem) "Space Grotesk", sans-serif;
+  font: 800 clamp(1.25rem, 2.5vw, 3rem) "Space Grotesk", var(--about-cjk-family), sans-serif;
   overflow-wrap: anywhere;
   text-decoration: none;
   cursor: pointer;
@@ -4289,7 +4288,7 @@ body:has(.about-portfolio) {
   color: #aaa;
   background: transparent;
   cursor: pointer;
-  font: 0.62rem "Source Code Pro", monospace;
+  font: 0.62rem "Source Code Pro", var(--about-cjk-family), monospace;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -4327,7 +4326,7 @@ body:has(.about-portfolio) {
   .about-service-detail {
     grid-template-columns: 1fr;
   }
-  .about-flow-field,
+  .about-info-image,
   .about-profile-copy,
   .about-services-intro .about-section-lead,
   .about-service-card h3,
@@ -4420,9 +4419,6 @@ body:has(.about-portfolio) {
   }
   .about-intro-grid {
     gap: 2.5rem;
-  }
-  .about-flow-field {
-    height: 18rem;
   }
   .about-profile-copy {
     gap: 1.25rem;
