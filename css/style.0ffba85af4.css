@@ -3043,12 +3043,18 @@ body:has(.about-portfolio) {
 }
 
 .about-info-modal {
+  --about-pixel-size: clamp(.5rem,.85vw,.95rem);
   width: fit-content;
   display: grid;
-  grid-template-columns: max-content clamp(16rem, 24vw, 21rem);
+  grid-template-columns: repeat(2, 40ch);
   align-items: start;
   gap: clamp(1.5rem, 3vw, 2.5rem);
   padding: clamp(1.5rem, 2.5vw, 2.5rem);
+  font: var(--about-pixel-size)/1.05 "Source Code Pro", monospace;
+}
+
+.about-info-bio {
+  width: 100%;
 }
 
 .about-pixel-name {
@@ -3058,7 +3064,7 @@ body:has(.about-portfolio) {
   margin: 0;
   overflow: hidden;
   color: var(--about-muted);
-  font: clamp(0.5rem, 0.85vw, 0.95rem)/1.05 "Source Code Pro", monospace;
+  font: inherit;
 }
 
 .about-pixel-name span {
@@ -3066,26 +3072,29 @@ body:has(.about-portfolio) {
 }
 
 .about-system-info {
-  max-height: min(32rem, 90vh - 6rem);
-  overflow-x: hidden;
-  overflow-y: auto;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
   border: 1px solid var(--about-border);
   background: var(--about-bg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.about-tree-section {
-  padding: 1.25rem;
-}
-
-.about-tree-section header {
+.about-command-dropdown summary {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  margin-bottom: 1rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  list-style: none;
+  font: 500 1rem "Source Code Pro", monospace;
 }
 
-.about-tree-section header i {
+.about-command-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.about-command-dropdown summary i {
   width: 0.5rem;
   height: 0.5rem;
   flex: none;
@@ -3093,15 +3102,26 @@ body:has(.about-portfolio) {
   background: var(--about-fg);
 }
 
-.about-tree-section header h2 {
-  margin: 0;
-  font: 500 1rem "Source Code Pro", monospace;
+.about-command-dropdown summary::after {
+  content: "⌄";
+  margin-left: auto;
+  color: var(--about-muted);
+  transition: transform 0.2s ease;
 }
 
-.about-tree-section header span {
-  height: 1px;
-  flex: 1;
-  background: var(--about-border);
+.about-command-dropdown[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.about-tree-section {
+  padding: 0.5rem 1.25rem 1.25rem;
+}
+
+.about-command-list {
+  max-height: clamp(8rem, 90vh - 20rem, 15rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-top: 1px solid var(--about-border);
 }
 
 .about-tree-section ul {
@@ -3193,14 +3213,14 @@ body:has(.about-portfolio) {
     width: 95vw;
   }
   .about-info-modal {
+    --about-pixel-size: clamp(.38rem,1.65vw,.58rem);
     width: 95vw;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
     padding: 1rem;
   }
   .about-pixel-name {
     gap: 0.55rem;
-    font-size: clamp(0.38rem, 1.65vw, 0.58rem);
   }
 }
 @media (prefers-reduced-motion: reduce) {
