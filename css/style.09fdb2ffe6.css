@@ -3858,109 +3858,31 @@ body:has(.about-portfolio) {
 
 .about-stack {
   overflow: hidden;
-}
-
-.about-stack-filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.55rem;
-  margin-bottom: 4rem;
-}
-
-.about-stack-filters button {
-  padding: 0.5rem 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  color: #aaa;
-  background: #171b19;
-  cursor: pointer;
-  font: 0.62rem "Source Code Pro", monospace;
-  letter-spacing: 0.05em;
-  transition: 0.25s ease;
-}
-
-.about-stack-filters button:hover, .about-stack-filters button.is-active {
-  border-color: var(--about-light);
-  color: var(--about-dark);
-  background: var(--about-light);
-}
-
-.about-stack-groups {
-  display: grid;
-  gap: clamp(4rem, 9vh, 7rem);
-}
-
-.about-stack-groups article[hidden] {
-  display: none;
-}
-
-.about-stack-groups article {
-  display: grid;
-  grid-template-columns: minmax(10rem, 1fr) minmax(0, 2fr);
-  gap: 2rem;
-}
-
-.about-stack-groups header h3 {
-  margin: 0;
-  color: #8fb5f2;
-  font: 700 clamp(1.5rem, 2.7vw, 3rem)/1 "Space Grotesk", sans-serif;
-  letter-spacing: -0.04em;
-  text-transform: uppercase;
-}
-
-.about-stack-groups header span {
-  display: block;
-  margin-top: 0.7rem;
-  color: #b5aaa4;
-  font: 0.58rem "Source Code Pro", monospace;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.about-stack-groups ul {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.55rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.about-stack-groups li {
-  display: flex;
-  min-height: 3.5rem;
-  box-sizing: border-box;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 0.55rem;
-  background: #171b19;
-  font: 0.7rem "Source Code Pro", monospace;
-  transition: border-color 0.25s, background 0.25s;
-}
-
-.about-stack-groups li:hover {
-  border-color: rgba(50, 115, 220, 0.45);
-  background: #1d221f;
-}
-
-.about-stack-groups li i {
-  width: 0.65rem;
-  height: 0.65rem;
-  border: 1px solid var(--about-accent);
-  border-radius: 50%;
+  container: about-stack/inline-size;
 }
 
 .about-stack .about-section-lead {
   color: #666;
 }
 
+.about-stack-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+}
+
 .about-stack-filters button {
-  border-color: var(--about-line);
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--about-line);
+  border-radius: 999px;
   color: #666;
   background: #fff;
+  cursor: pointer;
+  font: 0.75rem "Source Code Pro", monospace;
+  letter-spacing: 0.05em;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
 }
 
 .about-stack-filters button:hover, .about-stack-filters button.is-active {
@@ -3969,21 +3891,99 @@ body:has(.about-portfolio) {
   background: var(--about-ink);
 }
 
-.about-stack-groups header span {
-  color: #777;
+.about-stack-filters button.is-active {
+  font-weight: 600;
 }
 
-.about-stack-groups li {
-  border-color: #e4e4e0;
+.about-stack-groups {
+  display: grid;
+  gap: clamp(4rem, 9cqw, 6rem);
+}
+
+.about-stack-groups article[hidden] {
+  display: none;
+}
+
+.about-stack-groups article {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.about-stack-groups header h3 {
+  margin: 0;
+  color: var(--about-accent);
+  font: 700 clamp(1.5rem, 5cqw, 3rem)/1 "Space Grotesk", sans-serif;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.about-stack-groups header span {
+  display: block;
+  margin-top: 0.5rem;
+  color: #777;
+  font: 0.75rem "Source Code Pro", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.about-stack-groups ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-tech-item {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid #e4e4e0;
+  border-radius: 0.5rem;
   color: var(--about-ink);
   background: #fff;
+  transition: border-color 0.3s, background 0.3s;
 }
 
-.about-stack-groups li:hover {
+.about-tech-item:hover {
   border-color: rgba(50, 115, 220, 0.45);
   background: #f7f7f4;
 }
 
+.about-tech-item img {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+}
+
+.about-tech-item span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font: 700 0.75rem/1.5 "Source Code Pro", monospace;
+}
+
+@container about-stack (min-width:32rem) {
+  .about-stack-groups ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .about-tech-item span, .about-stack-filters button {
+    font-size: 0.875rem;
+  }
+}
+@container about-stack (min-width:48rem) {
+  .about-stack-groups article {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  }
+}
+@container about-stack (min-width:58rem) {
+  .about-stack-groups ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
 .about-projects {
   position: relative;
   overflow: hidden;
@@ -4345,8 +4345,7 @@ body:has(.about-portfolio) {
   .about-intro-grid,
   .about-services-intro,
   .about-service-card > header,
-  .about-service-detail,
-  .about-stack-groups article {
+  .about-service-detail {
     grid-template-columns: 1fr;
   }
   .about-flow-field,
@@ -4362,9 +4361,6 @@ body:has(.about-portfolio) {
   }
   .about-service-card h3 {
     padding-left: clamp(1rem, 4vw, 3rem);
-  }
-  .about-stack-groups ul {
-    grid-template-columns: 1fr;
   }
   .about-project-row {
     grid-template-columns: 3rem minmax(0, 1fr) 7rem;
@@ -4507,15 +4503,6 @@ body:has(.about-portfolio) {
   }
   .about-service-card h3 {
     padding-left: 0;
-  }
-  .about-stack-groups {
-    gap: 3.5rem;
-  }
-  .about-stack-groups article {
-    gap: 1.5rem;
-  }
-  .about-stack-filters {
-    margin-bottom: 3rem;
   }
   .about-project-list {
     display: grid;
