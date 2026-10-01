@@ -3458,6 +3458,19 @@ body:has(.about-portfolio) {
   background: var(--about-light);
 }
 
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .about-arc-menu__items > a:hover {
+    animation: about-arc-float 1.8s ease-in-out infinite;
+  }
+}
+@keyframes about-arc-float {
+  0%, 100% {
+    transform: rotate(var(--arc-angle)) translateX(calc(var(--arc-radius) + 1rem)) rotate(180deg) translate(-100%, -50%);
+  }
+  50% {
+    transform: rotate(var(--arc-angle)) translateX(calc(var(--arc-radius) + 1.35rem)) rotate(180deg) translate(-100%, -50%);
+  }
+}
 .about-profile-section.is-dark {
   color: var(--about-light);
   background: var(--about-dark);
