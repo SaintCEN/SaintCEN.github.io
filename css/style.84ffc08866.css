@@ -2708,8 +2708,8 @@ body:has(.about-portfolio) {
   --about-dark-soft: #1b1e1c;
   --about-light: #f4f2ed;
   --about-accent: #3273dc;
-  --about-panel-width: clamp(31rem, 52vw, 58rem);
-  --about-panel-half-width: clamp(15.5rem, 26vw, 29rem);
+  --about-panel-width: 50vw;
+  --about-panel-half-width: 25vw;
   position: relative;
   width: 100%;
   height: calc(100svh - 3.25rem);
@@ -3886,10 +3886,6 @@ body:has(.about-portfolio) {
   }
 }
 @media screen and (max-width: 960px) {
-  .about-portfolio {
-    --about-panel-width: 56vw;
-    --about-panel-half-width: 28vw;
-  }
   .about-profile-name {
     font-size: clamp(4rem, 10vw, 7rem);
   }
