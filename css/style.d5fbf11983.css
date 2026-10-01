@@ -3012,7 +3012,7 @@ body:has(.about-portfolio) {
 }
 
 .about-arc-menu {
-  --arc-diameter: clamp(13.5rem, 21vw, 19rem);
+  --arc-diameter: clamp(12.5rem, 18vw, 17rem);
   --arc-radius: calc(var(--arc-diameter) / 2);
   position: absolute;
   z-index: 25;
@@ -3051,12 +3051,13 @@ body:has(.about-portfolio) {
   justify-content: center;
   padding: 0.35rem 0.5rem;
   color: var(--about-ink);
-  background: var(--about-bg);
+  background: transparent;
   font: 600 0.72rem "Space Grotesk", sans-serif;
   letter-spacing: 0.04em;
   text-decoration: none;
   text-transform: uppercase;
   white-space: nowrap;
+  translate: -3rem 0;
   transform: translate(-50%, -50%) rotate(var(--arc-angle)) translateX(var(--arc-radius)) rotate(var(--arc-angle-inverse));
   transition: color 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -3446,8 +3447,11 @@ body:has(.about-portfolio) {
 
 .about-profile-section {
   box-sizing: border-box;
+  min-height: 100%;
   padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 4vw, 4rem);
   padding-inline: max(clamp(2rem, 4vw, 4rem), (100% - 80rem) / 2);
+  color: var(--about-ink);
+  background: var(--about-light);
 }
 
 .about-profile-section.is-dark {
@@ -3601,7 +3605,12 @@ body:has(.about-portfolio) {
 
 .about-experience {
   padding-top: clamp(4rem, 8vh, 7rem);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+.about-experience-section .about-experience {
+  padding-top: 0;
+  border-top: 0;
 }
 
 .about-experience > header {
@@ -3634,14 +3643,14 @@ body:has(.about-portfolio) {
 
 .about-timeline > svg path {
   fill: none;
-  stroke: rgba(232, 228, 222, 0.28);
+  stroke: rgba(17, 17, 17, 0.25);
   stroke-width: 1.5;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   transition: stroke-dashoffset 2.2s cubic-bezier(0.45, 0, 0.55, 1);
 }
 
-.about-experience.is-visible .about-timeline > svg path {
+.about-experience-section.is-visible .about-timeline > svg path {
   stroke-dashoffset: 0;
 }
 
@@ -3670,9 +3679,9 @@ body:has(.about-portfolio) {
   width: 0.9rem;
   height: 0.9rem;
   box-sizing: border-box;
-  border: 3px solid var(--about-dark);
+  border: 3px solid var(--about-light);
   border-radius: 50%;
-  background: var(--about-light);
+  background: var(--about-ink);
   transform: scale(0);
   transition: transform 0.45s 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -3686,7 +3695,7 @@ body:has(.about-portfolio) {
   top: 0.45rem;
   width: 3.5rem;
   height: 1px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(17, 17, 17, 0.25);
   transform: scaleX(0);
   transition: transform 0.55s 0.1s ease;
 }
@@ -3762,12 +3771,12 @@ body:has(.about-portfolio) {
 
 .about-timeline-content > div {
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
 }
 
 .about-timeline-content p {
   margin: 0.35rem 0 0;
-  color: #aaa;
+  color: #666;
   font-size: 0.8rem;
   line-height: 1.55;
 }
@@ -3860,7 +3869,6 @@ body:has(.about-portfolio) {
 }
 
 .about-stack {
-  border-radius: 0 0 2rem 2rem;
   overflow: hidden;
 }
 
@@ -3957,50 +3965,46 @@ body:has(.about-portfolio) {
   border-radius: 50%;
 }
 
-.about-curve-divider {
-  position: relative;
-  z-index: 2;
-  height: clamp(4rem, 8vh, 7rem);
-  overflow: hidden;
+.about-stack .about-section-lead {
+  color: #666;
 }
 
-.about-curve-divider::before {
-  position: absolute;
-  left: -10%;
-  width: 120%;
-  height: 180%;
-  border-radius: 0 0 50% 50%;
-  content: "";
+.about-stack-filters button {
+  border-color: var(--about-line);
+  color: #666;
+  background: #fff;
 }
 
-.about-curve-divider.is-dark-to-light {
-  background: var(--about-light);
+.about-stack-filters button:hover, .about-stack-filters button.is-active {
+  border-color: var(--about-ink);
+  color: var(--about-light);
+  background: var(--about-ink);
 }
 
-.about-curve-divider.is-dark-to-light::before {
-  top: -100%;
-  background: var(--about-dark);
+.about-stack-groups header span {
+  color: #777;
 }
 
-.about-curve-divider.is-light-to-dark {
-  background: var(--about-dark);
+.about-stack-groups li {
+  border-color: #e4e4e0;
+  color: var(--about-ink);
+  background: #fff;
 }
 
-.about-curve-divider.is-light-to-dark::before {
-  bottom: -100%;
-  border-radius: 50% 50% 0 0;
-  background: var(--about-light);
+.about-stack-groups li:hover {
+  border-color: rgba(50, 115, 220, 0.45);
+  background: #f7f7f4;
 }
 
 .about-projects {
   position: relative;
   overflow: hidden;
-  color: var(--about-ink);
-  background: var(--about-light);
+  color: var(--about-light);
+  background: var(--about-dark);
 }
 
 .about-project-list {
-  border-top: 1px solid var(--about-line);
+  border-top: 1px solid #343835;
 }
 
 .about-project-row {
@@ -4010,8 +4014,8 @@ body:has(.about-portfolio) {
   min-height: 7.5rem;
   align-items: center;
   padding: 1.2rem 0;
-  border-bottom: 1px solid var(--about-line);
-  color: var(--about-ink);
+  border-bottom: 1px solid #343835;
+  color: var(--about-light);
   text-decoration: none;
 }
 
@@ -4108,9 +4112,9 @@ body:has(.about-portfolio) {
 
 .about-project-title > div span {
   padding: 0.25rem 0.55rem;
-  border: 1px solid #ccc;
+  border: 1px solid #484d49;
   border-radius: 999px;
-  color: #777;
+  color: #aaa;
   font: 0.56rem "Source Code Pro", monospace;
 }
 
@@ -4223,20 +4227,33 @@ body:has(.about-portfolio) {
   font-style: normal;
 }
 
-.about-contact {
-  min-height: 90%;
+.about-projects + .about-marquee {
+  border-color: #343835;
   background: var(--about-dark);
+}
+
+.about-projects + .about-marquee > div {
+  background: var(--about-dark);
+}
+
+.about-projects + .about-marquee span {
+  color: #aaa;
+}
+
+.about-contact {
+  background: var(--about-light);
 }
 
 .about-contact-card {
   padding: clamp(2rem, 4vw, 4rem);
-  border: 1px solid #2f3431;
+  border: 1px solid var(--about-line);
   border-radius: 1.5rem;
-  background: #171b19;
+  background: #fff;
 }
 
 .about-contact-card .about-section-lead {
   margin-bottom: 3rem;
+  color: #666;
 }
 
 .about-contact-form {
@@ -4247,9 +4264,9 @@ body:has(.about-portfolio) {
   gap: 1.35rem;
   margin: 0 auto;
   padding: clamp(1.5rem, 3vw, 2rem);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--about-line);
   border-radius: 1rem;
-  background: #1d221f;
+  background: var(--about-soft);
 }
 
 .about-contact-form label {
@@ -4269,11 +4286,11 @@ body:has(.about-portfolio) {
   width: 100%;
   box-sizing: border-box;
   padding: 0.85rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid var(--about-line);
   border-radius: 0.75rem;
   outline: 0;
-  color: var(--about-light);
-  background: #171b19;
+  color: var(--about-ink);
+  background: #fff;
   font: 0.82rem/1.5 "Source Code Pro", monospace;
   transition: border-color 0.25s, box-shadow 0.25s;
 }
@@ -4298,14 +4315,14 @@ body:has(.about-portfolio) {
   align-items: center;
   margin-top: 4rem;
   padding-top: 3rem;
-  border-top: 1px solid #2f3431;
+  border-top: 1px solid var(--about-line);
   text-align: center;
 }
 
 .about-contact-direct a {
   position: relative;
   margin: 0.8rem 0 0.4rem;
-  color: var(--about-light);
+  color: var(--about-ink);
   font: 800 clamp(1.5rem, 3vw, 3rem) "Space Grotesk", sans-serif;
   text-decoration: none;
   text-transform: uppercase;
@@ -4489,7 +4506,7 @@ body:has(.about-portfolio) {
     top: 0;
     bottom: 0;
     left: 0.45rem;
-    border-left: 1px solid rgba(232, 228, 222, 0.28);
+    border-left: 1px solid rgba(17, 17, 17, 0.25);
     content: "";
   }
   .about-timeline article,
@@ -4555,9 +4572,9 @@ body:has(.about-portfolio) {
     display: block;
     min-height: 0;
     padding: 0.7rem;
-    border: 1px solid var(--about-line);
+    border: 1px solid #343835;
     border-radius: 1rem;
-    background: #fff;
+    background: #171b19;
   }
   .about-project-mobile-image {
     display: block;

@@ -25,7 +25,7 @@
 <meta property="og:site_name" content="Sa1ntCHENのHome">
 <meta property="og:description" content="A local site used to preview and style the Minos theme.">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-10-01T13:23:48.326Z">
+<meta property="article:published_time" content="2026-10-01T13:44:55.295Z">
 <meta property="article:modified_time" content="2026-09-27T07:31:47.806Z">
 <meta property="article:author" content="Author">
 <meta name="twitter:card" content="summary">
@@ -45,7 +45,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
 
 
-<link rel="stylesheet" href="/css/style.257c23dfb5.css">
+<link rel="stylesheet" href="/css/style.d5fbf11983.css">
 
 <meta name="page-transition-title" content="About">
 <meta name="page-kind" content="page">
@@ -148,21 +148,7 @@
 
     <nav class="about-arc-menu" data-about-arc-menu aria-label="About sections">
         <span class="about-arc-menu__orbit" aria-hidden="true"></span>
-        <div class="about-arc-menu__items">
-            
-            <a href="#about-profile-top" data-about-arc-link="#about-profile-top" style="--arc-index:0;--arc-angle:-90deg;--arc-angle-inverse:90deg">Intro</a>
-            
-            <a href="#about-profile-story" data-about-arc-link="#about-profile-story" style="--arc-index:1;--arc-angle:-126deg;--arc-angle-inverse:126deg">About</a>
-            
-            <a href="#about-profile-services" data-about-arc-link="#about-profile-services" style="--arc-index:2;--arc-angle:-162deg;--arc-angle-inverse:162deg">Services</a>
-            
-            <a href="#about-profile-stack" data-about-arc-link="#about-profile-stack" style="--arc-index:3;--arc-angle:-198deg;--arc-angle-inverse:198deg">Stack</a>
-            
-            <a href="#about-profile-projects" data-about-arc-link="#about-profile-projects" style="--arc-index:4;--arc-angle:-234deg;--arc-angle-inverse:234deg">Work</a>
-            
-            <a href="#about-profile-contact" data-about-arc-link="#about-profile-contact" style="--arc-index:5;--arc-angle:-270deg;--arc-angle-inverse:270deg">Contact</a>
-            
-        </div>
+        <div class="about-arc-menu__items"></div>
     </nav>
 
     <section class="about-terminal is-collapsed" data-about-terminal aria-label="Terminal Chat">
@@ -198,7 +184,7 @@
     <aside class="about-profile" data-about-profile aria-label="Sa1ntCHEN profile">
         <div class="about-profile__progress" data-about-progress></div>
 
-        <section class="about-profile-hero" id="about-profile-top">
+        <section class="about-profile-hero" id="about-profile-top" data-about-menu-label="Intro">
             <div class="about-profile-hero__inner" data-about-hero-inner>
                 <h1 class="about-profile-name" aria-label="Zichen Dai Sa1ntCHEN">
                     <span data-hero-line><i data-about-hero-char style="--hero-char-index:0">Z</i><i data-about-hero-char style="--hero-char-index:1">i</i><i data-about-hero-char style="--hero-char-index:2">c</i><i data-about-hero-char style="--hero-char-index:3">h</i><i data-about-hero-char style="--hero-char-index:4">e</i><i data-about-hero-char style="--hero-char-index:5">n</i><i data-about-hero-char style="--hero-char-index:6"> </i><i data-about-hero-char style="--hero-char-index:7">D</i><i data-about-hero-char style="--hero-char-index:8">a</i><i data-about-hero-char style="--hero-char-index:9">i</i></span>
@@ -224,7 +210,7 @@
             </div>
         </section>
 
-        <section class="about-profile-section is-dark about-story" id="about-profile-story">
+        <section class="about-profile-section is-dark about-story" id="about-profile-story" data-about-menu-label="About">
             <header class="about-section-heading" data-about-animated-heading data-about-reveal>
                 <h2 aria-label="Who am I?"><span class="about-heading-word">WHO</span><em class="about-heading-word">am</em><span class="about-heading-word">I?</span></h2>
                 <i class="about-heading-line" aria-hidden="true"></i>
@@ -245,7 +231,10 @@
                 </div>
             </div>
 
-            <div class="about-experience" data-about-experience>
+        </section>
+
+        <section class="about-profile-section about-experience-section" id="about-profile-experience" data-about-menu-label="Experience" data-about-experience>
+            <div class="about-experience">
                 <header data-about-reveal>
                     <p>(Experience)</p>
                     <h3 data-about-animated-heading aria-label="The path so far."><span class="about-heading-word">THE</span><em class="about-heading-word">path</em><span class="about-heading-word">SO FAR.</span></h3>
@@ -281,7 +270,7 @@
             </div>
         </section>
 
-        <section class="about-profile-section is-dark about-services" id="about-profile-services">
+        <section class="about-profile-section is-dark about-services" id="about-profile-services" data-about-menu-label="Services">
             <header class="about-section-heading" data-about-animated-heading data-about-reveal>
                 <h2 aria-label="What I do"><span class="about-heading-word">WHAT</span><em class="about-heading-word">I</em><span class="about-heading-word">DO</span></h2>
                 <i class="about-heading-line" aria-hidden="true"></i>
@@ -319,7 +308,7 @@
             </div>
         </section>
 
-        <section class="about-profile-section is-dark about-stack" id="about-profile-stack" data-about-stack>
+        <section class="about-profile-section about-stack" id="about-profile-stack" data-about-menu-label="Stack" data-about-stack>
             <header class="about-section-heading" data-about-animated-heading data-about-reveal>
                 <h2 aria-label="My tech stack"><span class="about-heading-word">MY</span><span class="about-heading-word">TECH</span><em class="about-heading-word">stack</em></h2>
                 <i class="about-heading-line" aria-hidden="true"></i>
@@ -354,9 +343,7 @@
             </div>
         </section>
 
-        <div class="about-curve-divider is-dark-to-light" aria-hidden="true"></div>
-
-        <section class="about-profile-section about-projects" id="about-profile-projects" data-about-projects>
+        <section class="about-profile-section is-dark about-projects" id="about-profile-projects" data-about-menu-label="Work" data-about-projects>
             <header class="about-section-heading" data-about-animated-heading data-about-reveal>
                 <h2 aria-label="Selected works"><span class="about-heading-word">SELECTED</span><em class="about-heading-word">works</em></h2>
                 <i class="about-heading-line" aria-hidden="true"></i>
@@ -396,9 +383,7 @@
         </div></div>
         
 
-        <div class="about-curve-divider is-light-to-dark" aria-hidden="true"></div>
-
-        <section class="about-profile-section is-dark about-contact" id="about-profile-contact">
+        <section class="about-profile-section about-contact" id="about-profile-contact" data-about-menu-label="Contact">
             <div class="about-contact-card" data-about-reveal>
                 <header class="about-section-heading" data-about-animated-heading>
                     <h2 aria-label="Let's talk"><span class="about-heading-word">LET'S</span><em class="about-heading-word">talk</em></h2>
@@ -474,7 +459,7 @@
 
     <script type="application/json" data-terminal-knowledge>{"commands":[{"input":"help","output":"Available commands: help, whoami, pwd, ls stack/, ls projects/, cat about.txt, cat status.txt, cat contact.txt."},{"input":"whoami","output":"Computer Vision · Generative Models · Agent Systems"},{"input":"pwd","output":"Xidian University, China"},{"input":"ls stack/","output":"Computer Vision · Generative Models · Agent Systems · Web Engineering"},{"input":"ls projects/","output":"Research & Notes — /archives/ · Visual Archive — /album/"},{"input":"cat about.txt","output":"They deemed my downfall the final chapter, yet I shall return to rewrite the tale."},{"input":"cat status.txt","output":"插秧中[GPT-6-Astra]"},{"input":"cat contact.txt","output":"GitHub: @SaintCEN · https://github.com/SaintCEN"}]}</script>
 </main>
-<script defer src="/js/about.b3d74109c4.js"></script>
+<script defer src="/js/about.1a69a54f1b.js"></script>
 
     
     
