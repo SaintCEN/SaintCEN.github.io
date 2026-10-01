@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@500;600;700&display=swap");
 body, button, input, select, textarea {
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
 }
@@ -3011,6 +3012,234 @@ body:has(.about-portfolio) {
   scrollbar-width: thin;
 }
 
+.about-menu-toggle {
+  --menu-pointer-x: 50%;
+  --menu-pointer-y: 50%;
+  position: absolute;
+  z-index: 43;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: grid;
+  width: clamp(3.7rem, 5vw, 4.6rem);
+  aspect-ratio: 1;
+  place-items: center;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--about-ink);
+  cursor: pointer;
+  transform: translate3d(var(--menu-shift-x, 0), var(--menu-shift-y, 0), 0);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease;
+}
+
+.about-menu-toggle:focus-visible {
+  outline: 2px solid var(--about-accent);
+  outline-offset: 3px;
+}
+
+.about-menu-toggle__ripple {
+  position: absolute;
+  top: var(--menu-pointer-y);
+  left: var(--menu-pointer-x);
+  width: 170%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #3273dc;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-menu-toggle:hover .about-menu-toggle__ripple,
+.about-menu-toggle.is-open .about-menu-toggle__ripple {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.about-menu-toggle__lines {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 1.35rem;
+  height: 0.8rem;
+}
+
+.about-menu-toggle__lines i {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transition: top 0.35s cubic-bezier(0.76, 0, 0.24, 1), transform 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.about-menu-toggle__lines i:first-child {
+  top: 0.15rem;
+}
+
+.about-menu-toggle__lines i:last-child {
+  top: 0.65rem;
+}
+
+.about-menu-toggle.is-open .about-menu-toggle__lines i:first-child {
+  top: 0.4rem;
+  transform: rotate(45deg);
+}
+
+.about-menu-toggle.is-open .about-menu-toggle__lines i:last-child {
+  top: 0.4rem;
+  transform: rotate(-45deg);
+}
+
+.about-profile-menu {
+  position: absolute;
+  z-index: 40;
+  inset: 0 0 0 50%;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s 0.72s;
+}
+
+.about-profile-menu.is-open {
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.about-profile-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  transition: opacity 0.45s ease;
+}
+
+.about-profile-menu.is-open .about-profile-menu__backdrop {
+  opacity: 1;
+}
+
+.about-profile-menu__drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: calc(100% - clamp(2.5rem, 5vw, 5rem));
+  color: #fff;
+  background: var(--about-dark);
+  transform: translateX(115%);
+  transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.about-profile-menu.is-open .about-profile-menu__drawer {
+  transform: none;
+}
+
+.about-profile-menu__curve {
+  position: absolute;
+  top: 0;
+  right: calc(100% - 1px);
+  width: clamp(2.6rem, 5vw, 5.1rem);
+  height: 100%;
+  overflow: visible;
+  fill: var(--about-dark);
+}
+
+.about-profile-menu__inner {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: clamp(5.8rem, 12vh, 8rem) clamp(1.5rem, 4vw, 4rem) 2rem;
+}
+
+.about-profile-menu__inner > p,
+.about-profile-menu__inner > small {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.48);
+  font: 600 0.66rem/1.4 "Source Code Pro", monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.about-profile-menu__inner nav {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1.25rem 0;
+}
+
+.about-profile-menu__inner nav::before,
+.about-profile-menu__inner nav::after {
+  display: block;
+  width: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.22);
+  content: "";
+  transition: width 0.7s 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-profile-menu.is-open .about-profile-menu__inner nav::before,
+.about-profile-menu.is-open .about-profile-menu__inner nav::after {
+  width: 100%;
+}
+
+.about-profile-menu__inner nav button {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.7rem;
+  padding: clamp(0.65rem, 1.7vh, 1rem) 0;
+  border: 0;
+  color: #fff;
+  opacity: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transform: translateX(4rem);
+  transition: opacity 0.45s calc(0.18s + var(--menu-index) * 0.055s) ease, transform 0.65s calc(0.18s + var(--menu-index) * 0.055s) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-profile-menu.is-open .about-profile-menu__inner nav button {
+  opacity: 1;
+  transform: none;
+}
+
+.about-profile-menu__inner nav button + button {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-profile-menu__inner nav button > span {
+  color: rgba(255, 255, 255, 0.42);
+  font: 0.62rem "Source Code Pro", monospace;
+}
+
+.about-profile-menu__inner nav button strong {
+  font: 400 clamp(1.65rem, 3.1vw, 3.1rem)/1 "Space Grotesk", sans-serif;
+  letter-spacing: -0.055em;
+}
+
+.about-profile-menu__inner nav button i {
+  font-style: normal;
+  opacity: 0;
+  transform: translate(-0.5rem, 0.5rem);
+  transition: opacity 0.25s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-profile-menu__inner nav button:hover i {
+  opacity: 1;
+  transform: none;
+}
+
+.about-profile-menu__inner nav button:hover strong {
+  font-style: italic;
+}
+
 .about-dialog {
   width: 100%;
   max-width: none;
@@ -3195,29 +3424,6 @@ body:has(.about-portfolio) {
   background: radial-gradient(circle at 88% 18%, rgba(0, 0, 0, 0.035), transparent 28%), linear-gradient(135deg, #fff 0%, #f8f8f6 100%);
 }
 
-.about-profile-hero::before {
-  position: absolute;
-  top: 1.75rem;
-  right: 1.75rem;
-  width: clamp(4rem, 8vw, 6rem);
-  aspect-ratio: 1;
-  border: 1px solid var(--about-line);
-  border-radius: 50%;
-  content: "";
-}
-
-.about-profile-hero::after {
-  position: absolute;
-  top: calc(1.75rem + clamp(2rem, 4vw, 3rem));
-  right: calc(1.75rem + clamp(2rem, 4vw, 3rem));
-  width: 1px;
-  height: clamp(4rem, 8vw, 6rem);
-  background: var(--about-line);
-  content: "";
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.about-profile-kicker,
 .about-section-heading > p,
 .about-experience > header > p {
   margin: 0 0 1.25rem;
@@ -3232,10 +3438,8 @@ body:has(.about-portfolio) {
   z-index: 1;
   margin: 0;
   color: var(--about-ink);
-  font-size: clamp(4.5rem, 9.2vw, 9rem);
   font-weight: 400;
-  letter-spacing: -0.07em;
-  line-height: 0.72;
+  line-height: 0.78;
 }
 
 .about-profile-name span,
@@ -3245,10 +3449,17 @@ body:has(.about-portfolio) {
   opacity: 0;
 }
 
+.about-profile-name span {
+  font: 700 clamp(3.4rem, 5.65vw, 6.25rem)/0.82 "Space Grotesk", "Source Code Pro", sans-serif;
+  letter-spacing: -0.085em;
+}
+
 .about-profile-name em {
-  margin-left: clamp(2rem, 8vw, 7rem);
+  margin-top: 0.18em;
+  margin-left: clamp(1rem, 4vw, 3.5rem);
+  font: 400 italic clamp(3.2rem, 5.25vw, 5.8rem)/0.85 "Instrument Serif", "Ovo", Georgia, serif;
+  letter-spacing: -0.045em;
   font-style: italic;
-  font-weight: 400;
 }
 
 .about-profile.is-profile-ready .about-profile-name span,
@@ -3947,19 +4158,31 @@ body:has(.about-portfolio) {
     border-top: 1px solid var(--about-line);
     border-left: 0;
   }
+  .about-menu-toggle {
+    top: calc(46% + 0.8rem);
+    right: 0.85rem;
+    width: 3.4rem;
+  }
+  .about-profile-menu {
+    inset: 46% 0 0;
+  }
+  .about-profile-menu__drawer {
+    width: calc(100% - 2.5rem);
+  }
+  .about-profile-menu__inner {
+    padding: 4.8rem 1.5rem 1.25rem;
+  }
   .about-profile-hero {
     min-height: 100%;
     padding: 3.5rem 1.25rem 2rem;
   }
-  .about-profile-hero::before,
-  .about-profile-hero::after {
-    display: none;
-  }
-  .about-profile-name {
-    font-size: clamp(3.75rem, 20vw, 6rem);
-  }
   .about-profile-name em {
+    font-size: clamp(3rem, 14vw, 5.2rem);
     margin-left: 1.5rem;
+  }
+  .about-profile-name span {
+    padding-right: 3rem;
+    font-size: clamp(3rem, 14vw, 5.4rem);
   }
   .about-profile-section {
     padding: 3.5rem 1.25rem;

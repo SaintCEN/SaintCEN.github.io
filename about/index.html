@@ -25,7 +25,7 @@
 <meta property="og:site_name" content="Sa1ntCHENのHome">
 <meta property="og:description" content="A local site used to preview and style the Minos theme.">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-10-01T11:51:39.710Z">
+<meta property="article:published_time" content="2026-10-01T12:12:48.396Z">
 <meta property="article:modified_time" content="2026-09-27T07:31:47.806Z">
 <meta property="article:author" content="Author">
 <meta name="twitter:card" content="summary">
@@ -45,7 +45,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
 
 
-<link rel="stylesheet" href="/css/style.06ab7406ea.css">
+<link rel="stylesheet" href="/css/style.e4f74e30d4.css">
 
 <meta name="page-transition-title" content="About">
 <meta name="page-kind" content="page">
@@ -146,6 +146,51 @@
         </div>
     </section>
 
+    <button class="about-menu-toggle" type="button" data-about-menu-toggle aria-expanded="false" aria-controls="about-profile-menu" aria-label="Open navigation">
+        <span class="about-menu-toggle__ripple" data-about-menu-ripple></span>
+        <span class="about-menu-toggle__lines" aria-hidden="true"><i></i><i></i></span>
+    </button>
+
+    <div class="about-profile-menu" id="about-profile-menu" data-about-menu aria-hidden="true">
+        <button class="about-profile-menu__backdrop" type="button" data-about-menu-close aria-label="Close navigation"></button>
+        <div class="about-profile-menu__drawer">
+            <svg class="about-profile-menu__curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <path data-about-menu-curve d="M100,0 L100,100 L100,100 Q0,50 100,0"></path>
+            </svg>
+            <div class="about-profile-menu__inner">
+                <p>Navigation</p>
+                <nav aria-label="About sections">
+                    
+                    <button type="button" data-about-menu-link="#about-profile-top" style="--menu-index:0">
+                        <span>01</span><strong>Intro</strong><i aria-hidden="true">↗</i>
+                    </button>
+                    
+                    <button type="button" data-about-menu-link="#about-profile-story" style="--menu-index:1">
+                        <span>02</span><strong>About</strong><i aria-hidden="true">↗</i>
+                    </button>
+                    
+                    <button type="button" data-about-menu-link="#about-profile-services" style="--menu-index:2">
+                        <span>03</span><strong>Services</strong><i aria-hidden="true">↗</i>
+                    </button>
+                    
+                    <button type="button" data-about-menu-link="#about-profile-projects" style="--menu-index:3">
+                        <span>04</span><strong>Work</strong><i aria-hidden="true">↗</i>
+                    </button>
+                    
+                    <button type="button" data-about-menu-link="#about-profile-stack" style="--menu-index:4">
+                        <span>05</span><strong>Stack</strong><i aria-hidden="true">↗</i>
+                    </button>
+                    
+                    <button type="button" data-about-menu-link="#about-profile-contact" style="--menu-index:5">
+                        <span>06</span><strong>Contact</strong><i aria-hidden="true">↗</i>
+                    </button>
+                    
+                </nav>
+                <small>Sa1ntCHEN / Portfolio</small>
+            </div>
+        </div>
+    </div>
+
     <section class="about-terminal is-collapsed" data-about-terminal aria-label="Terminal Chat">
         <header class="about-terminal__header">
             <div class="about-terminal__title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 6-6-6-6M12 19h8"></path></svg><strong>Terminal Chat</strong></div>
@@ -180,10 +225,9 @@
         <div class="about-profile__progress" data-about-progress></div>
 
         <section class="about-profile-hero" id="about-profile-top">
-            <p class="about-profile-kicker" data-about-reveal>Research · Engineering · Visual Notes</p>
-            <h1 class="about-profile-name" aria-label="Sa1nt CHEN">
-                <span>Sa1nt</span>
-                <em>CHEN</em>
+            <h1 class="about-profile-name" aria-label="Zichen Dai Sa1ntCHEN">
+                <span>Zichen Dai</span>
+                <em>Sa1ntCHEN</em>
             </h1>
             <p class="about-profile-tagline about-word-reveal" data-about-reveal>
                 <span>They</span> <span>deemed</span> <span>my</span> <span>downfall</span> <span>the</span> <span>final</span> <span>chapter,</span> <span>yet</span> <span>I</span> <span>shall</span> <span>return</span> <span>to</span> <span>rewrite</span> <span>the</span> <span>tale.</span> 
@@ -310,7 +354,7 @@
             </div>
         </section>
 
-        <section class="about-profile-section is-dark about-services">
+        <section class="about-profile-section is-dark about-services" id="about-profile-services">
             <header class="about-section-heading" data-about-reveal>
                 <p>What I Do</p>
                 <h2><span>WHAT</span> <em>I</em> <span>DO</span></h2>
@@ -368,7 +412,7 @@
             </div>
         </section>
 
-        <section class="about-profile-section about-projects">
+        <section class="about-profile-section about-projects" id="about-profile-projects">
             <header class="about-section-heading" data-about-reveal>
                 <p>Selected Work</p>
                 <h2><span>SELECTED</span> <em>works</em></h2>
@@ -423,7 +467,7 @@
             </div>
         </section>
 
-        <section class="about-profile-section is-dark about-stack" data-about-stack>
+        <section class="about-profile-section is-dark about-stack" id="about-profile-stack" data-about-stack>
             <header class="about-section-heading" data-about-reveal>
                 <p>My Stack</p>
                 <h2><span>MY</span> <em>stack</em></h2>
@@ -476,7 +520,7 @@
             </div>
         </section>
 
-        <section class="about-profile-section about-contact">
+        <section class="about-profile-section about-contact" id="about-profile-contact">
             <header class="about-section-heading" data-about-reveal>
                 <p>Contact</p>
                 <h2>Let&#39;s talk.</h2>
@@ -540,7 +584,7 @@
 
     <script type="application/json" data-terminal-knowledge>{"commands":[{"input":"help","output":"Available commands: help, whoami, pwd, ls stack/, ls projects/, cat about.txt, cat status.txt, cat contact.txt."},{"input":"whoami","output":"Computer Vision · Generative Models · Agent Systems"},{"input":"pwd","output":"Xidian University, China"},{"input":"ls stack/","output":"Computer Vision · Generative Models · Agent Systems · Web Engineering"},{"input":"ls projects/","output":"Research & Notes — /archives/ · Visual Archive — /album/"},{"input":"cat about.txt","output":"They deemed my downfall the final chapter, yet I shall return to rewrite the tale."},{"input":"cat status.txt","output":"插秧中[GPT-6-Astra]"},{"input":"cat contact.txt","output":"GitHub: @SaintCEN · https://github.com/SaintCEN"}]}</script>
 </main>
-<script defer src="/js/about.1fb4cc4b3a.js"></script>
+<script defer src="/js/about.b068b98b33.js"></script>
 
     
     
