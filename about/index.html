@@ -45,7 +45,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
 
 
-<link rel="stylesheet" href="/css/style.0e2b8c023d.css">
+<link rel="stylesheet" href="/css/style.57be848ab3.css">
 
 <meta name="page-transition-title" content="About">
 <meta name="page-kind" content="page">
@@ -139,138 +139,115 @@
     <div id="site-page">
     
 <main class="about-portfolio" data-about-page data-model-url="/media/pages/about/avatar.vrm" aria-label="About portfolio">
-    <div class="about-grain" aria-hidden="true"></div>
-
-    <header class="about-console-bar" aria-label="About controls">
-        <div class="about-console-group">
-            <button class="about-console-button" type="button" data-about-dialog="about-info-dialog">
-                <span class="about-console-mark" aria-hidden="true">i</span>
-                <span>Info</span>
+    <header class="about-navbar" aria-label="Portfolio controls">
+        <div class="about-navbar__group">
+            <button class="about-icon-button" type="button" data-about-dialog="about-info-dialog" aria-label="Info">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
             </button>
-            <button class="about-console-button" type="button" data-about-dialog="about-projects-dialog">
-                <span class="about-console-mark" aria-hidden="true">+</span>
-                <span>Projects</span>
+            <button class="about-icon-button" type="button" data-about-dialog="about-projects-dialog" aria-label="Projects">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"></path></svg>
             </button>
             
-            <a class="about-console-button" href="https://github.com/SaintCEN" target="_blank" rel="noopener noreferrer">
-                <span class="about-console-mark" aria-hidden="true">↗</span>
-                <span>GitHub</span>
+            <a class="about-icon-button" href="https://github.com/SaintCEN" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.4 4 5 5 0 0 0 19.3.5S18.2.1 15 1.8a13.4 13.4 0 0 0-7 0C4.8.1 3.7.5 3.7.5A5 5 0 0 0 3.6 4a5.4 5.4 0 0 0-1.4 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 8 18v4"></path><path d="M8 19c-3 .9-3-1.5-4-2"></path></svg>
             </a>
             
         </div>
-        <time class="about-clock" data-about-clock aria-label="Current local time">--:--:--</time>
-        <div class="about-console-group about-console-group--end">
-            <button class="about-console-button" type="button" data-about-motion disabled>
-                <span class="about-console-mark" aria-hidden="true">↻</span>
-                <span>Motion</span>
+        <time class="about-clock" data-about-clock aria-label="Current local time"></time>
+        <div class="about-navbar__group about-navbar__group--end">
+            <button class="about-icon-button" type="button" data-about-motion disabled aria-label="Play animation">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>
+            </button>
+            <button class="about-icon-button" type="button" data-about-theme aria-label="Toggle theme">
+                <svg class="about-theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.42"></path></svg>
+                <svg class="about-theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
             </button>
         </div>
     </header>
 
     <section class="about-avatar" aria-label="Interactive 3D avatar">
         <canvas class="about-avatar-canvas" data-about-canvas></canvas>
-        <div class="about-avatar-loader" data-about-loader>
-            <span class="about-avatar-loader__label">INITIALIZING AVATAR</span>
-            <span class="about-avatar-loader__track"><i data-about-progress></i></span>
-            <span class="about-avatar-loader__value" data-about-progress-value>00</span>
+        <div class="about-avatar-loader" data-about-loader aria-label="Loading avatar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.2-8.6"></path></svg>
         </div>
-        <p class="about-avatar-hint" data-about-hint>Move the pointer — she will follow.</p>
     </section>
 
-    <section class="about-terminal" data-about-terminal aria-label="Portfolio terminal">
+    <section class="about-terminal" data-about-terminal aria-label="Terminal Chat">
         <header class="about-terminal__header">
-            <span class="about-terminal__lights" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span>sa1nt@portfolio:~</span>
-            <button type="button" data-about-terminal-toggle aria-expanded="true" aria-label="Toggle terminal">⌄</button>
+            <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 6-6-6-6M12 19h8"></path></svg><strong>Terminal Chat</strong></div>
+            <button type="button" data-about-terminal-toggle aria-expanded="true" aria-label="Toggle terminal"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
         </header>
         <div class="about-terminal__body" data-about-terminal-body>
             <div class="about-terminal__messages" data-about-messages aria-live="polite">
-                <p class="is-system"><span>system</span><b>$</b> Portfolio terminal ready. Ask me about Sa1ntCHEN.</p>
+                <div class="about-message is-system">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 6-6-6-6M12 19h8"></path></svg>
+                    <div><p><strong>system@terminal</strong><time data-about-message-time></time></p><p><span>$</span> Terminal Chat v2.0.0 with AI initialized...</p></div>
+                </div>
+                <div class="about-message is-system">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 6-6-6-6M12 19h8"></path></svg>
+                    <div><p><strong>system@terminal</strong><time data-about-message-time></time></p><p><span>$</span> Type your message and press Enter to chat with AI.</p></div>
+                </div>
             </div>
-            
-            <div class="about-terminal__suggestions" aria-label="Suggested questions">
-                
-                <button type="button" data-about-question="Who are you?">Who are you?</button>
-                
-                <button type="button" data-about-question="What are you working on?">What are you working on?</button>
-                
-                <button type="button" data-about-question="Show me your projects.">Show me your projects.</button>
-                
-                <button type="button" data-about-question="How can I contact you?">How can I contact you?</button>
-                
-            </div>
-            
             <form class="about-terminal__form" data-about-form>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path></svg>
                 <label for="about-terminal-input">user@terminal:~$</label>
-                <input id="about-terminal-input" data-about-input type="text" autocomplete="off" placeholder="Ask about this portfolio…">
-                <button type="submit" aria-label="Send question">↵</button>
+                <textarea id="about-terminal-input" data-about-input rows="1" autocomplete="off" placeholder="Type your message..."></textarea>
+                <button type="submit" aria-label="Send message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg></button>
             </form>
         </div>
     </section>
 
     <dialog class="about-dialog" id="about-info-dialog">
-        <div class="about-dialog__frame">
-            <header class="about-dialog__header">
-                <span>~/identity/about.txt</span>
-                <button type="button" data-about-dialog-close aria-label="Close">×</button>
-            </header>
-            <div class="about-dialog__content about-dialog__content--identity">
-                <div>
-                    <p class="about-command"><b>$</b> whoami</p>
-                    <h2>Sa1ntCHEN</h2>
-                    <p>Computer Vision · Generative Models · Agent Systems</p>
-                    <p class="about-command"><b>$</b> cat current-status.txt</p>
-                    <p>插秧中[GPT-6-Astra]</p>
-                    <p>Xidian University, China</p>
+        <div class="about-modal about-info-modal">
+            <section class="about-info-bio">
+                <pre>███████╗ █████╗  ██╗███╗   ██╗████████╗
+██╔════╝██╔══██╗███║████╗  ██║╚══██╔══╝
+███████╗███████║╚██║██╔██╗ ██║   ██║
+╚════██║██╔══██║ ██║██║╚██╗██║   ██║
+███████║██║  ██║ ██║██║ ╚████║   ██║
+╚══════╝╚═╝  ╚═╝ ╚═╝╚═╝  ╚═══╝   ╚═╝</pre>
+                <div class="about-command-block">
+                    <p><b>$</b> whoami</p><div>Computer Vision · Generative Models · Agent Systems</div>
+                    <p><b>$</b> cat about.txt</p><div>They deemed my downfall the final chapter, yet I shall return to rewrite the tale.</div>
+                    <p><b>$</b> cat status.txt</p><div>插秧中[GPT-6-Astra]</div>
                 </div>
-                <div>
-                    <p class="about-command"><b>$</b> tree ./focus</p>
-                    <ul class="about-focus-tree">
-                        <li>Computer Vision</li><li>Generative Models</li><li>Agent Systems</li><li>Web Engineering</li>
-                    </ul>
-                    
-                    <p class="about-command"><b>$</b> ls ./contact</p>
-                    <ul class="about-contact-list">
-                        
-                        <li><a href="https://github.com/SaintCEN" target="_blank" rel="noopener noreferrer"><span>GitHub</span><b>@SaintCEN</b></a></li>
-                        
-                    </ul>
-                    
+            </section>
+            <section class="about-system-info">
+                <div class="about-tree-section">
+                    <header><i></i><h2>Technologies</h2><span></span></header>
+                    <p class="about-tree-root">▣ stack/</p>
+                    <ul><li><span>◇</span>Computer Vision</li><li><span>◇</span>Generative Models</li><li><span>◇</span>Agent Systems</li><li><span>◇</span>Web Engineering</li></ul>
                 </div>
-            </div>
+                
+                <div class="about-tree-section about-tree-section--contact">
+                    <header><i></i><h2>Contact</h2><span></span></header>
+                    <p class="about-tree-root">▣ social/</p>
+                    <ul><li><a href="https://github.com/SaintCEN" target="_blank" rel="noopener noreferrer"><span>◇</span><b>GitHub</b><em>@SaintCEN</em></a></li></ul>
+                </div>
+                
+                <footer></footer>
+            </section>
         </div>
     </dialog>
 
-    <dialog class="about-dialog about-dialog--projects" id="about-projects-dialog">
-        <div class="about-dialog__frame">
-            <header class="about-dialog__header">
-                <span>sa1nt@portfolio:~/projects$ ls -la</span>
-                <button type="button" data-about-dialog-close aria-label="Close">×</button>
-            </header>
-            <div class="about-dialog__content">
-                <div class="about-project-list">
-                    
-                    <article class="about-project">
-                        <p class="about-project__index">01</p>
-                        <div>
-                            <header><h2>Research &amp; Notes</h2><span>active</span></header>
-                            <p>Computer vision, generative models and engineering notes collected over time.</p>
-                            <ul><li>Vision</li><li>Research</li><li>Writing</li></ul>
-                            <a href="/archives/">OPEN PROJECT <span aria-hidden="true">↗</span></a>
-                        </div>
-                    </article>
-                    
-                    <article class="about-project">
-                        <p class="about-project__index">02</p>
-                        <div>
-                            <header><h2>Visual Archive</h2><span>evolving</span></header>
-                            <p>A photographic record of places, events and fragments of daily life.</p>
-                            <ul><li>Photography</li><li>Archive</li></ul>
-                            <a href="/album/">OPEN PROJECT <span aria-hidden="true">↗</span></a>
-                        </div>
-                    </article>
-                    
-                </div>
+    <dialog class="about-dialog" id="about-projects-dialog">
+        <div class="about-modal about-project-modal">
+            <header class="about-project-modal__header"><i></i><i></i><i></i><span>user@portfolio:~/projects$</span></header>
+            <div class="about-project-modal__body">
+                <p class="about-project-command"><b>$</b> ls -la projects/</p>
+                <p class="about-project-total">total 2 repositories</p>
+                
+                <article class="about-project">
+                    <p class="about-project-command"><b>$</b> cat research-&amp;-notes.json</p>
+                    <div><header><h2>▣ Research &amp; Notes</h2><span>● active</span></header><p>Computer vision, generative models and engineering notes collected over time.</p><ul><li>Vision</li><li>Research</li><li>Writing</li></ul><a href="/archives/">↗ Live Demo</a></div>
+                </article>
+                
+                <article class="about-project">
+                    <p class="about-project-command"><b>$</b> cat visual-archive.json</p>
+                    <div><header><h2>▣ Visual Archive</h2><span>● evolving</span></header><p>A photographic record of places, events and fragments of daily life.</p><ul><li>Photography</li><li>Archive</li></ul><a href="/album/">↗ Live Demo</a></div>
+                </article>
+                
+                <p class="about-project-command"><b>$</b> _</p>
             </div>
         </div>
     </dialog>
