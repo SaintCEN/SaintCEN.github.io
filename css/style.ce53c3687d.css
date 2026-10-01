@@ -3051,11 +3051,17 @@ body:has(.about-portfolio) {
 }
 
 .about-pixel-name {
+  display: grid;
+  gap: 0.8rem;
   max-width: 100%;
   margin: 0 0 1.5rem;
-  overflow: auto hidden;
+  overflow: hidden;
   color: var(--about-muted);
-  font: clamp(0.34rem, 0.55vw, 0.62rem)/1.08 "Source Code Pro", monospace;
+  font: clamp(0.5rem, 0.85vw, 0.95rem)/1.05 "Source Code Pro", monospace;
+}
+
+.about-pixel-name span {
+  display: block;
 }
 
 .about-command-block {
@@ -3064,25 +3070,17 @@ body:has(.about-portfolio) {
 }
 
 .about-command-block p {
-  margin: 1rem 0 0.2rem;
-  color: var(--about-fg);
+  margin: 0 0 1.35rem;
 }
 
-.about-command-block p:first-child {
-  margin-top: 0;
-}
-
-.about-command-block b {
-  color: #4e9c63;
-  font-weight: 400;
-}
-
-.about-command-block div {
-  padding-left: 1rem;
+.about-command-block p:last-child {
+  margin-bottom: 0;
 }
 
 .about-system-info {
-  overflow: hidden;
+  max-height: min(32rem, 90vh - 6rem);
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 1px solid var(--about-border);
   background: var(--about-bg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -3164,12 +3162,6 @@ body:has(.about-portfolio) {
   font: inherit;
 }
 
-.about-system-info footer {
-  height: 1rem;
-  border-top: 1px solid var(--about-border);
-  background: var(--about-accent);
-}
-
 @keyframes about-spin {
   to {
     transform: rotate(360deg);
@@ -3218,7 +3210,8 @@ body:has(.about-portfolio) {
     padding: 1rem;
   }
   .about-pixel-name {
-    font-size: clamp(0.22rem, 1vw, 0.38rem);
+    gap: 0.55rem;
+    font-size: clamp(0.38rem, 1.65vw, 0.58rem);
   }
 }
 @media (prefers-reduced-motion: reduce) {
