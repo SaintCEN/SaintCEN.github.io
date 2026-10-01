@@ -25,7 +25,7 @@
 <meta property="og:site_name" content="Sa1ntCHENのHome">
 <meta property="og:description" content="A local site used to preview and style the Minos theme.">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-10-01T12:12:48.396Z">
+<meta property="article:published_time" content="2026-10-01T12:39:58.644Z">
 <meta property="article:modified_time" content="2026-09-27T07:31:47.806Z">
 <meta property="article:author" content="Author">
 <meta name="twitter:card" content="summary">
@@ -45,7 +45,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
 
 
-<link rel="stylesheet" href="/css/style.e4f74e30d4.css">
+<link rel="stylesheet" href="/css/style.f30cf2b3ad.css">
 
 <meta name="page-transition-title" content="About">
 <meta name="page-kind" content="page">
@@ -146,50 +146,39 @@
         </div>
     </section>
 
-    <button class="about-menu-toggle" type="button" data-about-menu-toggle aria-expanded="false" aria-controls="about-profile-menu" aria-label="Open navigation">
-        <span class="about-menu-toggle__ripple" data-about-menu-ripple></span>
-        <span class="about-menu-toggle__lines" aria-hidden="true"><i></i><i></i></span>
-    </button>
-
-    <div class="about-profile-menu" id="about-profile-menu" data-about-menu aria-hidden="true">
-        <button class="about-profile-menu__backdrop" type="button" data-about-menu-close aria-label="Close navigation"></button>
-        <div class="about-profile-menu__drawer">
-            <svg class="about-profile-menu__curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                <path data-about-menu-curve d="M100,0 L100,100 L100,100 Q0,50 100,0"></path>
-            </svg>
-            <div class="about-profile-menu__inner">
-                <p>Navigation</p>
-                <nav aria-label="About sections">
-                    
-                    <button type="button" data-about-menu-link="#about-profile-top" style="--menu-index:0">
-                        <span>01</span><strong>Intro</strong><i aria-hidden="true">↗</i>
-                    </button>
-                    
-                    <button type="button" data-about-menu-link="#about-profile-story" style="--menu-index:1">
-                        <span>02</span><strong>About</strong><i aria-hidden="true">↗</i>
-                    </button>
-                    
-                    <button type="button" data-about-menu-link="#about-profile-services" style="--menu-index:2">
-                        <span>03</span><strong>Services</strong><i aria-hidden="true">↗</i>
-                    </button>
-                    
-                    <button type="button" data-about-menu-link="#about-profile-projects" style="--menu-index:3">
-                        <span>04</span><strong>Work</strong><i aria-hidden="true">↗</i>
-                    </button>
-                    
-                    <button type="button" data-about-menu-link="#about-profile-stack" style="--menu-index:4">
-                        <span>05</span><strong>Stack</strong><i aria-hidden="true">↗</i>
-                    </button>
-                    
-                    <button type="button" data-about-menu-link="#about-profile-contact" style="--menu-index:5">
-                        <span>06</span><strong>Contact</strong><i aria-hidden="true">↗</i>
-                    </button>
-                    
-                </nav>
-                <small>Sa1ntCHEN / Portfolio</small>
-            </div>
+    <nav class="about-arc-menu" data-about-arc-menu aria-label="About sections">
+        <span class="about-arc-menu__orbit" aria-hidden="true"></span>
+        <div class="about-arc-menu__items">
+            
+            <button type="button" data-about-arc-link="#about-profile-top" style="--arc-index:0;--arc-angle:-90deg;--arc-angle-inverse:90deg">
+                <span>01</span><strong>Intro</strong>
+            </button>
+            
+            <button type="button" data-about-arc-link="#about-profile-story" style="--arc-index:1;--arc-angle:-54deg;--arc-angle-inverse:54deg">
+                <span>02</span><strong>About</strong>
+            </button>
+            
+            <button type="button" data-about-arc-link="#about-profile-services" style="--arc-index:2;--arc-angle:-18deg;--arc-angle-inverse:18deg">
+                <span>03</span><strong>Services</strong>
+            </button>
+            
+            <button type="button" data-about-arc-link="#about-profile-projects" style="--arc-index:3;--arc-angle:18deg;--arc-angle-inverse:-18deg">
+                <span>04</span><strong>Work</strong>
+            </button>
+            
+            <button type="button" data-about-arc-link="#about-profile-stack" style="--arc-index:4;--arc-angle:54deg;--arc-angle-inverse:-54deg">
+                <span>05</span><strong>Stack</strong>
+            </button>
+            
+            <button type="button" data-about-arc-link="#about-profile-contact" style="--arc-index:5;--arc-angle:90deg;--arc-angle-inverse:-90deg">
+                <span>06</span><strong>Contact</strong>
+            </button>
+            
         </div>
-    </div>
+        <button class="about-arc-menu__hub" type="button" data-about-arc-toggle aria-expanded="false" aria-label="Open section navigation">
+            <span aria-hidden="true"></span>
+        </button>
+    </nav>
 
     <section class="about-terminal is-collapsed" data-about-terminal aria-label="Terminal Chat">
         <header class="about-terminal__header">
@@ -226,14 +215,12 @@
 
         <section class="about-profile-hero" id="about-profile-top">
             <h1 class="about-profile-name" aria-label="Zichen Dai Sa1ntCHEN">
-                <span>Zichen Dai</span>
-                <em>Sa1ntCHEN</em>
+                <span data-hero-line><i data-about-hero-char style="--hero-char-index:0">Z</i><i data-about-hero-char style="--hero-char-index:1">i</i><i data-about-hero-char style="--hero-char-index:2">c</i><i data-about-hero-char style="--hero-char-index:3">h</i><i data-about-hero-char style="--hero-char-index:4">e</i><i data-about-hero-char style="--hero-char-index:5">n</i><i data-about-hero-char style="--hero-char-index:6"> </i><i data-about-hero-char style="--hero-char-index:7">D</i><i data-about-hero-char style="--hero-char-index:8">a</i><i data-about-hero-char style="--hero-char-index:9">i</i></span>
+                <em data-hero-line><i data-about-hero-char style="--hero-char-index:10">S</i><i data-about-hero-char style="--hero-char-index:11">a</i><i data-about-hero-char style="--hero-char-index:12">1</i><i data-about-hero-char style="--hero-char-index:13">n</i><i data-about-hero-char style="--hero-char-index:14">t</i><i data-about-hero-char style="--hero-char-index:15">C</i><i data-about-hero-char style="--hero-char-index:16">H</i><i data-about-hero-char style="--hero-char-index:17">E</i><i data-about-hero-char style="--hero-char-index:18">N</i></em>
             </h1>
-            <p class="about-profile-tagline about-word-reveal" data-about-reveal>
-                <span>They</span> <span>deemed</span> <span>my</span> <span>downfall</span> <span>the</span> <span>final</span> <span>chapter,</span> <span>yet</span> <span>I</span> <span>shall</span> <span>return</span> <span>to</span> <span>rewrite</span> <span>the</span> <span>tale.</span> 
-            </p>
+            <p class="about-profile-tagline" data-about-hero-copy>They deemed my downfall the final chapter, yet I shall return to rewrite the tale.</p>
             
-            <div class="about-role-ticker" data-about-role-ticker aria-live="polite">
+            <div class="about-role-ticker" data-about-role-ticker data-about-hero-ticker aria-live="polite">
                 
                 <span class="is-active">Computer Vision</span>
                 
@@ -245,16 +232,13 @@
                 
             </div>
             
-            <div class="about-profile-actions" data-about-reveal>
+            <div class="about-profile-actions" data-about-hero-actions>
                 
-                <a href="/archives/" class="is-primary"><span>Explore Notes</span><b aria-hidden="true">↗</b></a>
+                <a href="/archives/" class="is-primary" style="--hero-action-index:0"><span>Explore Notes</span><b aria-hidden="true">↗</b></a>
                 
-                <a href="/album/" class=""><span>View Album</span><b aria-hidden="true">↗</b></a>
+                <a href="/album/" class="" style="--hero-action-index:1"><span>View Album</span><b aria-hidden="true">↗</b></a>
                 
             </div>
-            <button class="about-scroll-cue" type="button" data-about-scroll="#about-profile-story">
-                <span>Scroll to explore</span><i aria-hidden="true"></i>
-            </button>
         </section>
 
         
@@ -584,7 +568,7 @@
 
     <script type="application/json" data-terminal-knowledge>{"commands":[{"input":"help","output":"Available commands: help, whoami, pwd, ls stack/, ls projects/, cat about.txt, cat status.txt, cat contact.txt."},{"input":"whoami","output":"Computer Vision · Generative Models · Agent Systems"},{"input":"pwd","output":"Xidian University, China"},{"input":"ls stack/","output":"Computer Vision · Generative Models · Agent Systems · Web Engineering"},{"input":"ls projects/","output":"Research & Notes — /archives/ · Visual Archive — /album/"},{"input":"cat about.txt","output":"They deemed my downfall the final chapter, yet I shall return to rewrite the tale."},{"input":"cat status.txt","output":"插秧中[GPT-6-Astra]"},{"input":"cat contact.txt","output":"GitHub: @SaintCEN · https://github.com/SaintCEN"}]}</script>
 </main>
-<script defer src="/js/about.b068b98b33.js"></script>
+<script defer src="/js/about.ebc9dde0c0.js"></script>
 
     
     
