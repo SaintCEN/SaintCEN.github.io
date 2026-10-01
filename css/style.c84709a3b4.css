@@ -3040,7 +3040,7 @@ body:has(.about-portfolio) {
 }
 
 .about-info-modal {
-  --about-pixel-size: clamp(.42rem, .61vw, .72rem);
+  --about-pixel-size: clamp(.58rem, .82vw, .92rem);
   display: grid;
   width: min(94vw, 88rem);
   box-sizing: border-box;
