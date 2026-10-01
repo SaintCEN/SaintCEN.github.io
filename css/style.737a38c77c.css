@@ -3405,21 +3405,6 @@ body:has(.about-portfolio) {
   background: var(--about-ink);
 }
 
-.about-motion-button > i {
-  position: absolute;
-  width: 6.25rem;
-  height: 6.25rem;
-  border-radius: 50%;
-  opacity: 0;
-  background: rgba(255, 255, 255, 0.18);
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(0);
-}
-
-.about-motion-button.is-light > i {
-  background: rgba(17, 17, 17, 0.1);
-}
-
 .about-motion-button > span {
   position: relative;
   display: block;
