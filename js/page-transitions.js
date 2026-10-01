@@ -10,7 +10,7 @@
     var current = new URL(location.href), request = 0, frame = 0, layer, safety, scrollTimer;
     var svg, path, label, width, height, initialized = false, restoring = false;
     var repeatScripts = /\/js\/(?:home-hero|post-toc|album|archives-inline|script|insight|about(?:\.[a-f0-9]+)?)\.js$/;
-    var bundleReady, preloadReady, jsonData = new Map(), images = new Map(), assets = new Map();
+    var bundleReady, preloadReady, jsonData = new Map(), images = new Map();
     function key(url) { return url.pathname.replace(/\/(?:index\.html)?$/, '') + url.search; }
     function localPage(url) {
         return url.origin === location.origin && !(/\.[^/]+$/.test(url.pathname) && !/\.html?$/.test(url.pathname));
@@ -79,20 +79,7 @@
             }));
             return images.get(id);
         });
-        var assetLoads = Array.from(doc.querySelectorAll('#site-page [data-model-url]')).map(function (source) {
-            var value = source.getAttribute('data-model-url');
-            if (!value) return Promise.resolve();
-            var url = new URL(value, base).href;
-            if (!assets.has(url)) assets.set(url, fetch(url, { cache: 'force-cache' }).then(function (response) {
-                if (!response.ok) throw new Error('Asset unavailable');
-                return response.arrayBuffer();
-            }).then(function () {}).catch(function (error) {
-                assets.delete(url);
-                console.warn('Optional page asset unavailable.', error);
-            }));
-            return assets.get(url);
-        });
-        return Promise.all(imageLoads.concat(assetLoads));
+        return Promise.all(imageLoads);
     }
     async function loadBundle() {
         var meta = document.querySelector('meta[name="site-bundle"]');
