@@ -3804,13 +3804,13 @@ body:has(.about-portfolio) {
 }
 
 .about-service-list {
+  --service-stack:1;
   position: relative;
   padding-bottom: 3rem;
 }
 
 .about-service-card {
-  position: sticky;
-  top: calc(3.25rem + var(--service-index) * 5.4rem);
+  position: relative;
   z-index: calc(var(--service-index) + 1);
   padding: 1.5rem 0 clamp(4rem, 9vh, 7rem);
   border-top: 1px solid #343835;
@@ -4474,6 +4474,9 @@ body:has(.about-portfolio) {
   }
   .about-timeline-content h4 {
     font-size: clamp(1.65rem, 9vw, 2.75rem);
+  }
+  .about-service-list {
+    --service-stack:0;
   }
   .about-service-card {
     position: relative;
