@@ -2772,6 +2772,25 @@ body:has(.about-portfolio) {
   animation: about-spin 1s linear infinite;
 }
 
+.about-avatar.is-error .about-avatar-loader > svg {
+  display: none;
+}
+
+.about-avatar-loader p {
+  max-width: 18rem;
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.about-avatar-loader button {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--about-line);
+  color: var(--about-ink);
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
 .about-icon-button {
   display: grid;
   width: 1.8rem;
