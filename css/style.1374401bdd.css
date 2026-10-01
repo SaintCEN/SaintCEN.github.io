@@ -3574,14 +3574,6 @@ body:has(.about-portfolio) {
   gap: 1.5rem;
 }
 
-.about-section-label,
-.about-experience > header > p {
-  color: #b5aaa4;
-  font: 500 0.72rem "Source Code Pro", monospace;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-}
-
 .about-profile-copy p {
   margin: 0;
   color: var(--about-light);
@@ -3601,10 +3593,6 @@ body:has(.about-portfolio) {
 .about-experience > header {
   margin-bottom: clamp(4rem, 9vh, 7rem);
   text-align: center;
-}
-
-.about-experience > header > p {
-  margin: 0 0 1.25rem;
 }
 
 .about-experience h3 {
@@ -3778,12 +3766,8 @@ body:has(.about-portfolio) {
   margin-bottom: clamp(4rem, 8vh, 7rem);
 }
 
-.about-services-intro .about-section-label {
-  grid-column: 6/span 2;
-}
-
 .about-services-intro .about-section-lead {
-  grid-column: 8/span 5;
+  grid-column: 6/span 7;
   margin: 0;
 }
 
@@ -4381,7 +4365,6 @@ body:has(.about-portfolio) {
   }
   .about-flow-field,
   .about-profile-copy,
-  .about-services-intro .about-section-label,
   .about-services-intro .about-section-lead,
   .about-service-card h3,
   .about-service-detail > p,
