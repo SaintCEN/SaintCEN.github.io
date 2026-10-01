@@ -3046,7 +3046,7 @@ body:has(.about-portfolio) {
   --about-pixel-size: clamp(.5rem,.85vw,.95rem);
   width: fit-content;
   display: grid;
-  grid-template-columns: repeat(2, 40ch);
+  grid-template-columns: repeat(2, 1fr);
   align-items: start;
   gap: clamp(1.5rem, 3vw, 2.5rem);
   padding: clamp(1.5rem, 2.5vw, 2.5rem);
@@ -3054,15 +3054,16 @@ body:has(.about-portfolio) {
 }
 
 .about-info-bio {
-  width: 100%;
+  width: max-content;
+  max-width: 100%;
 }
 
 .about-pixel-name {
   display: grid;
   gap: 0.8rem;
-  max-width: 100%;
+  max-width: none;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
   color: var(--about-muted);
   font: inherit;
 }
@@ -3073,28 +3074,25 @@ body:has(.about-portfolio) {
 
 .about-system-info {
   box-sizing: border-box;
+  display: flex;
   width: 100%;
+  height: calc(12.6em + 0.8rem);
+  min-height: 0;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--about-border);
   background: var(--about-bg);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.about-command-dropdown summary {
+.about-command-header {
   display: flex;
   align-items: center;
   gap: 0.65rem;
   padding: 1rem 1.25rem;
-  cursor: pointer;
-  list-style: none;
-  font: 500 1rem "Source Code Pro", monospace;
 }
 
-.about-command-dropdown summary::-webkit-details-marker {
-  display: none;
-}
-
-.about-command-dropdown summary i {
+.about-command-header i {
   width: 0.5rem;
   height: 0.5rem;
   flex: none;
@@ -3102,15 +3100,15 @@ body:has(.about-portfolio) {
   background: var(--about-fg);
 }
 
-.about-command-dropdown summary::after {
-  content: "⌄";
-  margin-left: auto;
-  color: var(--about-muted);
-  transition: transform 0.2s ease;
+.about-command-header h2 {
+  margin: 0;
+  font: 500 1rem "Source Code Pro", monospace;
 }
 
-.about-command-dropdown[open] summary::after {
-  transform: rotate(180deg);
+.about-command-header span {
+  height: 1px;
+  flex: 1;
+  background: var(--about-border);
 }
 
 .about-tree-section {
@@ -3118,7 +3116,8 @@ body:has(.about-portfolio) {
 }
 
 .about-command-list {
-  max-height: clamp(8rem, 90vh - 20rem, 15rem);
+  min-height: 0;
+  flex: 1;
   overflow-x: hidden;
   overflow-y: auto;
   border-top: 1px solid var(--about-border);
@@ -3221,6 +3220,13 @@ body:has(.about-portfolio) {
   }
   .about-pixel-name {
     gap: 0.55rem;
+  }
+  .about-system-info {
+    height: auto;
+    max-height: 16rem;
+  }
+  .about-command-list {
+    max-height: 12rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
