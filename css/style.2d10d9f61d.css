@@ -3303,14 +3303,14 @@ body:has(.about-portfolio) {
 
 .about-profile-name > span {
   font: 800 clamp(3.4rem, 5.65vw, 6.25rem)/0.86 "Space Grotesk", "Source Code Pro", sans-serif;
-  letter-spacing: -0.085em;
+  letter-spacing: -0.025em;
 }
 
 .about-profile-name > em {
   margin-top: 0.18em;
   margin-left: clamp(3rem, 14vw, 13rem);
   font: 400 italic clamp(3.2rem, 5.25vw, 5.8rem)/0.85 "Instrument Serif", "Ovo", Georgia, serif;
-  letter-spacing: -0.045em;
+  letter-spacing: 0;
 }
 
 .about-profile-name [data-about-hero-char] {
@@ -3477,10 +3477,10 @@ body:has(.about-portfolio) {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0 0.22em;
+  gap: 0.12em 0.28em;
   margin: 0;
   font: 800 clamp(3rem, 5vw, 6.5rem)/0.9 "Space Grotesk", sans-serif;
-  letter-spacing: -0.075em;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
 }
 
@@ -3488,7 +3488,7 @@ body:has(.about-portfolio) {
 .about-experience h3 em {
   color: var(--about-accent);
   font: 400 italic 1.06em/1 "Instrument Serif", Georgia, serif;
-  letter-spacing: -0.05em;
+  letter-spacing: 0;
   text-transform: none;
 }
 
@@ -4065,7 +4065,7 @@ body:has(.about-portfolio) {
   margin: 0;
   overflow: hidden;
   font: 800 clamp(1.7rem, 3vw, 3.4rem)/1 "Space Grotesk", sans-serif;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
 }
 
