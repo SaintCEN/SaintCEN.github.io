@@ -264,7 +264,7 @@
             var incoming = document.importNode(doc.getElementById('site-page'), true);
             incoming.dataset.route = target.pathname;
             incoming.querySelectorAll('noscript').forEach(function (node) { node.remove(); });
-            var list = Array.from(incoming.querySelectorAll('script'));
+            var list = Array.from(incoming.querySelectorAll('script:not([type="application/json"])'));
             list.forEach(function (script) { script.remove(); });
             if (!options.pop) {
                 savePosition();
