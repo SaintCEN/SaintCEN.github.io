@@ -2783,66 +2783,10 @@ html.curve-home .navbar-main {
   font-variant-numeric: tabular-nums;
 }
 
-.about-intro {
-  position: absolute;
-  z-index: 4;
-  top: 24%;
-  left: clamp(1.5rem, 5vw, 6rem);
-  width: min(31rem, 29vw);
-}
-
-.about-eyebrow {
-  margin: 0 0 1.1rem;
-  color: var(--about-muted);
-  font: 600 0.68rem/1.2 "Source Code Pro", monospace, "Microsoft YaHei";
-  letter-spacing: 0.22em;
-}
-
-.about-intro h1 {
-  margin: 0;
-  font: 400 clamp(3.4rem, 6.2vw, 7rem)/0.85 "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  letter-spacing: -0.055em;
-}
-
-.about-role {
-  max-width: 28rem;
-  margin: 1.25rem 0 0;
-  font-size: clamp(0.72rem, 0.9vw, 0.92rem);
-  line-height: 1.6;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.about-statement {
-  max-width: 26rem;
-  margin: 2rem 0 0;
-  color: #4d4d49;
-  font: 400 clamp(1rem, 1.15vw, 1.3rem)/1.58 "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-}
-
-.about-status-line {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin-top: 1.4rem;
-  color: var(--about-muted);
-  font-size: 0.68rem;
-  letter-spacing: 0.05em;
-}
-
-.about-status-dot {
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: #1e1e1e;
-  box-shadow: 0 0 0 0.25rem rgba(23, 23, 23, 0.08);
-  animation: about-pulse 2.4s ease-in-out infinite;
-}
-
 .about-avatar {
   position: absolute;
   z-index: 2;
-  inset: 4rem 29% 0 25%;
+  inset: 4rem 30% 0 0;
   pointer-events: none;
 }
 
@@ -3265,11 +3209,6 @@ html.curve-home .navbar-main {
   letter-spacing: 0.09em;
 }
 
-@keyframes about-pulse {
-  50% {
-    box-shadow: 0 0 0 0.5rem rgba(23, 23, 23, 0);
-  }
-}
 @media screen and (max-width: 1023px) {
   .about-portfolio {
     min-height: 35rem;
@@ -3288,22 +3227,8 @@ html.curve-home .navbar-main {
   .about-clock {
     font-size: 0.62rem;
   }
-  .about-intro {
-    top: 14%;
-    left: 1.25rem;
-    width: min(24rem, 45vw);
-  }
-  .about-intro h1 {
-    font-size: clamp(3rem, 10vw, 5.5rem);
-  }
-  .about-role {
-    font-size: 0.66rem;
-  }
-  .about-statement {
-    font-size: 1rem;
-  }
   .about-avatar {
-    inset: 3.7rem 34% 0 12%;
+    inset: 3.7rem 36% 0 0;
   }
   .about-terminal {
     right: 0.8rem;
@@ -3318,20 +3243,6 @@ html.curve-home .navbar-main {
   }
   .about-console-bar {
     grid-template-columns: 1fr auto 1fr;
-  }
-  .about-intro {
-    top: 12%;
-    width: calc(100% - 2.5rem);
-    pointer-events: none;
-  }
-  .about-intro h1 {
-    font-size: clamp(3.1rem, 18vw, 5rem);
-  }
-  .about-role {
-    max-width: 18rem;
-  }
-  .about-statement, .about-status-line {
-    display: none;
   }
   .about-avatar {
     inset: 3.4rem 0 27% 0;
@@ -3372,9 +3283,6 @@ html.curve-home .navbar-main {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .about-status-dot {
-    animation: none;
-  }
   .about-avatar-hint, .about-avatar-loader, .about-terminal__body {
     transition: none;
   }
