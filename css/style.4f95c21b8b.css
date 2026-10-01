@@ -2764,7 +2764,13 @@ body:has(.about-portfolio) {
   display: block;
   width: 100%;
   height: 100%;
+  opacity: 0;
   cursor: default;
+  transition: opacity 0.45s ease;
+}
+
+.about-avatar.is-ready .about-avatar-canvas {
+  opacity: 1;
 }
 
 .about-avatar-loader {
@@ -2773,10 +2779,11 @@ body:has(.about-portfolio) {
   left: 50%;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.8rem;
+  width: min(15rem, 70vw);
   color: var(--about-muted);
   transform: translate(-50%, -50%);
-  transition: opacity 0.2s, visibility 0.2s;
+  transition: opacity 0.25s, visibility 0.25s;
 }
 
 .about-avatar-loader.is-hidden {
@@ -2784,13 +2791,45 @@ body:has(.about-portfolio) {
   visibility: hidden;
 }
 
-.about-avatar-loader svg {
-  width: 2rem;
-  height: 2rem;
+.about-avatar-loader > svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  flex: none;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
   animation: about-spin 1s linear infinite;
+}
+
+.about-avatar-loader__status {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.35rem 0.7rem;
+  width: 100%;
+  font: 0.68rem/1.2 "Source Code Pro", monospace;
+  letter-spacing: 0.04em;
+}
+
+.about-avatar-loader__status strong {
+  color: var(--about-fg);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.about-avatar-loader__track {
+  grid-column: 1/-1;
+  height: 1px;
+  overflow: hidden;
+  background: var(--about-border);
+}
+
+.about-avatar-loader__track i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--about-fg);
+  transition: width 0.18s ease;
 }
 
 .about-terminal {
