@@ -3017,7 +3017,7 @@ body:has(.about-portfolio) {
   position: absolute;
   z-index: 25;
   top: 50%;
-  left: 50%;
+  left: calc(50% - 1rem);
   width: 0;
   height: 0;
   color: var(--about-ink);
@@ -3076,8 +3076,8 @@ body:has(.about-portfolio) {
   text-decoration: none;
   text-transform: uppercase;
   white-space: nowrap;
-  translate: -3rem 0;
-  transform: translate(-50%, -50%) rotate(var(--arc-angle)) translateX(var(--arc-radius)) rotate(var(--arc-angle-inverse));
+  transform-origin: 0 0;
+  transform: rotate(var(--arc-angle)) translateX(calc(var(--arc-radius) + 1rem)) rotate(180deg) translate(-100%, -50%);
   transition: color 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -4244,79 +4244,37 @@ body:has(.about-portfolio) {
   color: #666;
 }
 
-.about-contact-form {
-  display: flex;
-  max-width: 42rem;
-  box-sizing: border-box;
-  flex-direction: column;
-  gap: 1.35rem;
-  margin: 0 auto;
-  padding: clamp(1.5rem, 3vw, 2rem);
-  border: 1px solid var(--about-line);
-  border-radius: 1rem;
-  background: var(--about-soft);
-}
-
-.about-contact-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-.about-contact-form label > span, .about-contact-direct > span, .about-contact-direct small {
+.about-contact-direct > span, .about-contact-direct small {
   color: #b5aaa4;
   font: 0.6rem "Source Code Pro", monospace;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.about-contact-form input, .about-contact-form textarea {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.85rem 1rem;
-  border: 1px solid var(--about-line);
-  border-radius: 0.75rem;
-  outline: 0;
-  color: var(--about-ink);
-  background: #fff;
-  font: 0.82rem/1.5 "Source Code Pro", monospace;
-  transition: border-color 0.25s, box-shadow 0.25s;
-}
-
-.about-contact-form textarea {
-  resize: vertical;
-}
-
-.about-contact-form input:focus, .about-contact-form textarea:focus {
-  border-color: var(--about-accent);
-  box-shadow: 0 0 0 1px rgba(50, 115, 220, 0.28);
-}
-
-.about-contact-form .about-motion-button {
-  align-self: flex-start;
-  margin-top: 0.35rem;
-}
-
 .about-contact-direct {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 4rem;
-  padding-top: 3rem;
-  border-top: 1px solid var(--about-line);
+  gap: 0.8rem;
+  padding-top: 2rem;
   text-align: center;
 }
 
-.about-contact-direct a {
+.about-contact-direct a, .about-contact-direct button {
   position: relative;
-  margin: 0.8rem 0 0.4rem;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
   color: var(--about-ink);
-  font: 800 clamp(1.5rem, 3vw, 3rem) "Space Grotesk", sans-serif;
+  background: transparent;
+  font: 800 clamp(1.25rem, 2.5vw, 3rem) "Space Grotesk", sans-serif;
+  overflow-wrap: anywhere;
   text-decoration: none;
-  text-transform: uppercase;
+  cursor: pointer;
 }
 
-.about-contact-direct a::after {
+.about-contact-direct a::after, .about-contact-direct button::after {
   position: absolute;
   right: 0;
   bottom: -0.2rem;
@@ -4328,12 +4286,21 @@ body:has(.about-portfolio) {
   transition: transform 0.5s;
 }
 
-.about-contact-direct a:hover {
+.about-contact-direct a:hover, .about-contact-direct button:hover {
   color: var(--about-accent);
 }
 
-.about-contact-direct a:hover::after {
+.about-contact-direct a:hover::after, .about-contact-direct button:hover::after {
   transform: scaleX(1);
+}
+
+.about-contact-direct button:focus-visible {
+  outline: 2px solid var(--about-accent);
+  outline-offset: 0.4rem;
+}
+
+.about-contact-direct small {
+  text-transform: none;
 }
 
 .about-back-to-top {
@@ -4451,7 +4418,7 @@ body:has(.about-portfolio) {
   .about-arc-menu {
     --arc-diameter: clamp(11rem, 50vw, 15rem);
     top: 68%;
-    left: calc(100% - 0.75rem);
+    left: calc(100% - 1rem);
   }
   .about-profile-hero {
     min-height: 100%;
@@ -4599,9 +4566,6 @@ body:has(.about-portfolio) {
   }
   .about-contact-card {
     padding: 2rem 1.25rem;
-  }
-  .about-contact-form {
-    padding: 1.25rem;
   }
   .about-info-modal {
     --about-pixel-size: clamp(.34rem, 1.45vw, .52rem);
