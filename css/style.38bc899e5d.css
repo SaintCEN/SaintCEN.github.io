@@ -3023,6 +3023,25 @@ body:has(.about-portfolio) {
   color: var(--about-ink);
 }
 
+.about-arc-menu__pattern {
+  position: absolute;
+  top: calc(-1 * var(--arc-radius));
+  left: calc(-1 * var(--arc-radius));
+  width: var(--arc-radius);
+  height: var(--arc-diameter);
+  overflow: hidden;
+  border-radius: 100% 0 0 100%/50% 0 0 50%;
+  pointer-events: none;
+}
+
+.about-arc-menu__pattern img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 65% center;
+}
+
 .about-arc-menu__orbit {
   position: absolute;
   top: 0;
