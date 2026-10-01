@@ -25,7 +25,7 @@
 <meta property="og:site_name" content="Sa1ntCHENのHome">
 <meta property="og:description" content="A local site used to preview and style the Minos theme.">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-10-01T10:35:32.293Z">
+<meta property="article:published_time" content="2026-10-01T10:46:04.331Z">
 <meta property="article:modified_time" content="2026-09-27T07:31:47.806Z">
 <meta property="article:author" content="Author">
 <meta name="twitter:card" content="summary">
@@ -45,7 +45,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
 
 
-<link rel="stylesheet" href="/css/style.a5f280fe7c.css">
+<link rel="stylesheet" href="/css/style.1dc09ede2e.css">
 
 <meta name="page-transition-title" content="About">
 <meta name="page-kind" content="page">
@@ -153,9 +153,6 @@
                 <button class="about-icon-button" type="button" data-about-dialog="about-info-dialog" aria-label="Info">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg>
                 </button>
-                <button class="about-icon-button" type="button" data-about-dialog="about-projects-dialog" aria-label="Projects">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"></path></svg>
-                </button>
                 <button class="about-icon-button" type="button" data-about-motion disabled aria-label="Play animation">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path></svg>
                 </button>
@@ -176,8 +173,8 @@
             <form class="about-terminal__form" data-about-form>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"></path></svg>
                 <label for="about-terminal-input">user@terminal:~$</label>
-                <textarea id="about-terminal-input" data-about-input rows="1" autocomplete="off" placeholder="Type your message..."></textarea>
-                <button type="submit" aria-label="Send message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg></button>
+                <textarea id="about-terminal-input" data-about-input rows="1" autocomplete="off" placeholder="Type your command..."></textarea>
+                <button type="submit" aria-label="Run command"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg></button>
             </form>
         </div>
     </section>
@@ -185,61 +182,53 @@
     <dialog class="about-dialog" id="about-info-dialog">
         <div class="about-modal about-info-modal">
             <section class="about-info-bio">
-                <pre>███████╗ █████╗  ██╗███╗   ██╗████████╗
-██╔════╝██╔══██╗███║████╗  ██║╚══██╔══╝
-███████╗███████║╚██║██╔██╗ ██║   ██║
-╚════██║██╔══██║ ██║██║╚██╗██║   ██║
-███████║██║  ██║ ██║██║ ╚████║   ██║
-╚══════╝╚═╝  ╚═╝ ╚═╝╚═╝  ╚═══╝   ╚═╝</pre>
+                <pre class="about-pixel-name" aria-label="Sa1ntCHEN">███████╗ █████╗  ██╗███╗   ██╗████████╗ ██████╗██╗  ██╗███████╗███╗   ██╗
+██╔════╝██╔══██╗███║████╗  ██║╚══██╔══╝██╔════╝██║  ██║██╔════╝████╗  ██║
+███████╗███████║╚██║██╔██╗ ██║   ██║   ██║     ███████║█████╗  ██╔██╗ ██║
+╚════██║██╔══██║ ██║██║╚██╗██║   ██║   ██║     ██╔══██║██╔══╝  ██║╚██╗██║
+███████║██║  ██║ ██║██║ ╚████║   ██║   ╚██████╗██║  ██║███████╗██║ ╚████║
+╚══════╝╚═╝  ╚═╝ ╚═╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝</pre>
                 <div class="about-command-block">
+                    
                     <p><b>$</b> whoami</p><div>Computer Vision · Generative Models · Agent Systems</div>
+                    
                     <p><b>$</b> cat about.txt</p><div>They deemed my downfall the final chapter, yet I shall return to rewrite the tale.</div>
+                    
                     <p><b>$</b> cat status.txt</p><div>插秧中[GPT-6-Astra]</div>
+                    
                 </div>
             </section>
-            <section class="about-system-info">
-                <div class="about-tree-section">
-                    <header><i></i><h2>Technologies</h2><span></span></header>
-                    <p class="about-tree-root">▣ stack/</p>
-                    <ul><li><span>◇</span>Computer Vision</li><li><span>◇</span>Generative Models</li><li><span>◇</span>Agent Systems</li><li><span>◇</span>Web Engineering</li></ul>
+            <section class="about-system-info" aria-label="Available commands">
+                <div class="about-tree-section about-command-list">
+                    <header><i></i><h2>Commands</h2><span></span></header>
+                    <ul>
+                        
+                        <li><span>$</span><code>whoami</code></li>
+                        
+                        <li><span>$</span><code>cat about.txt</code></li>
+                        
+                        <li><span>$</span><code>cat status.txt</code></li>
+                        
+                        <li><span>$</span><code>pwd</code></li>
+                        
+                        <li><span>$</span><code>ls stack/</code></li>
+                        
+                        <li><span>$</span><code>ls projects/</code></li>
+                        
+                        <li><span>$</span><code>cat contact.txt</code></li>
+                        
+                        <li><span>$</span><code>help</code></li>
+                        
+                    </ul>
                 </div>
-                
-                <div class="about-tree-section about-tree-section--contact">
-                    <header><i></i><h2>Contact</h2><span></span></header>
-                    <p class="about-tree-root">▣ social/</p>
-                    <ul><li><a href="https://github.com/SaintCEN" target="_blank" rel="noopener noreferrer"><span>◇</span><b>GitHub</b><em>@SaintCEN</em></a></li></ul>
-                </div>
-                
                 <footer></footer>
             </section>
         </div>
     </dialog>
 
-    <dialog class="about-dialog" id="about-projects-dialog">
-        <div class="about-modal about-project-modal">
-            <header class="about-project-modal__header"><i></i><i></i><i></i><span>user@portfolio:~/projects$</span></header>
-            <div class="about-project-modal__body">
-                <p class="about-project-command"><b>$</b> ls -la projects/</p>
-                <p class="about-project-total">total 2 repositories</p>
-                
-                <article class="about-project">
-                    <p class="about-project-command"><b>$</b> cat research-&amp;-notes.json</p>
-                    <div><header><h2>▣ Research &amp; Notes</h2><span>● active</span></header><p>Computer vision, generative models and engineering notes collected over time.</p><ul><li>Vision</li><li>Research</li><li>Writing</li></ul><a href="/archives/">↗ Live Demo</a></div>
-                </article>
-                
-                <article class="about-project">
-                    <p class="about-project-command"><b>$</b> cat visual-archive.json</p>
-                    <div><header><h2>▣ Visual Archive</h2><span>● evolving</span></header><p>A photographic record of places, events and fragments of daily life.</p><ul><li>Photography</li><li>Archive</li></ul><a href="/album/">↗ Live Demo</a></div>
-                </article>
-                
-                <p class="about-project-command"><b>$</b> _</p>
-            </div>
-        </div>
-    </dialog>
-
-    <script type="application/json" data-terminal-knowledge>{"name":"Sa1ntCHEN","role":"Computer Vision · Generative Models · Agent Systems","introduction":"They deemed my downfall the final chapter, yet I shall return to rewrite the tale.","status":"插秧中[GPT-6-Astra]","location":"Xidian University, China","focus":["Computer Vision","Generative Models","Agent Systems","Web Engineering"],"projects":[{"name":"Research & Notes","description":"Computer vision, generative models and engineering notes collected over time.","technologies":["Vision","Research","Writing"],"url":"/archives/","status":"active"},{"name":"Visual Archive","description":"A photographic record of places, events and fragments of daily life.","technologies":["Photography","Archive"],"url":"/album/","status":"evolving"}],"contacts":[{"label":"GitHub","value":"@SaintCEN","url":"https://github.com/SaintCEN"}]}</script>
+    <script type="application/json" data-terminal-knowledge>{"commands":[{"input":"whoami","output":"Computer Vision · Generative Models · Agent Systems"},{"input":"cat about.txt","output":"They deemed my downfall the final chapter, yet I shall return to rewrite the tale."},{"input":"cat status.txt","output":"插秧中[GPT-6-Astra]"},{"input":"pwd","output":"Xidian University, China"},{"input":"ls stack/","output":"Computer Vision · Generative Models · Agent Systems · Web Engineering"},{"input":"ls projects/","output":"Research & Notes — /archives/ · Visual Archive — /album/"},{"input":"cat contact.txt","output":"GitHub: @SaintCEN · https://github.com/SaintCEN"},{"input":"help","output":"Available commands: whoami, cat about.txt, cat status.txt, pwd, ls stack/, ls projects/, cat contact.txt, help."}]}</script>
 </main>
-<script defer src="/js/about.ed95591af4.js"></script>
+<script defer src="/js/about.422e261e22.js"></script>
 
     
     

@@ -3050,12 +3050,12 @@ body:has(.about-portfolio) {
   padding: clamp(1.5rem, 3vw, 3rem);
 }
 
-.about-info-bio pre {
+.about-pixel-name {
   max-width: 100%;
   margin: 0 0 1.5rem;
-  overflow: auto;
+  overflow: auto hidden;
   color: var(--about-muted);
-  font: clamp(0.42rem, 0.72vw, 0.78rem)/1.1 "Source Code Pro", monospace;
+  font: clamp(0.34rem, 0.55vw, 0.62rem)/1.08 "Source Code Pro", monospace;
 }
 
 .about-command-block {
@@ -3072,7 +3072,7 @@ body:has(.about-portfolio) {
   margin-top: 0;
 }
 
-.about-command-block b, .about-project-command b {
+.about-command-block b {
   color: #4e9c63;
   font-weight: 400;
 }
@@ -3107,10 +3107,6 @@ body:has(.about-portfolio) {
   background: var(--about-fg);
 }
 
-.about-tree-section--contact header i {
-  background: #d97836;
-}
-
 .about-tree-section header h2 {
   margin: 0;
   font: 500 1rem "Source Code Pro", monospace;
@@ -3122,15 +3118,9 @@ body:has(.about-portfolio) {
   background: var(--about-border);
 }
 
-.about-tree-root {
-  margin: 0 0 0.5rem 1rem;
-  color: var(--about-muted);
-  font: 0.78rem "Source Code Pro", monospace;
-}
-
 .about-tree-section ul {
   position: relative;
-  margin: 0 0 0 2rem;
+  margin: 0 0 0 1rem;
   padding: 0;
   list-style: none;
 }
@@ -3157,140 +3147,27 @@ body:has(.about-portfolio) {
   border-top: 1px solid #4ade80;
 }
 
-.about-tree-section li > span, .about-tree-section a > span {
-  margin-right: 0.6rem;
-}
-
-.about-tree-section a {
+.about-command-list li {
   display: flex;
   align-items: center;
+  gap: 0.7rem;
+}
+
+.about-command-list li > span {
+  color: #4e9c63;
+}
+
+.about-command-list code {
+  padding: 0;
   color: inherit;
-}
-
-.about-tree-section a b {
-  font-weight: 400;
-}
-
-.about-tree-section a em {
-  margin-left: auto;
-  color: var(--about-muted);
-  font-style: normal;
-  font-size: 0.7rem;
+  background: none;
+  font: inherit;
 }
 
 .about-system-info footer {
   height: 1rem;
   border-top: 1px solid var(--about-border);
   background: var(--about-accent);
-}
-
-.about-project-modal {
-  width: min(80vw, 72rem);
-  font-family: "Source Code Pro", monospace;
-}
-
-.about-project-modal__header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1.2rem 1.5rem;
-  border-bottom: 1px solid var(--about-border);
-}
-
-.about-project-modal__header i {
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 50%;
-  background: #e35d5b;
-}
-
-.about-project-modal__header i:nth-child(2) {
-  background: #e4bd58;
-}
-
-.about-project-modal__header i:nth-child(3) {
-  background: #63b66a;
-}
-
-.about-project-modal__header span {
-  margin-left: 0.35rem;
-  color: var(--about-muted);
-  font-size: 0.8rem;
-}
-
-.about-project-modal__body {
-  max-height: calc(90vh - 4rem);
-  padding: 1.5rem;
-  overflow-y: auto;
-}
-
-.about-project-command {
-  margin: 0 0 0.7rem;
-  font-size: 0.85rem;
-}
-
-.about-project-total {
-  margin: 0 0 1.5rem 1rem;
-  color: var(--about-muted);
-  font-size: 0.78rem;
-}
-
-.about-project {
-  margin-bottom: 1.5rem;
-}
-
-.about-project > div {
-  margin-left: 1rem;
-  padding: 1rem;
-  border-left: 2px solid #4e9c63;
-  background: color-mix(in srgb, var(--about-accent) 55%, transparent);
-}
-
-.about-project header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.about-project h2 {
-  margin: 0;
-  font: 500 0.9rem "Source Code Pro", monospace;
-}
-
-.about-project header span {
-  color: #4e9c63;
-  font-size: 0.7rem;
-}
-
-.about-project > div > p {
-  margin: 0.65rem 0;
-  color: var(--about-muted);
-  font-size: 0.78rem;
-  line-height: 1.6;
-}
-
-.about-project ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0.75rem 0;
-  padding: 0;
-  list-style: none;
-}
-
-.about-project li {
-  padding: 0.25rem 0.5rem;
-  border: 1px solid color-mix(in srgb, #4e9c63 35%, transparent);
-  border-radius: 0.25rem;
-  color: #4e9c63;
-  background: color-mix(in srgb, #4e9c63 10%, transparent);
-  font-size: 0.68rem;
-}
-
-.about-project a {
-  color: var(--about-muted);
-  font-size: 0.78rem;
 }
 
 @keyframes about-spin {
@@ -3340,11 +3217,8 @@ body:has(.about-portfolio) {
     gap: 1.5rem;
     padding: 1rem;
   }
-  .about-info-bio pre {
-    font-size: clamp(0.34rem, 1.5vw, 0.55rem);
-  }
-  .about-project-modal {
-    width: 95vw;
+  .about-pixel-name {
+    font-size: clamp(0.22rem, 1vw, 0.38rem);
   }
 }
 @media (prefers-reduced-motion: reduce) {
