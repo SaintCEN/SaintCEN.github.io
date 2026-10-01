@@ -1,8 +1,7 @@
-AvatarSample_C
-Author: VRoid Project
-Source: https://github.com/dawnn07/ai-portfolio/blob/main/public/model.vrm
+Ciel 1.0
+Author: repino / ArmoireLepus
+Reference: https://armoirelepus.booth.pm/items/3368697
 
-The VRM file embeds the following license URL and permissions:
-https://hub.vroid.com/license?allowed_to_use_user=everyone&characterization_allowed_user=everyone&corporate_commercial_use=allow&credit=unnecessary&modification=allow&personal_commercial_use=profit&redistribution=allow&sexual_expression=allow&version=1&violent_expression=allow
-
-Redistribution is allowed and credit is unnecessary under the embedded model terms.
+This copy is published with explicit redistribution authorization held and
+confirmed by the site owner on 2026-10-01. Other rights remain with the model
+author. This notice does not grant downstream redistribution rights.
