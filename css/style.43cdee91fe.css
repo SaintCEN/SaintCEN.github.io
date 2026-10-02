@@ -2746,6 +2746,10 @@ body:has(.about-portfolio) {
   opacity: 1;
 }
 
+.about-avatar:not(.is-ready) .about-avatar-canvas {
+  transition: none;
+}
+
 .about-avatar-loader {
   position: absolute;
   top: var(--about-loader-center-y, 50%);
@@ -2763,6 +2767,7 @@ body:has(.about-portfolio) {
 .about-avatar-loader.is-hidden {
   opacity: 0;
   visibility: hidden;
+  transition: none;
 }
 
 .about-avatar-loader__row {
