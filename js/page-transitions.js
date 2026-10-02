@@ -71,12 +71,12 @@
         if (reduced.matches || !element.animate) return;
         revealed = new Promise(function (resolve) { finishReveal = resolve; });
         var motions = [element.animate([{ opacity: 0 }, { opacity: 1 }], {
-            id: 'article-entry-fade', duration: 240, easing: 'ease-out'
+            id: 'article-entry-fade', duration: 360, easing: 'ease-out'
         })];
         var content = element.querySelector('.post-main');
         if (content) motions.push(content.animate([
             { transform: 'translateY(8px)' }, { transform: 'none' }
-        ], { id: 'article-entry-rise', duration: 280, easing: 'cubic-bezier(.22, 1, .36, 1)' }));
+        ], { id: 'article-entry-rise', duration: 420, easing: 'cubic-bezier(.22, 1, .36, 1)' }));
         articleAnimations = motions;
         Promise.all(motions.map(function (animation) { return animation.finished.catch(function () {}); })).then(function () {
             if (articleAnimations === motions) clear();
@@ -287,7 +287,7 @@
                 if (cards && cards.animate) {
                     clear();
                     var exit = cards.animate([{ opacity: 1 }, { opacity: 0 }], {
-                        id: 'archive-card-exit', duration: 100, easing: 'ease-out', fill: 'forwards'
+                        id: 'archive-card-exit', duration: 150, easing: 'ease-out', fill: 'forwards'
                     });
                     articleAnimations.push(exit);
                     await exit.finished.catch(function () {});
