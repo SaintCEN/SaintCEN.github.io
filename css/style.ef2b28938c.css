@@ -2715,8 +2715,7 @@ body:has(.about-portfolio) {
   --about-dark-soft: #1b1e1c;
   --about-light: #f4f2ed;
   --about-accent: #3273dc;
-  --about-panel-width: 50vw;
-  --about-panel-half-width: 25vw;
+  --about-panel-width: 60%;
   --about-cjk-family: "About CJK";
   position: relative;
   width: 100%;
@@ -3043,7 +3042,7 @@ body:has(.about-portfolio) {
   position: absolute;
   z-index: 25;
   top: 50%;
-  left: calc(50% - 1rem);
+  left: calc(100% - var(--about-panel-width) - 1rem);
   width: 0;
   height: 0;
   color: var(--about-ink);
