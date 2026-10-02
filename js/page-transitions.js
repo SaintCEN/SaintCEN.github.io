@@ -9,6 +9,7 @@
     var revealed = Promise.resolve(), finishReveal;
     var current = new URL(location.href), request = 0, frame = 0, layer, safety, scrollTimer;
     var svg, path, label, width, height, initialized = false, restoring = false;
+    var articleAnimations = [];
     var repeatScripts = /\/js\/(?:home-hero|post-toc|album|archives-inline|script|insight|about(?:\.[a-f0-9]+)?)\.js$/;
     var bundleReady, preloadReady, jsonData = new Map(), images = new Map();
     function key(url) { return url.pathname.replace(/\/(?:index\.html)?$/, '') + url.search; }
@@ -17,6 +18,8 @@
     }
     function clear() {
         cancelAnimationFrame(frame); clearTimeout(safety); frame = 0;
+        articleAnimations.forEach(function (animation) { animation.cancel(); });
+        articleAnimations = [];
         if (layer) layer.remove();
         layer = null;
         document.documentElement.classList.remove('curve-home');
@@ -62,6 +65,23 @@
         }
         frame = requestAnimationFrame(tick);
         safety = setTimeout(clear, 2500);
+    }
+    function revealArticle(element) {
+        clear();
+        if (reduced.matches || !element.animate) return;
+        revealed = new Promise(function (resolve) { finishReveal = resolve; });
+        var motions = [element.animate([{ opacity: 0 }, { opacity: 1 }], {
+            id: 'article-entry-fade', duration: 240, easing: 'ease-out'
+        })];
+        var content = element.querySelector('.post-main');
+        if (content) motions.push(content.animate([
+            { transform: 'translateY(8px)' }, { transform: 'none' }
+        ], { id: 'article-entry-rise', duration: 280, easing: 'cubic-bezier(.22, 1, .36, 1)' }));
+        articleAnimations = motions;
+        Promise.all(motions.map(function (animation) { return animation.finished.catch(function () {}); })).then(function () {
+            if (articleAnimations === motions) clear();
+        });
+        safety = setTimeout(clear, 800);
     }
     function warmImages(doc, base) {
         var imageLoads = Array.from(doc.querySelectorAll('#site-page img[src]')).map(function (source) {
@@ -260,6 +280,20 @@
             await new Promise(function (resolve) { setTimeout(resolve, 0); });
             if (ticket !== request) return;
             var doc = result.doc;
+            var toArticle = !!doc.querySelector('meta[name="page-kind"][content="article"]');
+            var articleEntry = toArticle && !!oldPage.querySelector('[data-inline-archive]');
+            if (articleEntry && !reduced.matches) {
+                var cards = oldPage.querySelector('.inline-archive__content-wrap');
+                if (cards && cards.animate) {
+                    clear();
+                    var exit = cards.animate([{ opacity: 1 }, { opacity: 0 }], {
+                        id: 'archive-card-exit', duration: 100, easing: 'ease-out', fill: 'forwards'
+                    });
+                    articleAnimations.push(exit);
+                    await exit.finished.catch(function () {});
+                    if (ticket !== request) { exit.cancel(); return; }
+                }
+            }
             var target = new URL(result.url); target.hash = url.hash;
             var incoming = document.importNode(doc.getElementById('site-page'), true);
             incoming.dataset.route = target.pathname;
@@ -278,12 +312,12 @@
             var hasNavbar = doc.documentElement.classList.contains('has-navbar-fixed-top');
             document.documentElement.classList.toggle('has-navbar-fixed-top', hasNavbar);
             var title = doc.querySelector('meta[name="page-transition-title"]');
-            var toArticle = !!doc.querySelector('meta[name="page-kind"][content="article"]');
             if (toArticle) clear();
             else play(title ? title.content : doc.title, fromHome || !hasNavbar);
             oldPage.replaceWith(incoming);
             syncNavbar(doc);
             position(url, options.scroll);
+            if (articleEntry) revealArticle(incoming);
             var heading = incoming.querySelector('h1');
             if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
             restoring = false;
