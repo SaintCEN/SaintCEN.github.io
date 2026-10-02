@@ -400,9 +400,13 @@
         var maximumHeight = host.clientHeight;
         var targetHeight = root.getBoundingClientRect().height;
         var styles = getComputedStyle(root);
+        var frameStyles = getComputedStyle(this.DOM.contentWrap);
+        var frameChrome = ['paddingTop', 'paddingBottom', 'borderTopWidth', 'borderBottomWidth'].reduce(function (total, property) {
+            return total + (parseFloat(frameStyles[property]) || 0);
+        }, 0);
         var gap = parseFloat(styles.rowGap) || 0;
         var menuHeight = this.DOM.menu.getBoundingClientRect().height;
-        var availableForCards = Math.max(0, maximumHeight - menuHeight - gap);
+        var availableForCards = Math.max(0, maximumHeight - menuHeight - gap - frameChrome);
         var desiredWidth = firstCard.getBoundingClientRect().width;
         var minimumWidth = Math.min(224, desiredWidth);
         var cardHeight = this.cardFrameHeightAt(desiredWidth);
@@ -419,7 +423,7 @@
             cardHeight = this.cardFrameHeightAt(desiredWidth);
         }
 
-        var requiredHeight = cardHeight + gap + menuHeight;
+        var requiredHeight = cardHeight + frameChrome + gap + menuHeight;
         root.style.setProperty('--archive-layout-height', Math.min(maximumHeight, Math.max(targetHeight, requiredHeight)) + 'px');
         this.contents.forEach(function (content) { content.gallery.resize(); });
     };

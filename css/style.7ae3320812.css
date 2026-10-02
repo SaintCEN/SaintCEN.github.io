@@ -577,19 +577,46 @@ figure.highlight .section {
 }
 
 .inline-archive__content-wrap {
+  --archive-film-band: clamp(.7rem, 1.8svh, 1.25rem);
   grid-row: 1;
   position: relative;
   width: 100%;
   min-width: 0;
   height: auto;
   min-height: 0;
+  padding-block: var(--archive-film-band);
+  border: 1px solid #171717;
   overflow: hidden;
   overflow: clip;
 }
 
+.inline-archive__content-wrap::before,
+.inline-archive__content-wrap::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  left: 0;
+  height: var(--archive-film-band);
+  background-color: #171717;
+  background-image: repeating-linear-gradient(90deg, transparent 0 0.45rem, #fff 0.45rem 0.8rem, transparent 0.8rem 1.3rem);
+  background-size: auto 40%;
+  background-position: 0 50%;
+  background-repeat: repeat-x;
+  pointer-events: none;
+}
+
+.inline-archive__content-wrap::before {
+  top: 0;
+}
+
+.inline-archive__content-wrap::after {
+  bottom: 0;
+}
+
 .inline-archive__content {
   position: absolute;
-  inset: 0;
+  inset: var(--archive-film-band) 0;
   width: 100%;
   height: auto;
   overflow: hidden;
@@ -599,6 +626,7 @@ figure.highlight .section {
 
 .inline-archive__content.is-current {
   position: relative;
+  inset: auto;
   opacity: 1;
   pointer-events: auto;
 }
@@ -2731,6 +2759,17 @@ body:has(.about-portfolio) {
   position: absolute;
   z-index: 1;
   inset: 0 var(--about-panel-width) 0 0;
+}
+
+.about-avatar::after {
+  content: "";
+  position: absolute;
+  inset: 0.6rem;
+  border: clamp(2rem, 4.5vw, 4rem) solid transparent;
+  border-image-source: var(--about-avatar-frame);
+  border-image-slice: 15% 16%;
+  border-image-repeat: stretch;
+  pointer-events: none;
 }
 
 .about-avatar-canvas {
