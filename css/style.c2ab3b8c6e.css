@@ -2720,7 +2720,7 @@ body:has(.about-portfolio) {
   position: relative;
   width: 100%;
   height: calc(100svh - 3.25rem);
-  min-height: 30rem;
+  min-height: 0;
   overflow: hidden;
   color: var(--about-ink);
   background: var(--about-bg);
@@ -3037,7 +3037,7 @@ body:has(.about-portfolio) {
 }
 
 .about-arc-menu {
-  --arc-diameter: clamp(12.5rem, 18vw, 17rem);
+  --arc-diameter: clamp(6rem, min(13.5vw, 27svh), 13rem);
   --arc-radius: calc(var(--arc-diameter) / 2);
   position: absolute;
   z-index: 25;
@@ -3096,7 +3096,7 @@ body:has(.about-portfolio) {
   padding: 0.35rem 0.5rem;
   color: var(--about-ink);
   background: transparent;
-  font: 600 0.72rem "Space Grotesk", var(--about-cjk-family), sans-serif;
+  font: 600 0.68rem "Space Grotesk", var(--about-cjk-family), sans-serif;
   letter-spacing: 0.04em;
   text-decoration: none;
   text-transform: uppercase;
@@ -4365,15 +4365,11 @@ body:has(.about-portfolio) {
 @media screen and (max-width: 700px) {
   .about-portfolio {
     height: calc(100svh - 3.25rem);
-    min-height: 32rem;
+    min-height: 0;
   }
   .about-avatar {
     right: 0;
     bottom: 54%;
-  }
-  .about-avatar-loader {
-    top: 23%;
-    left: 50%;
   }
   .about-terminal {
     top: auto;
@@ -4408,8 +4404,8 @@ body:has(.about-portfolio) {
     width: 100%;
   }
   .about-arc-menu {
-    --arc-diameter: clamp(11rem, 50vw, 15rem);
-    top: 68%;
+    --arc-diameter: clamp(3rem, min(28vw, calc((100svh - 3.25rem) * .46 - 10rem)), 10rem);
+    top: calc(23% - 0.8rem);
     left: calc(100% - 1rem);
   }
   .about-profile-hero {
