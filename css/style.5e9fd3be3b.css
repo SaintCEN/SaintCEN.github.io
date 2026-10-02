@@ -2733,17 +2733,6 @@ body:has(.about-portfolio) {
   inset: 0 var(--about-panel-width) 0 0;
 }
 
-.about-avatar::after {
-  content: "";
-  position: absolute;
-  inset: 0.6rem;
-  border: clamp(2rem, 4.5vw, 4rem) solid transparent;
-  border-image-source: var(--about-avatar-frame);
-  border-image-slice: 15% 16%;
-  border-image-repeat: stretch;
-  pointer-events: none;
-}
-
 .about-avatar-canvas {
   display: block;
   width: 100%;
