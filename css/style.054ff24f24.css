@@ -2748,8 +2748,8 @@ body:has(.about-portfolio) {
 
 .about-avatar-loader {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: var(--about-loader-center-y, 50%);
+  left: var(--about-loader-center-x, 50%);
   display: grid;
   place-items: center;
   gap: 1rem;
@@ -2768,26 +2768,26 @@ body:has(.about-portfolio) {
 .about-avatar-loader__row {
   display: flex;
   align-items: center;
-  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  gap: clamp(0.5rem, 1vw, 0.875rem);
 }
 
 .about-avatar-loader__sprite {
   display: block;
   flex: none;
-  width: clamp(4rem, 7vw, 6rem);
+  width: clamp(3rem, 5.25vw, 4.5rem);
   height: auto;
   image-rendering: pixelated;
 }
 
 .about-avatar-loader__status {
   display: grid;
-  font: clamp(0.85rem, 0.9vw, 1rem)/1.5 "Source Code Pro", monospace;
+  font: clamp(0.75rem, 0.8vw, 0.875rem)/1.5 "Source Code Pro", monospace;
   white-space: nowrap;
 }
 
 .about-avatar-loader__status > span {
   grid-area: 1/1;
-  animation: about-meow-status 2s step-end infinite;
+  animation: about-meow-status 2s ease-in-out infinite;
 }
 
 .about-avatar-loader__status > span + span {
@@ -4356,13 +4356,25 @@ body:has(.about-portfolio) {
 }
 
 @keyframes about-meow-status {
+  0%, 40%, 100% {
+    opacity: 1;
+    transform: none;
+  }
+  48% {
+    opacity: 0;
+    transform: translateY(-0.2em);
+  }
+  50%, 90% {
+    opacity: 0;
+    transform: translateY(0.2em);
+  }
+}
+@keyframes about-meow-status-still {
   0%, 49.999% {
     opacity: 1;
-    visibility: visible;
   }
   50%, 100% {
     opacity: 0;
-    visibility: hidden;
   }
 }
 @keyframes about-marquee {
@@ -4593,6 +4605,10 @@ body:has(.about-portfolio) {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .about-avatar-loader__status > span {
+    animation-name: about-meow-status-still;
+    animation-timing-function: step-end;
+  }
   .about-marquee > div {
     animation: none;
   }
