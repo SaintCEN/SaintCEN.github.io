@@ -359,6 +359,7 @@
         };
         this.DOM.menuItems = Array.from(this.DOM.menu.querySelectorAll('[data-inline-menu-item]'));
         this.DOM.contents = Array.from(root.querySelectorAll('[data-inline-content]'));
+        this.DOM.titles = Array.from(root.querySelectorAll('.inline-archive__gallery-title'));
         this.sharedProperties = {
             tx: { previous: 0, current: 0, amount: 0.08 },
             ty: { previous: 0, current: 0, amount: 0.08 },
@@ -381,8 +382,26 @@
         this.fitLayout();
     }
 
+    Controller.prototype.fitTitles = function () {
+        this.DOM.titles.forEach(function (title) {
+            // Start at the stylesheet size so titles can grow again on resize.
+            title.style.removeProperty('--archive-title-size');
+            var link = title.querySelector('a');
+            var available = title.clientWidth;
+            if (!link || available <= 0) return;
+            var width = link.getBoundingClientRect().width;
+            var size = parseFloat(getComputedStyle(title).fontSize);
+            for (var step = 0; step < 3 && width > available; step += 1) {
+                size *= (available - 0.5) / width;
+                title.style.setProperty('--archive-title-size', size + 'px');
+                width = link.getBoundingClientRect().width;
+            }
+        });
+    };
+
     Controller.prototype.cardFrameHeightAt = function (width) {
         root.style.setProperty('--archive-fitted-card-width', width + 'px');
+        this.fitTitles();
         return this.DOM.contents.reduce(function (maximum, content) {
             var frame = content.querySelector('.inline-archive__gallery');
             return frame ? Math.max(maximum, frame.getBoundingClientRect().height) : maximum;

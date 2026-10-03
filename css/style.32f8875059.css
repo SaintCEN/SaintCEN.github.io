@@ -676,14 +676,16 @@ figure.highlight .section {
   min-width: 0;
   margin: 0 0 0.35rem;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;
-  font-size: clamp(1.35rem, min(2.2vw, 3.8svh), 2.7rem);
+  font-size: var(--archive-title-size, clamp(1.35rem, min(2.2vw, 3.8svh), 2.7rem));
   font-weight: normal;
   line-height: 1.08;
   text-transform: none;
+  white-space: nowrap;
 }
 .inline-archive__gallery-title a {
+  display: inline-block;
   color: inherit;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
 }
 .inline-archive__gallery-title a:hover,
 .inline-archive__gallery-title a:focus-visible {
