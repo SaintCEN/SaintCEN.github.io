@@ -3869,6 +3869,11 @@ body:has(.about-portfolio) {
   background: var(--about-dark);
 }
 
+.about-service-card.is-stacked {
+  position: sticky;
+  top: var(--service-sticky-top);
+}
+
 .about-service-card > header {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
