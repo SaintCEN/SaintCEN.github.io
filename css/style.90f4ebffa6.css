@@ -2373,6 +2373,7 @@ html.curve-home .navbar-main {
 .album-grid.is-enhanced .content__info, .album-grid.is-enhanced .gallery {
   height: 100%;
   min-height: 0;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior-y: contain;
   scrollbar-width: thin;
