@@ -153,7 +153,7 @@ a.tag.article-tag {
 }
 .article blockquote.colorquote.info:before {
   background-color: hsl(204, 86%, 53%);
-  background-image: url("/image-media/7a4679f9678fce31c6a6e67b.webp");
+  background-image: url("../images/info.jpg");
 }
 .article blockquote.colorquote.success {
   border-color: hsl(141, 71%, 48%);
@@ -161,7 +161,7 @@ a.tag.article-tag {
 }
 .article blockquote.colorquote.success:before {
   background-color: hsl(141, 71%, 48%);
-  background-image: url("/image-media/61b49c41a01b5020a44f6bde.webp");
+  background-image: url("../images/check.jpg");
 }
 .article blockquote.colorquote.warning {
   border-color: hsl(48, 100%, 67%);
@@ -169,7 +169,7 @@ a.tag.article-tag {
 }
 .article blockquote.colorquote.warning:before {
   background-color: hsl(48, 100%, 67%);
-  background-image: url("/image-media/361037ac7906c11502f6a0a0.webp");
+  background-image: url("../images/question.jpg");
 }
 .article blockquote.colorquote.danger {
   border-color: hsl(348, 100%, 61%);
@@ -177,7 +177,7 @@ a.tag.article-tag {
 }
 .article blockquote.colorquote.danger:before {
   background-color: hsl(348, 100%, 61%);
-  background-image: url("/image-media/dd95ec696037e4a9e9e2b964.webp");
+  background-image: url("../images/exclamation.jpg");
 }
 .article blockquote.pullquote {
   float: right;
@@ -199,7 +199,7 @@ a.tag.article-tag {
   width: 3rem;
   height: 3rem;
   opacity: 0.1;
-  background: url("/image-media/ae9950d8d9e34db45b63cd31.webp") 0 0/3rem 3rem no-repeat;
+  background: url("../images/quote-left.jpg") 0 0/3rem 3rem no-repeat;
 }
 .article blockquote footer cite {
   font-style: normal;
@@ -1173,6 +1173,8 @@ figure.highlight .section {
 }
 
 .home-brand {
+  display: flex;
+  justify-content: center;
   margin: 0;
   color: #000;
   font-family: "Ovo", "Georgia", "STZhongsong", "Microsoft YaHei", serif;

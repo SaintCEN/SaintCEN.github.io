@@ -46,7 +46,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
 
-<link rel="stylesheet" href="&#x2F;css&#x2F;style.64043363b0.css">
+<link rel="stylesheet" href="/css/style.9ef3c2b6f1.css">
 
 <meta name="page-transition-title" content="Text-Conditioned 3D Survey">
 <meta name="page-kind" content="article">
@@ -67,7 +67,7 @@
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item navbar-logo" href="/">
-                <img src="&#x2F;image-media&#x2F;4ba39b106dc4b3dc8da65775.webp" alt height="28">
+                <img src="/images/logo.jpg" alt="" height="28">
             </a>
             <button class="navbar-burger" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation site-tools">
                 <span aria-hidden="true"></span>
@@ -81,15 +81,21 @@
             <ul>
             
             <li class="active">
-            <a class="gooey-link" aria-current="location" href="/archives">Archives</a>
+            <a class="gooey-link"
+               aria-current="location"
+               href="/archives">Archives</a>
             </li>
             
-            <li class>
-            <a class="gooey-link" href="/album">Album</a>
+            <li class="">
+            <a class="gooey-link"
+               
+               href="/album">Album</a>
             </li>
             
-            <li class>
-            <a class="gooey-link" href="/about">About</a>
+            <li class="">
+            <a class="gooey-link"
+               
+               href="/about">About</a>
             </li>
             
             </ul>
@@ -107,8 +113,8 @@
 </nav>
 <svg width="0" height="0" aria-hidden="true" focusable="false" class="nav-ink-defs">
     <defs><filter id="nav-ink-alpha" x="-100%" y="-300%" width="300%" height="700%" color-interpolation-filters="sRGB">
-        <fecolormatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1 0 0 0 1" result="ink"/>
-        <fecomposite in="ink" in2="SourceGraphic" operator="in"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1 0 0 0 1" result="ink" />
+        <feComposite in="ink" in2="SourceGraphic" operator="in" />
     </filter></defs>
 </svg>
 <noscript><link rel="stylesheet" href="/css/no-script.css"></noscript>
@@ -124,7 +130,7 @@
 <div class="profile">
     <div class="profile-avatar">
         
-        <img src="&#x2F;image-media&#x2F;1d62c4490095ea09fdd06bf9.webp" alt="Sa1ntCHEN">
+        <img src="/images/avatar-profile.jpg" alt="Sa1ntCHEN">
         
     </div>
     <div class="profile-identity">
@@ -144,19 +150,23 @@
 
 <div class="profile-social">
     
-    <a class="profile-social-link" href="https://github.com/SaintCEN" title="github" aria-label="github" target="_blank" rel="noopener">
+    <a class="profile-social-link" href="https://github.com/SaintCEN" title="github" aria-label="github"
+       target="_blank" rel="noopener">
         <i class="fab fa-github"></i>
     </a>
     
-    <a class="profile-social-link" href="https://x.com/" title="x" aria-label="x" target="_blank" rel="noopener">
-        <svg viewbox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25h6.83l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    <a class="profile-social-link" href="https://x.com/" title="x" aria-label="x"
+       target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25h6.83l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
     </a>
     
-    <a class="profile-social-link" href="#" title="wechat" aria-label="wechat">
+    <a class="profile-social-link" href="#" title="wechat" aria-label="wechat"
+       >
         <i class="fab fa-weixin"></i>
     </a>
     
-    <a class="profile-social-link" href="#" title="qq" aria-label="qq">
+    <a class="profile-social-link" href="#" title="qq" aria-label="qq"
+       >
         <i class="fab fa-qq"></i>
     </a>
     
@@ -198,23 +208,23 @@
 
 <h2 id="本文在探讨什么"><a href="#本文在探讨什么" class="headerlink" title="本文在探讨什么"></a>本文在探讨什么</h2><p>在Generation领域，文本往往作为条件输入：例如Text2Image（T2I），即输出结果与文本输入相对应。而我想探讨的是：文本能否作为补充语义信息来调制主干网络，即Text-Conditioned，辅助某个下游任务，我重点讨论的是Scene-Level 3D Reconstruction/Generation。对真实世界的感知，尤其是更为复杂的多物体场景，从直觉上看语义信息似乎比RGB视觉特征更直接的指出了“外观看起来相似但是结构完全不同的区域”，举个例子就是“这个杯子摆在墙前面，而不是墙上的图案”。因此，我展开了一些文献的调研，意外的是我发现这块文献异常的少，似乎直觉和实验有悖，可谓是SOTA is cheap，Story is all you need…</p>
 <p>下图（来自TextSplat，ACM MM 2025）就展示了我想探讨的文本作用：从输入图由VLM标注得出，与网络做特征交互辅助3D重建的学习。</p>
-<p><img src="&#x2F;image-media&#x2F;9c3329269a387f6fd2cda940.webp"></p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;Text-Conditioned%203D%20Survey&#x2F;1.png"></p>
 <blockquote>
 <p>判断Text-Conditioned 3D的可行性，我们应该关注在3D任务中文本的作用边界到底是什么。因为文本是噪声严重的模态，其泛化能力必然得到质疑，事实证明大部分方法指标提升也相对有限。它能解决哪些现有方法的Failcase，又是从什么角度（几何？外观？）做了改善，在什么样的Backbone中文本才有作用，不同任务形式（场景？物体？）文本的定位是否不同，文本标注成什么形式才有作用，这都是我们要考虑的。</p>
 </blockquote>
-<h2 id="在3D之前：深度估计"><a href="#在3D之前：深度估计" class="headerlink" title="在3D之前：深度估计"></a>在3D之前：深度估计</h2><p><img src="&#x2F;image-media&#x2F;81b9bdcc512e5772bbaab9ac.webp"></p>
+<h2 id="在3D之前：深度估计"><a href="#在3D之前：深度估计" class="headerlink" title="在3D之前：深度估计"></a>在3D之前：深度估计</h2><p><img src="&#x2F;media&#x2F;posts&#x2F;Text-Conditioned%203D%20Survey&#x2F;2.png"></p>
 <p>直接说文本辅助3D学习可能太直接，我们先降维考虑下3D视觉的重要信息Depth深度。</p>
 <p>事实上，已经有文献证明了文本有助于深度估计尤其是小物体，即上图的IRIS（CVPR 2025）。文本和图像共同编码作为条件输入Diffusion，在网络内部做特征交互。这里文本的作用其实类似我的直觉：文本标注能增强网络对Object的感知能力，说的更神一点就是提升网络泛化能力，在不同数据集中识别出相同Object的存在，防止深度信息平滑。</p>
 <p>看来文本对于3D感知的调制确实有先例，而且作用方式倾向于通过物体语义信息来区分场景中的3D结构（架构图中的提示词就是揭示物体语义，关于文本标注下文再重点讨论）。</p>
-<h2 id="A-2D-Semantic-Feature-Cross-Attn"><a href="#A-2D-Semantic-Feature-Cross-Attn" class="headerlink" title="A.2D Semantic Feature Cross-Attn"></a>A.2D Semantic Feature Cross-Attn</h2><h3 id="A-1-核心思路"><a href="#A-1-核心思路" class="headerlink" title="A.1 核心思路"></a>A.1 核心思路</h3><p><img src="&#x2F;image-media&#x2F;4dd9ca5a5f86491503994c36.webp"></p>
+<h2 id="A-2D-Semantic-Feature-Cross-Attn"><a href="#A-2D-Semantic-Feature-Cross-Attn" class="headerlink" title="A.2D Semantic Feature Cross-Attn"></a>A.2D Semantic Feature Cross-Attn</h2><h3 id="A-1-核心思路"><a href="#A-1-核心思路" class="headerlink" title="A.1 核心思路"></a>A.1 核心思路</h3><p><img src="&#x2F;media&#x2F;posts&#x2F;Text-Conditioned%203D%20Survey&#x2F;3.png"></p>
 <p>架构图来自CATSplat（ICCV 2025），目前最权威的印证我的思考的一篇。图像和文本分别做Encode然后做Cross-Attn让图像特征带上语义信息，后续在3D空间中解码。抽象的来看，和文本交互回答了“这个高斯表示什么”，而后续再一次和点云特征交互回答了“这个高斯位置在哪里”，其实和IRIS的思路完全一致。但是比较遗憾的是实验结果显示指标提升并没有那么明显。</p>
 <h3 id="A-2-从文本标注引发的作用探讨"><a href="#A-2-从文本标注引发的作用探讨" class="headerlink" title="A.2 从文本标注引发的作用探讨"></a>A.2 从文本标注引发的作用探讨</h3><p>在附录中CATSplat展示了它的文本标注，其实和IRIS类似：“cozy living room”指出大致场景，“armchairs” / “sofa”指出含什么object。方位其实不重要，因为网络内部存在image block与text embedding的cross attention。那我们可以思考：3D任务上，外观例如颜色，材质等要素我们也需要纳入考虑吗？但是图像信息就能确认外观，而且比起文本显然更加精准。我甚至可以下个暴论：文本调制对3D的作用就是几何。它当然无法准确输出3D结构，但是1.在场景中可以确认3D结构分布 2.能确认场景中的物体大概长什么形状，然后图像信息来确认具体形状与外观。但是这种监督明显偏弱，现有文本方法往往只依靠Cross Attention增强图像特征信息，在复杂场景中或许难以捕捉到语义-视觉关联，因此指标上难以带来飞跃性的提升。</p>
-<h3 id="A-3-除了文本，我们还需要什么"><a href="#A-3-除了文本，我们还需要什么" class="headerlink" title="A.3 除了文本，我们还需要什么"></a>A.3 除了文本，我们还需要什么</h3><p><img src="&#x2F;image-media&#x2F;80a5201a1b8f31a12ab3cc90.webp"></p>
+<h3 id="A-3-除了文本，我们还需要什么"><a href="#A-3-除了文本，我们还需要什么" class="headerlink" title="A.3 除了文本，我们还需要什么"></a>A.3 除了文本，我们还需要什么</h3><p><img src="&#x2F;media&#x2F;posts&#x2F;Text-Conditioned%203D%20Survey&#x2F;4.png"></p>
 <h2 id="B-Text-3D-Alignment-Prior"><a href="#B-Text-3D-Alignment-Prior" class="headerlink" title="B.Text-3D Alignment Prior"></a>B.Text-3D Alignment Prior</h2><h3 id="B-1-核心思路"><a href="#B-1-核心思路" class="headerlink" title="B.1 核心思路"></a>B.1 核心思路</h3><p>这里主要展示两个有些区别的方法。这类方法希望让文本提前学习到3D先验，然后注入到网络某些地方作为主骨架的语义信息补充</p>
-<p><img src="&#x2F;image-media&#x2F;6e76766ec58a562f78227057.webp"></p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;Text-Conditioned%203D%20Survey&#x2F;5.png"></p>
 <p>上图是TIGON（CVPR 2026）的架构图，核心是利用预训练的通用3D生成模型（支持Text/Image输入），图像提供大致轮廓，文本提供细节语义，利用二者预训练的生成模型在去噪过程中让中间特征层交互，弥补纯图像的语义缺失部分。论文中举得例子是：给定一张老虎图，可以还原这只老虎的形状，但是没法做到“长尾巴”这种细节语义；但是直接用文本描述，又未必能生成用户希望得到的老虎形象。</p>
 <p>其实这个方法本质类似于3D编辑，但是它巧妙的地方在把复杂的文本与隐藏层的交互转换成了预训练权重高信息特征层的交互。</p>
-<p><img src="&#x2F;image-media&#x2F;cf58e1a927264c7bec450ede.webp"></p>
+<p><img src="&#x2F;media&#x2F;posts&#x2F;Text-Conditioned%203D%20Survey&#x2F;6.png"></p>
 <p>上图是MESC-3D（CVPR 2026）的架构图，我们的关注点主要是“3D Semantic Prior Learning Module”的部分。它训练一个可学习文本嵌入，做了一个文本Object Label Embedding和真实点云数据的Contrastive Learning，让文本embedding学习到“这个物体的结构应该长什么样”，encode后与初始得到的真实3D特征Concat，再送入主干网络。</p>
 <h3 id="B-2-和A的比较"><a href="#B-2-和A的比较" class="headerlink" title="B.2 和A的比较"></a>B.2 和A的比较</h3><ul>
 <li>文本作用边界：这里的作用范围更倾向于物体。无论是具体的语义信息，还是可学习文本嵌入，它们本质上都还是物体范畴不会有太大的几何差异；但是在场景Caption中，只依靠文本标注无法确认某个物体的方位，出现严重的几何不对齐情况。</li>
@@ -501,7 +511,7 @@
     <div class="searchbox-mask"></div>
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">
