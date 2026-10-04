@@ -51,8 +51,7 @@
   const SPLAT_FORCE = 5200;
   const PAPER_HEX = 0xf4efe6; // matches --paper, so it blends into the rest of the page
 
-  const INK_HEX = { sumi:0x1a1a1f };
-  const CYCLE_ORDER = ['sumi'];
+  const INK_HEX = 0x1a1a1f;
 
   function hexToRGB01(hex){ return [((hex>>16)&255)/255, ((hex>>8)&255)/255, (hex&255)/255]; }
   const PAPER_RGB = hexToRGB01(PAPER_HEX);
@@ -60,8 +59,7 @@
     const rgb = hexToRGB01(hex);
     return rgb.map((c,i)=> Math.max(0, -Math.log(Math.max(c,0.015)/PAPER_RGB[i])));
   }
-  const ABSORPTION = {};
-  Object.keys(INK_HEX).forEach(k=> ABSORPTION[k]=computeAbsorption(INK_HEX[k]));
+  const ABSORPTION = computeAbsorption(INK_HEX);
 
   // ---------- three.js core ----------
   const renderer = new THREE.WebGLRenderer({canvas, alpha:false, antialias:false, preserveDrawingBuffer:false, powerPreference:'low-power'});
@@ -347,7 +345,7 @@
   }
 
   // ---------- splats ----------
-  function applySplat(px, py, dx, dy, paintDye, colorKey){
+  function applySplat(px, py, dx, dy, paintDye){
     const aspect = simW/simH;
     splatMat.uniforms.uTarget.value = velocity.read.texture;
     splatMat.uniforms.aspectRatio.value = aspect;
@@ -356,8 +354,8 @@
     splatMat.uniforms.radius.value = SPLAT_RADIUS;
     blit(splatMat, velocity.write); velocity.swap();
 
-    if(paintDye && colorKey){
-      const a = ABSORPTION[colorKey];
+    if(paintDye){
+      const a = ABSORPTION;
       splatMat.uniforms.uTarget.value = dye.read.texture;
       splatMat.uniforms.color.value.set(a[0],a[1],a[2]);
       splatMat.uniforms.radius.value = SPLAT_RADIUS*1.4;
@@ -365,47 +363,11 @@
     }
   }
 
-  // ---------- UI state ----------
-  let currentColorKey='sumi';
-  let cycleMode=false;
-  let cycleIdx=0;
-  let autoplayOn=true;
-  const hintEl = heroEl.querySelector('.home-ink-hint');
-  let hintHidden=false;
-  function hideHint(){
-    if(hintHidden) return;
-    hintHidden=true;
-    hintEl && hintEl.classList.add('faded');
-  }
-  later(hideHint, 9000);
-
-  function nextPaintColor(){
-    if(cycleMode){ const k=CYCLE_ORDER[cycleIdx % CYCLE_ORDER.length]; cycleIdx++; return k; }
-    return currentColorKey;
-  }
-
-  heroEl.querySelectorAll('.home-ink-swatch').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      heroEl.querySelectorAll('.home-ink-swatch').forEach(b=>b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      const key = btn.dataset.ink;
-      if(key==='cycle'){ cycleMode=true; cycleIdx=0; }
-      else { cycleMode=false; currentColorKey=key; }
-    });
-  });
-  const autoplayBtn = heroEl.querySelector('[data-action="autoplay"]');
-  autoplayBtn && autoplayBtn.addEventListener('click', ()=>{
-    autoplayOn = !autoplayOn;
-    autoplayBtn.querySelector('b').classList.toggle('is-on', autoplayOn);
-  });
-  const washBtn = heroEl.querySelector('[data-action="wash"]');
-  washBtn && washBtn.addEventListener('click', ()=>{ washing=true; washT=0; markInteraction(); });
-
   // ---------- pointer interaction ----------
   let lastInteraction = performance.now();
-  function markInteraction(){ lastInteraction = performance.now(); hideHint(); }
+  function markInteraction(){ lastInteraction = performance.now(); }
 
-  let activePointerId=null, lastPx=0.5, lastPy=0.5, strokeColor='sumi';
+  let activePointerId=null, lastPx=0.5, lastPy=0.5;
   function normFromEvent(e){
     const rect = canvas.getBoundingClientRect();
     return [ (e.clientX-rect.left)/rect.width, 1 - (e.clientY-rect.top)/rect.height ];
@@ -415,16 +377,15 @@
     try{ canvas.setPointerCapture(e.pointerId); }catch(err){}
     const [x,y] = normFromEvent(e);
     lastPx=x; lastPy=y;
-    strokeColor = nextPaintColor();
     markInteraction();
-    applySplat(x,y,(Math.random()-0.5)*SPLAT_FORCE*0.1,(Math.random()-0.5)*SPLAT_FORCE*0.1,true,strokeColor);
+    applySplat(x,y,(Math.random()-0.5)*SPLAT_FORCE*0.1,(Math.random()-0.5)*SPLAT_FORCE*0.1,true);
   });
   canvas.addEventListener('pointermove', (e)=>{
     const [x,y] = normFromEvent(e);
     const dx=(x-lastPx)*SPLAT_FORCE, dy=(y-lastPy)*SPLAT_FORCE;
     const painting = e.pointerId===activePointerId && (e.buttons & 1);
     if(painting){
-      applySplat(x,y,dx,dy,true,strokeColor);
+      applySplat(x,y,dx,dy,true);
       markInteraction();
     } else {
       applySplat(x,y,dx*0.5,dy*0.5,false);
@@ -439,8 +400,7 @@
     if(!heroVisible) return;
     if(e.code==='Space'){
       e.preventDefault(); markInteraction();
-      const key=nextPaintColor();
-      applySplat(Math.random(),Math.random(),(Math.random()-0.5)*SPLAT_FORCE,(Math.random()-0.5)*SPLAT_FORCE,true,key);
+      applySplat(Math.random(),Math.random(),(Math.random()-0.5)*SPLAT_FORCE,(Math.random()-0.5)*SPLAT_FORCE,true);
     } else if(e.key==='x' || e.key==='X'){
       washing=true; washT=0; markInteraction();
     }
@@ -449,19 +409,16 @@
   // ---------- autoplay: idle drift + occasional drops ----------
   let lastAutoSplat=0, lastFlow=0;
   function updateAutoplay(now){
-    if(!autoplayOn) return;
     const idleFor = now-lastInteraction;
     const dropGap = reducedMotion ? 3200 : 1600;
     const flowGap = reducedMotion ? 1100 : 450;
     if(idleFor>3000 && now-lastAutoSplat>dropGap){
       lastAutoSplat=now;
       const x=Math.random(), y=Math.random();
-      const key=nextPaintColor();
-      applySplat(x,y,(Math.random()-0.5)*SPLAT_FORCE*0.6,(Math.random()-0.5)*SPLAT_FORCE*0.6,true,key);
+      applySplat(x,y,(Math.random()-0.5)*SPLAT_FORCE*0.6,(Math.random()-0.5)*SPLAT_FORCE*0.6,true);
       if(!reducedMotion && Math.random()<0.5){
         later(()=>{
-          const key2=nextPaintColor();
-          applySplat(x+(Math.random()-0.5)*0.12, y+(Math.random()-0.5)*0.12, (Math.random()-0.5)*SPLAT_FORCE*0.4,(Math.random()-0.5)*SPLAT_FORCE*0.4, true, key2);
+          applySplat(x+(Math.random()-0.5)*0.12, y+(Math.random()-0.5)*0.12, (Math.random()-0.5)*SPLAT_FORCE*0.4,(Math.random()-0.5)*SPLAT_FORCE*0.4, true);
         }, 180+Math.random()*260);
       }
     }
@@ -473,9 +430,9 @@
 
   // ---------- initial three-drop intro ----------
   function introSequence(){
-    later(()=>applySplat(0.38,0.58,0,0,true,'sumi'), 0);
-    later(()=>applySplat(0.62,0.42,0,0,true,'sumi'), 450);
-    later(()=>applySplat(0.5,0.62,0,0,true,'sumi'), 950);
+    later(()=>applySplat(0.38,0.58,0,0,true), 0);
+    later(()=>applySplat(0.62,0.42,0,0,true), 450);
+    later(()=>applySplat(0.5,0.62,0,0,true), 950);
   }
 
   // ---------- render loop, gated by visibility ----------

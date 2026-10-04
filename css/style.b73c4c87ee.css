@@ -37,10 +37,6 @@ a.tag.article-tag {
   overflow-y: auto;
 }
 
-.article .second-date-block {
-  color: gray;
-  font-size: 0.8rem;
-}
 .article + .article {
   padding-top: 2rem;
   border-top: 1px solid #dbdbdb;
