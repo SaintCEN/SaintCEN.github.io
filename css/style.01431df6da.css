@@ -2432,18 +2432,19 @@ html.curve-home .navbar-main {
   margin-top: 0;
 }
 .album-grid .gallery {
+  --album-photo-gap: clamp(1rem, 2.5vw, 3rem);
   margin: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
-  align-content: start;
-  gap: clamp(1rem, 2.5vw, 3rem);
   padding-right: clamp(0.5rem, 1vw, 1rem);
   padding-bottom: 1rem;
 }
+.album-grid .gallery__flow {
+  column-count: 2;
+  column-gap: var(--album-photo-gap);
+}
 .album-grid .content .gallery .gallery__figure {
-  margin: 0;
+  margin: 0 0 var(--album-photo-gap);
   min-width: 0;
+  break-inside: avoid;
 }
 .album-grid .gallery__figure img {
   display: block;
@@ -2556,8 +2557,10 @@ html.curve-home .navbar-main {
     padding: 1.25rem clamp(0.75rem, 3vw, 1.5rem);
   }
   .album-grid .gallery {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.5rem;
+    --album-photo-gap: 1.5rem;
+  }
+  .album-grid .gallery__flow {
+    column-count: 1;
   }
 }
 @media (min-width: 848px) {
