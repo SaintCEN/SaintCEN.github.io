@@ -38,6 +38,7 @@ class ContentPage {
             el: el
         };
         this.DOM.backCtrl = this.DOM.el.querySelector('.content__back');
+        this.DOM.info = this.DOM.el.querySelector('.content__info');
         this.DOM.title = this.DOM.el.querySelector('.content__title');
         this.DOM.titleInner = this.DOM.title.querySelector('span');
         this.DOM.intro = this.DOM.el.querySelector('.content__intro');
@@ -437,6 +438,8 @@ class MenuController {
         this.isOpen = true;
         this.DOM.el.inert = true;
         menuItem.DOM.content.inert = false;
+        menuItem.contentPage.DOM.gallery.scrollTop = 0;
+        menuItem.contentPage.DOM.info.scrollTop = 0;
         menuItem.DOM.el.setAttribute('aria-expanded', 'true');
         root.classList.add('is-open');
         gsap.killTweensOf(menuItem.DOM.galleryItems);

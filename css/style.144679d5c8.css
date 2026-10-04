@@ -2020,7 +2020,7 @@ html.curve-home .navbar-main {
     display: none;
   }
 }
-/* MenuFullGrid by Codrops (MIT). Original grid positions and title hierarchy. */
+/* Album menu based on MenuFullGrid by Codrops (MIT). */
 .album-grid {
   --color-menu: #171717;
   --color-menu-hover: #3273dc;
@@ -2194,7 +2194,7 @@ html.curve-home .navbar-main {
   padding-top: 0;
   padding-bottom: 0;
 }
-.album-grid.is-enhanced:not(.is-open) {
+.album-grid.is-enhanced {
   height: var(--album-height);
   grid-template-rows: var(--album-height);
   overflow: hidden;
@@ -2335,20 +2335,17 @@ html.curve-home .navbar-main {
 }
 .album-grid .content {
   margin: 0 auto;
-  padding: 2rem 0 10rem 0;
-  align-self: center;
-  justify-self: center;
+  padding: clamp(1.25rem, 4svh, 3rem) clamp(1.25rem, 4vw, 6rem);
   width: 100%;
+  min-width: 0;
   position: relative;
   display: grid;
-  grid-template-areas: "back" "title" "intro" "date" "gallery";
-  grid-gap: 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(1.5rem, 5vw, 7rem);
+  align-items: start;
 }
-.album-grid .content::before {
-  content: "";
-  grid-area: back;
-  width: 3rem;
-  height: 3rem;
+.album-grid.is-enhanced .page {
+  height: var(--album-height);
 }
 .album-grid.is-enhanced .content {
   position: absolute;
@@ -2360,29 +2357,33 @@ html.curve-home .navbar-main {
 }
 .album-grid.is-enhanced .content--current {
   position: relative;
-  overflow: visible;
-  height: auto;
+  height: 100%;
   opacity: 1;
 }
 .album-grid.is-enhanced .page:not(.page--preview) .content--current {
   pointer-events: auto;
 }
+.album-grid .content__info {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3svh, 2.5rem);
+  min-width: 0;
+}
+.album-grid.is-enhanced .content__info, .album-grid.is-enhanced .gallery {
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #bbb transparent;
+}
 .album-grid .content__back {
-  grid-area: back;
-  position: fixed;
-  top: calc(3.25rem + clamp(1rem, 2svh, 2rem));
-  left: max(1rem, (100vw - min(50vw, 1000px)) / 2 - clamp(4.25rem, 5vw, 5.25rem));
-  z-index: 20;
-  width: 3rem;
-  height: 3rem;
-  visibility: hidden;
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(2rem, 3vw, 3rem);
+  height: clamp(2rem, 3vw, 3rem);
   cursor: pointer;
-}
-.album-grid.is-enhanced .content--current .content__back {
-  visibility: visible;
-}
-.album-grid .content__back:focus {
-  outline: none;
 }
 .album-grid .content__back svg {
   display: block;
@@ -2390,56 +2391,75 @@ html.curve-home .navbar-main {
   height: 100%;
   pointer-events: none;
   fill: #171717;
-  stroke: #000;
+  stroke: #171717;
   stroke-width: 17px;
 }
-.album-grid .content__back:hover svg,
-.album-grid .content__back:focus svg {
-  fill: #171717;
+.album-grid .content__back:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: -1px;
 }
-.album-grid .content__title {
-  grid-area: title;
-  font-size: var(--title-size-fallback);
-  font-size: var(--title-size);
+.album-grid .content .content__title {
+  margin: 0;
+  font-size: clamp(1.25rem, 4.5vw, 6rem);
+  font-size: clamp(1.25rem, 16cqi, 6rem);
   font-weight: 700;
-  margin: 0;
-  line-height: 1.2;
+  font-style: normal;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
   position: relative;
-  overflow: hidden;
 }
-.album-grid .content__intro {
-  grid-area: intro;
+.album-grid .content .content__intro {
   margin: 0;
-  font-size: 1.65rem;
-  width: 100%;
-  max-width: none;
+  font-size: clamp(0.8rem, 1.35vw, 1.5rem);
+  line-height: 1.65;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
   position: relative;
-  overflow: hidden;
 }
-.album-grid .content__date {
-  grid-area: date;
-  align-self: end;
-  justify-self: end;
+.album-grid .content .content__date {
+  margin: auto 0 0;
+  padding-top: clamp(1rem, 4svh, 3rem);
+  font-size: clamp(0.8rem, 1.2vw, 1.25rem);
   position: relative;
-  overflow: hidden;
+}
+.album-grid .content .content__date small {
+  display: block;
+  margin-top: 0.5rem;
+  font: clamp(0.6rem, 0.7vw, 0.85rem) "Source Code Pro", monospace, "Microsoft YaHei";
+  color: #777;
+}
+.album-grid .content .content__date small:only-child {
+  margin-top: 0;
 }
 .album-grid .gallery {
-  margin: 2rem 0 0 0;
-  grid-area: gallery;
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-.album-grid .gallery__figure {
   margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  align-content: start;
+  gap: clamp(1rem, 2.5vw, 3rem);
+  padding-right: clamp(0.5rem, 1vw, 1rem);
+  padding-bottom: 1rem;
 }
-.album-grid .gallery__figure-img {
-  max-width: 100%;
+.album-grid .content .gallery .gallery__figure {
+  margin: 0;
+  min-width: 0;
+}
+.album-grid .gallery__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.album-grid .gallery__figure-caption {
+  margin-top: 0.65rem;
+  font-size: clamp(0.75rem, 1vw, 1rem);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 .album-grid.is-enhanced .content__back, .album-grid.is-enhanced .content__title, .album-grid.is-enhanced .content__intro, .album-grid.is-enhanced .content__date, .album-grid.is-enhanced .gallery__figure {
   opacity: 0;
 }
-.album-grid .menu, .album-grid .content {
+.album-grid .menu {
   width: 50vw;
   max-width: 1000px;
 }
@@ -2481,59 +2501,6 @@ html.curve-home .navbar-main {
 .album-grid .bg-gallery-wrap {
   pointer-events: none;
 }
-.album-grid .content {
-  grid-template-areas: "back back" "title title" "intro date" "gallery gallery";
-  grid-template-columns: minmax(0, 2fr) minmax(10rem, 1fr);
-  padding-top: 2rem;
-  min-width: 0;
-}
-.album-grid .content .content__title {
-  margin: 0;
-  font-style: normal;
-  overflow-wrap: anywhere;
-}
-.album-grid .content .content__intro, .album-grid .content .content__date {
-  margin: 0;
-}
-.album-grid .content__intro {
-  font-size: 1.3rem;
-  line-height: 1.6;
-  white-space: pre-line;
-}
-.album-grid .content__date {
-  text-align: right;
-}
-.album-grid .content__date small {
-  display: block;
-  margin-top: 0.5rem;
-  font: 0.65rem "Source Code Pro", monospace, "Microsoft YaHei";
-  color: #777;
-}
-.album-grid .content__date small:only-child {
-  margin-top: 0;
-}
-.album-grid .content__back svg {
-  fill: #171717;
-  stroke: #171717;
-}
-.album-grid .gallery {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: start;
-}
-.album-grid .gallery .gallery__figure {
-  margin: 0;
-}
-.album-grid .gallery__figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.album-grid .gallery__figure-caption {
-  margin-top: 0.65rem;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-}
 .album-grid .album-empty {
   grid-column: 1/-1;
   padding: 3rem 0;
@@ -2554,11 +2521,8 @@ html.curve-home .navbar-main {
     --title-size: clamp(2rem, 8vw, 4rem);
     --album-wheel-step: clamp(4.75rem, 13svh, 6.25rem);
   }
-  .album-grid .menu, .album-grid .content {
-    width: 88vw;
-  }
   .album-grid .menu {
-    padding: 4rem 0;
+    width: 88vw;
   }
   .album-grid .menu__headline {
     width: min(100%, 24rem);
@@ -2587,34 +2551,13 @@ html.curve-home .navbar-main {
     max-width: 16vw;
   }
   .album-grid .content {
-    grid-template-areas: "back" "title" "intro" "date" "gallery";
-    grid-template-columns: minmax(0, 1fr);
-    padding-top: 2rem;
-    gap: 1.5rem;
-  }
-  .album-grid .content__intro {
-    font-size: 1rem;
-  }
-  .album-grid .content__date {
-    justify-self: start;
-    text-align: left;
-    font-size: 0.8rem;
-  }
-  .album-grid .content::before {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-  .album-grid .content__back {
-    left: clamp(0.5rem, 2vw, 1rem);
-    width: 2.5rem;
-    height: 2.5rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr);
+    gap: clamp(1rem, 4vw, 2rem);
+    padding: 1.25rem clamp(0.75rem, 3vw, 1.5rem);
   }
   .album-grid .gallery {
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-  .album-grid .gallery__figure-caption {
-    font-size: 0.65rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
   }
 }
 @media (min-width: 848px) {
