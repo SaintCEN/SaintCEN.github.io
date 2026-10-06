@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://saintcen.github.io/2026/09/30/Qwen-Image%20Series/&#x2F;media&#x2F;posts&#x2F;Qwen-Image%20Series&#x2F;1.jpg">
 <meta property="og:image" content="https://saintcen.github.io/2026/09/30/Qwen-Image%20Series/&#x2F;media&#x2F;posts&#x2F;Qwen-Image%20Series&#x2F;3.png">
 <meta property="article:published_time" content="2026-09-30T00:00:00.000Z">
-<meta property="article:modified_time" content="2026-10-02T02:09:28.477Z">
+<meta property="article:modified_time" content="2026-10-06T05:14:22.447Z">
 <meta property="article:author" content="Sa1ntCHEN">
 <meta property="article:tag" content="Generation">
 <meta property="article:tag" content="Qwen">
@@ -195,7 +195,7 @@
                 <span class="column is-narrow">
                     
                     
-                    3 minutes read (About 425 words)
+                    3 minutes read (About 426 words)
                 </span>
                 
             </div>
@@ -210,7 +210,7 @@
 <li>Qwen-Image 2.1</li>
 </ul>
 <p>模型家族革新主要从数据构建（组成/合成/过滤）、训练策略（Pre-Training / Multi-Stage Training / Post-Training）、模型架构（算法核心/参数量）以及Infra（推理加速）这四个角度进行分析。</p>
-<h2 id="Qwen-Image-1-0"><a href="#Qwen-Image-1-0" class="headerlink" title="Qwen-Image 1.0"></a>Qwen-Image 1.0</h2><h3 id="主要能力"><a href="#主要能力" class="headerlink" title="主要能力"></a>主要能力</h3><p>在开启对模型家族的学习前，我们先考虑这个问题。从宏观上看，模型应同时具备Text-To-Image (T2I) 和Text-Image-To-Image (TI2I)的能力。这二者本质是有悖的，Edit比起Gen更加克制，因此设计一个统一模型范式以及合理的训练策略成了难题；从微观上看，用户需求包括高质量的图像生成（艺术风格和准确内容）、灵活的图像编辑（风格转换、背景修改、物体添加以及姿态调整等等）、偏理解任务的图像编辑（深度估计、新视角合成以及物体识别等等）和复杂的文本渲染（海报、水印以及复杂场景等等，由于和自然图像的差异，往往被单独提出）</p>
+<h2 id="Qwen-Image-1-0"><a href="#Qwen-Image-1-0" class="headerlink" title="Qwen-Image 1.0"></a>Qwen-Image 1.0</h2><h3 id="主要能力"><a href="#主要能力" class="headerlink" title="主要能力"></a>主要能力</h3><p>在开启对模型家族的学习前，我们先考虑这个问题。从宏观上看，模型应同时具备Text-To-Image (T2I) 和Text-Image-To-Image (TI2I)的能力。这二者本质是有悖的，Edit比起Gen更加克制，因此设计一个统一模型范式以及合理的训练策略成了难题；从微观上看，用户需求包括高质量的图像生成（艺术风格和准确内容）、灵活的图像编辑（风格转换、背景修改、物体添加以及姿态调整等等）、偏理解任务的图像编辑（深度估计、新视角合成以及物体识别等等）和复杂的文本渲染（海报、水印以及复杂场景等等，由于和自然图像的差异，往往被单独提出）。</p>
 <h3 id="数据构建"><a href="#数据构建" class="headerlink" title="数据构建"></a>数据构建</h3><h3 id="模型架构"><a href="#模型架构" class="headerlink" title="模型架构"></a>模型架构</h3><p><img src="&#x2F;media&#x2F;posts&#x2F;Qwen-Image%20Series&#x2F;3.png"></p>
 <h3 id="训练策略"><a href="#训练策略" class="headerlink" title="训练策略"></a>训练策略</h3><h3 id="推理加速"><a href="#推理加速" class="headerlink" title="推理加速"></a>推理加速</h3><h3 id="实验评估"><a href="#实验评估" class="headerlink" title="实验评估"></a>实验评估</h3><h2 id="Qwen-Image-2-0"><a href="#Qwen-Image-2-0" class="headerlink" title="Qwen-Image 2.0"></a>Qwen-Image 2.0</h2><h3 id="主要能力-1"><a href="#主要能力-1" class="headerlink" title="主要能力"></a>主要能力</h3><h3 id="数据构建-1"><a href="#数据构建-1" class="headerlink" title="数据构建"></a>数据构建</h3><h3 id="模型架构-1"><a href="#模型架构-1" class="headerlink" title="模型架构"></a>模型架构</h3><h3 id="训练策略-1"><a href="#训练策略-1" class="headerlink" title="训练策略"></a>训练策略</h3><h3 id="推理加速-1"><a href="#推理加速-1" class="headerlink" title="推理加速"></a>推理加速</h3><h3 id="实验评估-1"><a href="#实验评估-1" class="headerlink" title="实验评估"></a>实验评估</h3><h2 id="Qwen-Image-2-1"><a href="#Qwen-Image-2-1" class="headerlink" title="Qwen-Image 2.1"></a>Qwen-Image 2.1</h2><h3 id="主要能力-2"><a href="#主要能力-2" class="headerlink" title="主要能力"></a>主要能力</h3><h3 id="数据构建-2"><a href="#数据构建-2" class="headerlink" title="数据构建"></a>数据构建</h3><h3 id="模型架构-2"><a href="#模型架构-2" class="headerlink" title="模型架构"></a>模型架构</h3><h3 id="训练策略-2"><a href="#训练策略-2" class="headerlink" title="训练策略"></a>训练策略</h3><h3 id="推理加速-2"><a href="#推理加速-2" class="headerlink" title="推理加速"></a>推理加速</h3><h3 id="实验评估-2"><a href="#实验评估-2" class="headerlink" title="实验评估"></a>实验评估</h3>
             </div>
